@@ -46,8 +46,9 @@ Same either way:
 - **Author name.** Pseudonyms are fine. No follower counts, ever.
 - **Optional:** X handle, GitHub handle, a site, a one-line bio.
 - **The story.** Default shape: five sections — The Pitch · The Delusion ·
-  The Reality Check · Why It Stays Unbuilt · Unwanted Bonus. Format breaks
-  are allowed; see below.
+  The Reality Check · Why It Stays Unbuilt · Unwanted Bonus — with an
+  optional How It Started before the Pitch. Format breaks are allowed; see
+  below.
 - **One to three official tags,** from the closed list below.
 
 ### Official tags
@@ -59,15 +60,20 @@ One to three per idea. The list is closed — no free-typed tags — and the
 schema rejects anything else. If your idea genuinely needs a fifteenth tag,
 say so in the PR and make the case.
 
-### The five sections
+### The sections
 
 | Section              | What goes in it                                                                       |
 | -------------------- | ------------------------------------------------------------------------------------- |
+| How It Started       | _Optional._ The mundane moment the idea mutated from. Two or three sentences, a scene. |
 | The Pitch            | The idea, played completely straight. Sell it.                                        |
 | The Delusion         | Why it sounded good. The reasoning that got you there.                                |
 | The Reality Check    | Where it falls apart. Be specific — numbers, mechanics, the one detail that kills it. |
 | Why It Stays Unbuilt | The verdict. Short.                                                                   |
 | Unwanted Bonus       | The worse idea that fell out of the first one.                                        |
+
+How It Started is the one optional section: use it when the origin is
+genuinely a story, skip it when the Pitch already carries it. The other five
+are required, in that order — `npm run check:ideas` enforces them.
 
 No word-count rule. Funny and specific beats a target length, and the editor
 trims what drags.

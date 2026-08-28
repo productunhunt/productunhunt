@@ -21,6 +21,15 @@ draft: false
 heroImage: null
 ---
 
+## How It Started
+
+A friend came back from two weeks away and spent his first evening home
+editing the trip into shape — nine days of photos trimmed to the six that
+photographed well. Somebody at the table said the quiet part out loud: the
+holiday and the posting of the holiday were already two separate products,
+and only one of them had cost three thousand dollars. I wrote "decouple them"
+on a napkin like it was a strategy.
+
 ## The Pitch
 
 A subscription service that generates a complete, photorealistic holiday you did

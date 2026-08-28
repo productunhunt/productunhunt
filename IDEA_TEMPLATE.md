@@ -55,6 +55,13 @@ heroImage: null
   Write it straight. The joke is the seriousness.
 -->
 
+<!--
+  Optional opener: ## How It Started
+  The mundane moment the idea mutated from — the queue, the invoice, the
+  conversation you overheard. Two or three sentences, a scene not a biography.
+  Skip it if your Pitch already carries the origin; it usually does.
+-->
+
 ## The Pitch
 
 <!--
