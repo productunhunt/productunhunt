@@ -1,12 +1,13 @@
 import type { APIRoute, GetStaticPaths } from 'astro';
-import { getCollection } from 'astro:content';
+import { getPublishedIdeas } from '../../../lib/ideas';
+import { STATUS_LABEL } from '../../../lib/status';
 import { readFile } from 'node:fs/promises';
 import { createRequire } from 'node:module';
 import satori from 'satori';
 import sharp from 'sharp';
 import { SITE } from '../../../consts';
 
-// Build-time generated Open Graph images for every blog post and work entry,
+// Build-time generated Open Graph images for every published idea,
 // rendered in the theme's light palette (see global.css tokens). The static
 // `public/og.jpg` remains the site-wide fallback for all other pages.
 
@@ -17,26 +18,15 @@ interface OgProps {
 }
 
 export const getStaticPaths = (async () => {
-  const blog = await getCollection('blog', ({ data }) => !data.draft);
-  const works = await getCollection('works');
-  return [
-    ...blog.map((entry) => ({
-      params: { collection: 'blog', slug: entry.id },
-      props: {
-        title: entry.data.title,
-        description: entry.data.description,
-        kind: 'Blog',
-      } satisfies OgProps,
-    })),
-    ...works.map((entry) => ({
-      params: { collection: 'works', slug: entry.id },
-      props: {
-        title: entry.data.title,
-        description: entry.data.description,
-        kind: 'Work',
-      } satisfies OgProps,
-    })),
-  ];
+  const ideas = await getPublishedIdeas();
+  return ideas.map((idea) => ({
+    params: { collection: 'ideas', slug: idea.id },
+    props: {
+      title: idea.data.title,
+      description: idea.data.tagline,
+      kind: STATUS_LABEL[idea.data.status],
+    } satisfies OgProps,
+  }));
 }) satisfies GetStaticPaths;
 
 // Satori has no oklch() support, so these are hex equivalents of the
