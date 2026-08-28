@@ -1,27 +1,40 @@
-// Site-wide settings. Edit this file to rebrand the theme — every page,
-// the RSS feed, and Open Graph tags read from here.
+// Site-wide settings. Every page, the RSS feed, and Open Graph tags read from
+// here.
 
 import type { UIKey } from './i18n/en';
 
+/** The public repo (§15). Ideas arrive as PRs against it, and giscus is backed
+ *  by its Discussions. Neither the org nor the repo exists yet — creating both
+ *  is a launch-blocking errand, not a code change. */
+export const REPO_URL = 'https://github.com/productunhunt/productunhunt';
+
+/** The submission inbox for everyone who isn't opening a PR (§11). Must exist
+ *  and forward before launch. */
+export const CONTACT_EMAIL = 'ideas@productunhunt.com';
+
 export const SITE = {
-  /** BCP 47 language tag. Picks the UI dictionary in `src/i18n/`, and sets
-   *  `<html lang>`, date formatting, and the RSS feed language. Dictionaries
-   *  ship for `en` and `ja`; regional variants like `en-GB` reuse the base
-   *  language's strings while keeping their own date format. */
+  /** BCP 47 language tag. Sets `<html lang>`, date formatting, and the RSS feed
+   *  language. Only `en` ships — §16 puts a multilingual UI out of scope. */
   locale: 'en',
-  /** Site name — used in the header brand, <title>, and og:site_name. */
-  title: 'Astro Keel',
-  /** Default meta description for pages that don't set their own. */
-  description: 'A minimal, neutral, and modern portfolio and blog theme for Astro.',
+  /** Site name — used in <title>, og:site_name, and the RSS feed. */
+  title: 'ProductUnhunt',
+  /** The masthead lockup (§2). Spaced caps belong to the header only; `title`
+   *  is what goes in `<title>` and og:site_name, where the spacing would read
+   *  as a typo. */
+  wordmark: 'PRODUCT UNHUNT',
+  /** The manifesto line. Doubles as the default meta description. */
+  description:
+    'The internet has enough serious people building serious products to solve serious problems. ProductUnhunt is for the rest of us.',
   /** Description of the RSS feed at /rss.xml. */
-  rssDescription: 'Notes, essays, and release logs from Astro Keel.',
-  /** Default social share image, relative to the site root (see public/). */
+  rssDescription: 'Business ideas that were considered and correctly abandoned.',
+  /** Default social share image, relative to the site root (see public/).
+   *  Per-idea cards are generated at build time; this is the fallback. */
   ogImage: '/og.jpg',
-  /** Post author, emitted in JSON-LD BlogPosting structured data.
-   *  Leave empty ('') to omit the author field. */
-  author: 'Astro Keel',
-  /** Footer credit line. */
-  footerText: 'Built with Astro Keel.',
+  /** House byline (§2). Ideas carry their own author in frontmatter — §12 is
+   *  explicit that JSON-LD reads that, not this. */
+  author: 'Ravi — Chief Unhunter',
+  /** Footer credit line (§2). */
+  footerText: 'Built for ideas that should stay theoretical.',
 } as const;
 
 /** Icons bundled with the theme — see `src/components/SocialLinks.astro`. */
@@ -35,15 +48,15 @@ export interface SocialLink {
   icon: SocialIcon;
 }
 
-/** Social profiles rendered as inline SVG icons in the footer.
- *  Add or remove entries here — no template edits needed. */
+/** Rendered as inline SVG icons in the footer. */
 export const SOCIAL_LINKS: readonly SocialLink[] = [
-  { label: 'GitHub', href: 'https://github.com/kpab/astro-keel', icon: 'github' },
+  { label: 'GitHub', href: REPO_URL, icon: 'github' },
   { label: 'RSS feed', href: '/rss.xml', icon: 'rss' },
+  { label: 'Submit an idea by email', href: `mailto:${CONTACT_EMAIL}`, icon: 'email' },
 ];
 
-/** Giscus — GitHub Discussions-backed comments on blog posts.
- *  See `GISCUS` below; values come from https://giscus.app. */
+/** Giscus — GitHub Discussions-backed comments, on idea pages only (§10).
+ *  Values come from https://giscus.app. */
 export interface GiscusConfig {
   /** Master switch. While `false`, no Giscus markup, CSS, or script is emitted. */
   enabled: boolean;
@@ -56,7 +69,7 @@ export interface GiscusConfig {
   category: string;
   /** Category ID from giscus.app (starts with `DIC_`). */
   categoryId: string;
-  /** How a post maps to its discussion. `pathname` is the safest default —
+  /** How a page maps to its discussion. `pathname` is the safest default —
    *  it survives retitling, unlike `title`. */
   mapping: 'pathname' | 'url' | 'title' | 'og:title' | 'specific' | 'number';
   /** Use a strict title match when looking up the discussion. */
@@ -74,23 +87,22 @@ export interface GiscusConfig {
   darkTheme: string;
 }
 
-/** Comments are **off by default** — the theme ships no third-party JavaScript
- *  unless you ask for it. To turn them on: enable Discussions on your repo,
- *  install the giscus app (https://github.com/apps/giscus), fill in the IDs
- *  from https://giscus.app, and set `enabled: true`. */
+/** Off until the repo exists: giscus needs a real `repoId` and `categoryId`
+ *  from https://giscus.app, and there is nothing to generate them from yet.
+ *  `Comments.astro` emits no markup while this is `false`, so an idea page
+ *  degrades to no comment section rather than a broken widget. The launch bar
+ *  (§14) allows this one to land post-launch. */
 export const GISCUS: GiscusConfig = {
   enabled: false,
   repo: '',
   repoId: '',
-  category: 'Announcements',
+  category: 'Ideas',
   categoryId: '',
   mapping: 'pathname',
   strict: true,
   reactionsEnabled: true,
   inputPosition: 'bottom',
   lang: 'en',
-  // Other options include `preferred_color_scheme`, `transparent_dark`,
-  // `noborder_light`, `cobalt`, or a URL to your own theme CSS.
   lightTheme: 'light',
   darkTheme: 'dark',
 };
@@ -99,14 +111,17 @@ export type NavItem =
   | { href: string; label: string; labelKey?: never }
   | { href: string; labelKey: UIKey; label?: never };
 
-/** Header navigation. `href` is relative to the site root; the configured
- *  `base` is applied automatically via `withBase()`. The bundled entries
- *  localize through the UI dictionary; give a page you add yourself a literal
- *  `label` instead — one of the two is required. */
+/** Header navigation — §2's three items, and only those. `/about/` and
+ *  `/search/` are real pages (§3) but live in the footer: a six-item masthead
+ *  dilutes the setup the joke depends on. */
 export const NAV_ITEMS: readonly NavItem[] = [
-  { href: '/', labelKey: 'nav.home' },
+  { href: '/ideas/', labelKey: 'nav.ideas' },
+  { href: '/how-it-works/', labelKey: 'nav.howItWorks' },
+  { href: '/contribute/', labelKey: 'nav.contribute' },
+];
+
+/** Footer navigation — the pages the masthead doesn't carry. */
+export const FOOTER_ITEMS: readonly NavItem[] = [
   { href: '/about/', labelKey: 'nav.about' },
-  { href: '/works/', labelKey: 'nav.works' },
-  { href: '/blog/', labelKey: 'nav.blog' },
   { href: '/search/', labelKey: 'nav.search' },
 ];

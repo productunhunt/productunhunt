@@ -24,44 +24,19 @@ const websiteSchema = {
 <BaseLayout description={SITE.description}>
   <StructuredData slot="head" schema={websiteSchema} />
   <section class="hero section">
-    <p class="eyebrow">Portfolio / writing / systems notes</p>
-    <h1>Structural minimalism for careful digital work.</h1>
-    <p class="lead">
-      Astro Keel gives projects, essays, and professional notes a disciplined frame: editorial type,
-      measured rhythm, and a single accent carried through fine structural rules.
-    </p>
+    <p class="eyebrow">Ideas, correctly abandoned</p>
+    <h1>{SITE.description}</h1>
     <div class="action-row" aria-label={t('home.primaryLinks')}>
-      <a class="button" href={withBase('/ideas/')}>{t('home.viewWorks')}</a>
-      <a class="text-link" href={withBase('/about/')}>{t('home.readNotes')}</a>
-    </div>
-  </section>
-
-  <section class="section split-overview" aria-label={t('home.overviewLabel')}>
-    <div>
-      <p class="eyebrow">Principles</p>
-      <h2>Readable first, decorative last.</h2>
-    </div>
-    <div class="feature-list">
-      <article>
-        <h3>Baseline rhythm</h3>
-        <p>Vertical spacing follows a steady cadence for long-form reading.</p>
-      </article>
-      <article>
-        <h3>Typed content</h3>
-        <p>Collections are prepared for project case studies and durable notes.</p>
-      </article>
-      <article>
-        <h3>Keel lines</h3>
-        <p>Fine rules create structure without relying on decorative effects.</p>
-      </article>
+      <a class="button" href={withBase('/contribute/')}>{t('cta.submit')}</a>
+      <a class="text-link" href={withBase('/how-it-works/')}>{t('cta.howThisWorks')}</a>
     </div>
   </section>
 
   <section class="section index-feed" aria-labelledby="latest-ideas">
     <div class="section-heading">
-      <p class="eyebrow">{t('home.latestBlogEyebrow')}</p>
-      <h2 id="latest-ideas">Recently not built.</h2>
-      <a class="text-link" href={withBase('/ideas/')}>{t('home.allPosts')}</a>
+      <p class="eyebrow">{t('ideas.eyebrow')}</p>
+      <h2 id="latest-ideas">{t('home.recentlyNotBuilt')}</h2>
+      <a class="text-link" href={withBase('/ideas/')}>{t('cta.fullPile')}</a>
     </div>
 
     {
@@ -81,7 +56,7 @@ const websiteSchema = {
         </div>
       ) : (
         <div class="empty-state compact">
-          <p set:html={t('home.postsEmpty')} />
+          <p>{t('home.empty')}</p>
         </div>
       )
     }

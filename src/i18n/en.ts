@@ -1,32 +1,31 @@
-// English UI dictionary — the reference translation.
+// English UI dictionary — the only one that ships. §16 puts a multilingual UI
+// out of scope, but the dictionary itself earns its keep: `UIKey` is derived
+// from this object, so deleting a string that a template still renders is a
+// compile error rather than an empty span discovered in production.
 //
-// **Scope: UI chrome only.** Navigation, pagination, section labels, button and
-// link labels, aria labels, generated strings, and the theme-owned 404 page.
-// Placeholder prose on the home and about pages is *not* here: it lives in the
-// `.astro` files, where you would edit it anyway. Keeping the split means a new
-// locale is ~60 short strings rather than a rewrite of the demo copy.
+// **Scope: UI chrome and reusable copy.** Navigation, section headings, button
+// and aria labels, generated strings, and the copy §2 fixes site-wide. Page
+// prose that appears exactly once lives in its `.astro` file, where you would
+// edit it anyway.
 //
-// This file also defines the *shape* every other dictionary must match, so add
-// a key here first, then to each locale under `src/i18n/`. Keys are flat and
-// dotted; `{name}` placeholders are filled in by `t()`.
-//
-// Two values carry inline `<code>` markup and are rendered with `set:html`.
-// They are theme-authored, never user input.
+// Keys are flat and dotted; `{name}` placeholders are filled in by `t()`.
+// A few values carry inline `<code>` markup and are rendered with `set:html` —
+// they are authored here, never user input.
 //
 // Note: values are deliberately *not* `as const` — widening them to `string`
-// is what lets other locales satisfy `UIStrings`.
+// is what keeps the type a dictionary shape rather than a union of literals.
 
 export const en = {
   // Header, footer, and other chrome
-  'nav.home': 'Home',
+  'nav.ideas': 'Ideas',
+  'nav.howItWorks': 'How it works',
+  'nav.contribute': 'Contribute',
   'nav.about': 'About',
-  'nav.works': 'Works',
-  'nav.blog': 'Blog',
   'nav.search': 'Search',
   'nav.label': 'Main navigation',
   'nav.brandHome': '{site} home',
   'theme.toggle': 'Toggle color theme',
-  'footer.notes': 'Notes',
+  'footer.label': 'Footer navigation',
   'social.label': 'Social links',
 
   // Pagination
@@ -35,75 +34,120 @@ export const en = {
   'pagination.older': 'Older →',
   'pagination.status': 'Page {current} of {total}',
 
-  // Home — labels and links only; the page's own copy lives in index.astro
+  // Shared calls to action (§2). The same two strings appear on the homepage,
+  // the idea page, and the contribute interstitial.
+  'cta.submit': 'Submit an unbuilt idea',
+  'cta.howThisWorks': 'How this works',
+  'cta.fullPile': 'See the full pile',
+
+  // Tag filter row — `All` plus only the tags currently in use (§5).
+  'filter.label': 'Filter ideas by tag',
+  'filter.all': 'All',
+
+  // Homepage (§5). The manifesto line itself is SITE.description.
   'home.primaryLinks': 'Primary links',
-  'home.viewWorks': 'View works',
-  'home.readNotes': 'Read notes',
-  'home.overviewLabel': 'Theme overview',
-  'home.latestWorksEyebrow': 'Latest works',
-  'home.allWorks': 'All works',
-  'home.workTech': '{title} technology',
-  'home.worksEmpty':
-    'Add works under <code>src/content/works</code> to surface the latest projects here.',
-  'home.latestBlogEyebrow': 'Latest blog',
-  'home.allPosts': 'All posts',
-  'home.postsEmpty':
-    'Add blog entries under <code>src/content/blog</code> to surface the latest notes here.',
+  'home.recentlyNotBuilt': 'Recently not built',
+  'home.featuredHeading': 'Most unhinged this week',
+  'home.contributeHeading': 'You have bad ideas too',
+  'home.contributeLead':
+    'Two doors, one format: open a pull request, or email it and let someone else do the YAML.',
+  'home.empty': 'Nothing has been correctly abandoned yet. Give it a moment.',
 
-  // Blog index
-  'blog.title': 'Blog',
-  'blog.titlePaged': 'Blog · Page {page}',
-  'blog.eyebrow': 'Blog',
-  'blog.listLabel': 'Blog posts',
-  'blog.tagsEyebrow': 'Tags',
-  'blog.tagsNavLabel': 'Blog tags',
+  // Idea archive (§3) — the pile, with no manifesto essay on top.
+  'ideas.title': 'The full pile',
+  'ideas.titlePaged': 'The full pile · Page {page}',
+  'ideas.eyebrow': 'Archive',
+  'ideas.description': 'Every idea considered and correctly abandoned on {site}.',
+  'ideas.lead': 'Everything considered and correctly abandoned, newest first.',
+  'ideas.listLabel': 'Abandoned ideas',
+  'ideas.empty': 'The pile is empty. Enjoy it while it lasts.',
 
-  // Tag archive — every string here is generated from the tag, so it stays
-  // in the dictionary even though it reads like page copy.
-  'tag.title': 'Posts tagged “{tag}”',
-  'tag.titlePaged': 'Posts tagged “{tag}” · Page {page}',
-  'tag.description': 'Blog posts tagged {tag} on {site}.',
+  // Tag archive — every string here is generated from a tag, which is why it
+  // stays in the dictionary even though it reads like page copy.
+  'tag.title': 'Ideas tagged “{tag}”',
+  'tag.titlePaged': 'Ideas tagged “{tag}” · Page {page}',
+  'tag.description': 'Abandoned ideas tagged {tag} on {site}.',
   'tag.eyebrow': 'Tag',
-  'tag.lead': 'Notes collected under the {tag} tag.',
-  'tag.listLabel': '{tag} posts',
+  'tag.lead': 'Bad ideas filed under {tag}.',
+  'tag.listLabel': '{tag} ideas',
   'tag.moreTagsEyebrow': 'More tags',
-  'tag.otherTagsNavLabel': 'Other blog tags',
-  'tag.allPosts': 'All posts',
+  'tag.otherTagsNavLabel': 'Other tags',
+  'tag.allIdeas': 'All ideas',
 
-  // Blog post
-  'post.eyebrow': 'Blog',
-  'post.readingTime': '{minutes} min read',
-  'post.tocLabel': 'Table of contents',
-  'post.contentsEyebrow': 'Contents',
-  'post.adjacentLabel': 'Adjacent posts',
-  'post.previous': 'Previous',
-  'post.next': 'Next',
-  'post.relatedEyebrow': 'Related',
-  'post.breadcrumbHome': 'Home',
-  'post.breadcrumbBlog': 'Blog',
+  // Idea page (§7)
+  'idea.tagsLabel': 'Tags',
+  'idea.editorStampEyebrow': 'Editor’s note',
+  'idea.moodEyebrow': 'Current mood',
+  'idea.tocLabel': 'Table of contents',
+  'idea.contentsEyebrow': 'Contents',
+  'idea.relatedEyebrow': 'Similar mistakes',
+  'idea.relatedLabel': 'Similar mistakes',
+  'idea.submitEyebrow': 'Submit a worse one',
+  'idea.breadcrumbHome': 'Home',
+  'idea.breadcrumbIdeas': 'Ideas',
+  'idea.authorSourcePR': 'Submitted by pull request',
+  'idea.authorSourceEmail': 'Submitted by email',
 
-  // Comments (rendered only when GISCUS.enabled)
+  // Status badges (§8). `src/lib/status.ts` maps a frontmatter key to one of
+  // these, so the label is written down exactly once.
+  'status.unbuilt': 'Regrettably unbuilt',
+  'status.someone-built-it': 'Unfortunately real',
+  'status.still-a-threat': 'Do not encourage',
+
+  // Community verdict (§9)
+  'poll.heading': 'Community verdict',
+  'poll.label': 'Community verdict poll',
+  'poll.empty': 'Nobody has incriminated themselves yet',
+  'poll.others': '+ {count} other questionable opinions',
+  'poll.votes': '{count} votes',
+  'poll.votesOne': '1 vote',
+  'poll.yourVote': 'Your verdict',
+  'poll.unavailable': 'Voting is unavailable right now. The ideas remain bad regardless.',
+  'poll.failed': 'That vote did not go through. Try again.',
+
+  // Comments (§10) — rendered only when GISCUS.enabled
   'comments.eyebrow': 'Comments',
-  // `{link}` is a whole anchor element, built in Comments.astro — a translation
+  // `{link}` is a whole anchor element, built in Comments.astro — a rewrite
   // decides where in the sentence it lands, and the URL never has to be
   // interpolated into the dictionary value.
   'comments.failed': 'Comments could not be loaded. Read the thread on {link}.',
   'comments.failedLink': 'GitHub Discussions ↗',
   'comments.noscript': 'Comments require JavaScript. They are hosted on GitHub Discussions.',
+  'houseRules.eyebrow': 'House rules',
+  'houseRules.label': 'House rules',
+  'houseRules.one': 'Roast the idea, not the author.',
+  'houseRules.two': 'Pitching a real startup in the comments is a self-own and will be deleted.',
 
-  // Works
-  'works.title': 'Works',
-  'works.eyebrow': 'Works',
-  'works.listLabel': 'Selected works',
-  'work.eyebrow': 'Work',
-  'work.visit': 'Visit project',
-  'work.repository': 'View repository',
-  'work.stackEyebrow': 'Stack',
+  // Contribute (§11)
+  'contribute.title': 'Contribute',
+  'contribute.eyebrow': 'Contribute',
+  'contribute.lead': 'Two doors, one format. The editor publishes; you supply the regret.',
+  'contribute.prEyebrow': 'For developers',
+  'contribute.emailEyebrow': 'For everyone else',
+  'contribute.fieldsEyebrow': 'What an entry needs',
+  'contribute.confirmation': 'I thought about building this and chose not to',
+  'contribute.reviewEyebrow': 'What gets published',
 
-  // About — section labels only; the biography copy lives in about/index.astro
+  // How it works (§3)
+  'howItWorks.title': 'How it works',
+  'howItWorks.eyebrow': 'How it works',
+
+  // The license paragraph (§11), rendered on Contribute and How it works.
+  // One string, blank-line separated: both pages split it into paragraphs, so
+  // the wording can never drift between them.
+  'license.eyebrow': 'The deal',
+  'license.body': [
+    'This is entertainment. Treat every idea as public and already dead.',
+    'By submitting, you grant ProductUnhunt a perpetual license to publish, edit, and roast it. You keep whatever rights you think you had. We promise nothing.',
+    'Do not send confidential plans, client work, or anything you would mind seeing next to Founder needs sleep.',
+    'Published ideas may be copy-edited. The joke stays yours; the commas may not.',
+    'We can reject or unpublish anything, no debate.',
+  ].join('\n\n'),
+
+  // About — section labels only; the copy lives in about/index.astro
   'about.title': 'About',
   'about.eyebrow': 'About',
-  'about.ledgerLabel': 'Experience summary',
+  'about.ledgerLabel': 'What this site will not do',
 
   // Search
   'search.title': 'Search',
@@ -112,17 +156,17 @@ export const en = {
   'search.fallback':
     'The search index is generated at build time. Run <code>npm run build</code> and preview the site to try it — it is not available on the dev server.',
 
-  // 404 — a theme-owned page, so its copy belongs here
+  // 404 (§2)
   'notFound.title': 'Page not found',
-  'notFound.description': 'The page you were looking for does not exist.',
+  'notFound.description': 'This page was also correctly abandoned.',
   'notFound.eyebrow': '404 — Not found',
-  'notFound.heading': 'This page drifted off course.',
+  'notFound.heading': 'This page was also correctly abandoned.',
   'notFound.lead':
-    'The address may have moved, or it never existed. The keel lines below lead back to steady water.',
+    'It was considered, briefly, and then it was not built. The pile below is still standing.',
   'notFound.linksLabel': 'Recovery links',
   'notFound.home': 'Back home',
-  'notFound.blog': 'Read the blog',
-  'notFound.works': 'Browse works',
+  'notFound.ideas': 'Browse the pile',
+  'notFound.contribute': 'Submit an unbuilt idea',
 };
 
 /** The shape every dictionary must implement. */

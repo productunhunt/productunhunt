@@ -1,7 +1,11 @@
 :root {
   color-scheme: light;
-  /* Change this one line to retune the theme accent. */
-  --color-accent: oklch(0.54 0.14 35);
+  /* Cheap gold (§2). The accent is declared in FOUR blocks in this file —
+     here, the `prefers-color-scheme: dark` media query, and the two
+     `[data-theme]` overrides — and a fifth time as hex in
+     `src/pages/og/.../[slug].png.ts`, because satori cannot parse oklch().
+     Retune all five together or the share cards ship the old accent. */
+  --color-accent: oklch(0.55 0.11 82);
   --color-accent-hover: color-mix(in oklch, var(--color-accent), black 12%);
   --color-accent-soft: color-mix(in oklch, var(--color-accent), transparent 84%);
   /* Text/icon color on top of a filled accent surface. */
@@ -27,7 +31,7 @@
 @media (prefers-color-scheme: dark) {
   :root {
     color-scheme: dark;
-    --color-accent: oklch(0.72 0.13 42);
+    --color-accent: oklch(0.82 0.13 88);
     --color-accent-hover: color-mix(in oklch, var(--color-accent), white 10%);
     --color-accent-soft: color-mix(in oklch, var(--color-accent), transparent 78%);
     /* The dark-scheme accent is light, so filled surfaces need dark text. */
@@ -44,7 +48,7 @@
 
 :root[data-theme='light'] {
   color-scheme: light;
-  --color-accent: oklch(0.54 0.14 35);
+  --color-accent: oklch(0.55 0.11 82);
   --color-accent-hover: color-mix(in oklch, var(--color-accent), black 12%);
   --color-accent-soft: color-mix(in oklch, var(--color-accent), transparent 84%);
   /* Text/icon color on top of a filled accent surface. */
@@ -60,7 +64,7 @@
 
 :root[data-theme='dark'] {
   color-scheme: dark;
-  --color-accent: oklch(0.72 0.13 42);
+  --color-accent: oklch(0.82 0.13 88);
   --color-accent-hover: color-mix(in oklch, var(--color-accent), white 10%);
   --color-accent-soft: color-mix(in oklch, var(--color-accent), transparent 78%);
   /* The dark-scheme accent is light, so filled surfaces need dark text. */
@@ -158,6 +162,15 @@ a:not(.brand, .button):hover {
   font-family: var(--font-display);
   font-weight: 700;
   letter-spacing: 0.01em;
+}
+
+/* PRODUCT UNHUNT (§2). The tracking is the whole lockup — it is what makes a
+   two-word name read as a masthead rather than a logotype. Sized in `em` so it
+   tracks the brand's own font-size at every breakpoint. */
+.wordmark {
+  font-size: 0.86em;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
 }
 
 .brand-mark {
