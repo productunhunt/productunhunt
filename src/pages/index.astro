@@ -4,6 +4,7 @@
 // paragraph, so nothing stands between the manifesto line and the pile.
 import BaseLayout from '../layouts/BaseLayout.astro';
 import IdeaList from '../components/IdeaList.astro';
+import Interstitial from '../components/Interstitial.astro';
 import StructuredData from '../components/StructuredData.astro';
 import TagFilter from '../components/TagFilter.astro';
 import { withBase } from '../lib/url';
@@ -63,14 +64,14 @@ const websiteSchema = {
 
   {
     featured.length > 0 && (
-      <section
-        class="section interstitial featured-interstitial"
-        aria-labelledby="featured-heading"
+      <Interstitial
+        class="featured-interstitial"
+        eyebrow={t('ideas.eyebrow')}
+        heading={t('home.featuredHeading')}
+        headingId="featured-heading"
       >
-        <p class="eyebrow">{t('ideas.eyebrow')}</p>
-        <h2 id="featured-heading">{t('home.featuredHeading')}</h2>
         <IdeaList ideas={featured.slice(0, 3)} label={t('home.featuredHeading')} />
-      </section>
+      </Interstitial>
     )
   }
 
@@ -82,27 +83,22 @@ const websiteSchema = {
     )
   }
 
-  <section
-    class="section interstitial contribute-interstitial"
-    aria-labelledby="contribute-heading"
+  <Interstitial
+    class="contribute-interstitial"
+    layout="split"
+    eyebrow={t('contribute.eyebrow')}
+    heading={t('home.contributeHeading')}
+    headingId="contribute-heading"
   >
-    <div class="prose-grid">
-      <div>
-        <p class="eyebrow">{t('contribute.eyebrow')}</p>
-        <h2 id="contribute-heading">{t('home.contributeHeading')}</h2>
-      </div>
-      <div class="prose-stack">
-        <p>{t('home.contributeLead')}</p>
-        <div class="action-row">
-          <a class="button" href={withBase('/contribute/')}>{t('cta.submit')}</a>
-          <a class="text-link" href={`${REPO_URL}/pulls`} rel="noopener noreferrer" target="_blank">
-            Open a pull request ↗
-          </a>
-          <a class="text-link" href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
-        </div>
-      </div>
+    <p>{t('home.contributeLead')}</p>
+    <div class="action-row">
+      <a class="button" href={withBase('/contribute/')}>{t('cta.submit')}</a>
+      <a class="text-link" href={`${REPO_URL}/pulls`} rel="noopener noreferrer" target="_blank">
+        Open a pull request ↗
+      </a>
+      <a class="text-link" href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
     </div>
-  </section>
+  </Interstitial>
 
   {
     thirdBlock.length > 0 && (

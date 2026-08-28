@@ -9,8 +9,10 @@ import { render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import AuthorCard from '../../components/AuthorCard.astro';
 import Comments from '../../components/Comments.astro';
+import Poll from '../../components/Poll.astro';
 import StatusBadge from '../../components/StatusBadge.astro';
 import StructuredData from '../../components/StructuredData.astro';
+import VoteSummary from '../../components/VoteSummary.astro';
 import { withBase } from '../../lib/url';
 import { getPublishedIdeas, byNewest } from '../../lib/ideas';
 import { tagSlug } from '../../lib/tags';
@@ -138,13 +140,13 @@ const breadcrumbSchema = {
       }
 
       {
-        /* 6. Current mood teaser — the leading reaction only, never the widget.
-           Server-rendered with the §9 empty copy; Phase 5's poll script fills
-           it from the same batched counts response the cards use. */
+        /* 6. Current mood teaser — the leading reaction only, never the
+           widget. It shares the page's single batched counts request with the
+           poll below rather than fetching for itself. */
       }
-      <aside class="mood-teaser" data-mood-teaser={idea.id}>
+      <aside class="mood-teaser">
         <p class="eyebrow">{t('idea.moodEyebrow')}</p>
-        <p class="mood-value">{t('poll.empty')}</p>
+        <VoteSummary slug={idea.id} top={1} showRemainder={false} class="mood-value" />
       </aside>
     </header>
 
@@ -182,16 +184,10 @@ const breadcrumbSchema = {
       </div>
     </div>
 
-    {
-      /* 8. Community verdict — all six options with counts and a thin bar.
-         Phase 5 replaces this block with `<Poll>`; until then the heading and
-         the §9 empty copy hold the slot so the page order is already right. */
-    }
+    {/* 8. Community verdict — all six options with counts and a thin bar. */}
     <section class="section poll-section" aria-labelledby="verdict-heading">
       <p class="eyebrow" id="verdict-heading">{t('poll.heading')}</p>
-      <div class="poll" data-poll={idea.id} aria-label={t('poll.label')}>
-        <p class="poll-empty">{t('poll.empty')}</p>
-      </div>
+      <Poll slug={idea.id} />
     </section>
 
     {/* 9. House rules */}

@@ -1,8 +1,11 @@
 ---
-// §8's idea-page author card: avatar, name, optional title, optional links,
-// optional one-line bio, and how the idea arrived. Pseudonyms are fine and
-// every optional field is genuinely optional — most house ideas set only
-// `name` and `title`.
+// The author, in the two forms the site needs (§8).
+//
+// `compact` is §6's feed chip: a name and nothing else — no avatar, no bio, no
+// links, no follower count. The full card is §7's byline: avatar, name,
+// optional title, optional links, optional one-line bio, and how the idea
+// arrived. One component so the two can never disagree about what an author
+// is, and so a field added to the schema has one place to land.
 import { t } from '../i18n';
 
 interface Props {
@@ -15,13 +18,13 @@ interface Props {
     bio?: string | null;
     source: 'PR' | 'email';
   };
+  compact?: boolean;
 }
 
-const { author } = Astro.props;
+const { author, compact = false } = Astro.props;
 
-// The schema carries no email, so Gravatar is unreachable by design (§8 lists
-// it as an option; the content model rules it out). A GitHub handle gives a
-// real avatar; everything else falls back to a generated initial mark.
+// The schema carries no email, so Gravatar is unreachable by design. A GitHub
+// handle gives a real avatar; everything else falls back to an initial mark.
 const handle = author.github?.replace(/^@/, '');
 const avatarUrl = handle ? `https://github.com/${encodeURIComponent(handle)}.png?size=96` : null;
 const initial = [...author.name.trim()][0]?.toUpperCase() ?? '?';
@@ -37,41 +40,43 @@ const sourceLabel =
   author.source === 'email' ? t('idea.authorSourceEmail') : t('idea.authorSourcePR');
 ---
 
-<div class="author-card">
-  {
-    avatarUrl ? (
-      <img
-        class="author-avatar"
-        src={avatarUrl}
-        alt=""
-        width="48"
-        height="48"
-        loading="lazy"
-        decoding="async"
-      />
-    ) : (
-      <span class="author-avatar is-generated" aria-hidden="true">
-        {initial}
-      </span>
-    )
-  }
-  <div class="author-body">
-    <p class="author-name">
-      {author.name}
-      {author.title && <span class="author-title">{author.title}</span>}
-    </p>
-    {author.bio && <p class="author-bio">{author.bio}</p>}
-    {
-      links.length > 0 && (
-        <p class="author-links">
-          {links.map((link) => (
-            <a href={link.href} rel="noopener noreferrer nofollow" target="_blank">
-              {link.label}
-            </a>
-          ))}
+{
+  compact ? (
+    <span class="author-chip">{author.name}</span>
+  ) : (
+    <div class="author-card">
+      {avatarUrl ? (
+        <img
+          class="author-avatar"
+          src={avatarUrl}
+          alt=""
+          width="48"
+          height="48"
+          loading="lazy"
+          decoding="async"
+        />
+      ) : (
+        <span class="author-avatar is-generated" aria-hidden="true">
+          {initial}
+        </span>
+      )}
+      <div class="author-body">
+        <p class="author-name">
+          {author.name}
+          {author.title && <span class="author-title">{author.title}</span>}
         </p>
-      )
-    }
-    <p class="author-source">{sourceLabel}</p>
-  </div>
-</div>
+        {author.bio && <p class="author-bio">{author.bio}</p>}
+        {links.length > 0 && (
+          <p class="author-links">
+            {links.map((link) => (
+              <a href={link.href} rel="noopener noreferrer nofollow" target="_blank">
+                {link.label}
+              </a>
+            ))}
+          </p>
+        )}
+        <p class="author-source">{sourceLabel}</p>
+      </div>
+    </div>
+  )
+}

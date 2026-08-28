@@ -1206,9 +1206,14 @@ pre code {
   border-top: var(--hairline);
 }
 
+/* Custom elements are inline by default; both of these are layout boxes. */
+pu-vote-summary,
+pu-poll {
+  display: block;
+}
+
 .vote-summary-empty,
-.poll-empty,
-.mood-value {
+.poll-status {
   margin: 0;
   color: var(--color-muted);
   font-size: 0.85rem;
@@ -1493,4 +1498,144 @@ pre code {
   .process-list {
     grid-template-columns: 1fr;
   }
+}
+
+/* ==========================================================================
+   Community verdict (§9) — Phase 5 island
+   ========================================================================== */
+
+/* §6's card readout: the leading reactions and the remainder line. */
+.vote-summary-list {
+  display: grid;
+  gap: 0.3rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.vote-summary-list li {
+  display: grid;
+  align-items: baseline;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+}
+
+.vote-emoji {
+  font-size: 0.9rem;
+  line-height: 1;
+}
+
+.vote-label {
+  overflow: hidden;
+  color: var(--color-text);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.vote-count,
+.poll-count {
+  color: var(--color-accent);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.vote-remainder {
+  margin: 0.55rem 0 0;
+  color: var(--color-muted);
+  font-size: 0.78rem;
+}
+
+/* The idea page's mood teaser is the same element with `top={1}` and no
+   remainder, so it only needs the box removed. */
+.mood-value .vote-summary-list li {
+  font-size: 0.95rem;
+}
+
+/* The full poll (§9): all six, counts, and a thin bar. */
+.poll-options {
+  display: grid;
+  gap: 0.4rem;
+  margin: 0 0 var(--baseline);
+  padding: 0;
+  list-style: none;
+}
+
+.poll-option {
+  position: relative;
+  display: grid;
+  width: 100%;
+  align-items: center;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 0.75rem;
+  padding: 0.65rem 0.8rem 0.8rem;
+  border: var(--hairline);
+  background: var(--color-bg);
+  color: inherit;
+  cursor: pointer;
+  text-align: left;
+  transition:
+    border-color 180ms ease,
+    background 180ms ease;
+}
+
+/* Server-rendered state: visible, legible, and honestly not clickable until
+   the island upgrades it. */
+.poll-option:disabled {
+  cursor: default;
+  opacity: 0.7;
+}
+
+.poll-option:not(:disabled):hover {
+  border-color: var(--color-accent);
+}
+
+.poll-option[aria-pressed='true'] {
+  border-color: var(--color-accent);
+  background: var(--color-accent-soft);
+}
+
+.poll-emoji {
+  font-size: 1rem;
+  line-height: 1;
+}
+
+/* The chosen row is already marked by `aria-pressed`; this carries the same
+   fact as text for anyone whose reading of it is linear. */
+.poll-your {
+  position: absolute;
+  overflow: hidden;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.poll-bar {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  background: var(--color-soft);
+}
+
+.poll-bar-fill {
+  display: block;
+  height: 100%;
+  background: var(--color-accent);
+  transition: width 220ms ease;
+}
+
+.poll-status.is-error {
+  color: var(--color-accent);
+}
+
+.poll-noscript {
+  margin: 0.75rem 0 0;
+  color: var(--color-muted);
+  font-size: 0.85rem;
 }

@@ -1,0 +1,63 @@
+---
+// The community verdict (§9): all six options with counts and a thin bar.
+// Every option is rendered server-side, so a visitor with no JavaScript sees
+// the full set and the empty copy rather than an unexplained blank. The
+// buttons ship `disabled` and are enabled by the island on upgrade — an
+// enabled button that silently does nothing is the worse failure.
+import { POLL_OPTIONS } from '../lib/poll';
+import { t } from '../i18n';
+
+interface Props {
+  slug: string;
+}
+
+const { slug } = Astro.props;
+---
+
+<pu-poll
+  class="poll"
+  data-slug={slug}
+  data-empty={t('poll.empty')}
+  data-votes={t('poll.votes')}
+  data-votes-one={t('poll.votesOne')}
+  data-failed={t('poll.failed')}
+  data-unavailable={t('poll.unavailable')}
+>
+  <ul class="poll-options" aria-label={t('poll.label')}>
+    {
+      POLL_OPTIONS.map((option) => (
+        <li>
+          <button
+            type="button"
+            class="poll-option"
+            data-option={option.key}
+            aria-pressed="false"
+            disabled
+          >
+            <span class="poll-emoji" aria-hidden="true">
+              {option.emoji}
+            </span>
+            <span class="poll-label">{option.label}</span>
+            <span class="poll-your" data-your-vote hidden>
+              {t('poll.yourVote')}
+            </span>
+            <span class="poll-count" data-count />
+            <span class="poll-bar" aria-hidden="true">
+              <span class="poll-bar-fill" data-bar style="width: 0%" />
+            </span>
+          </button>
+        </li>
+      ))
+    }
+  </ul>
+
+  <p class="poll-status" data-poll-status>{t('poll.empty')}</p>
+
+  <noscript>
+    <p class="poll-noscript">{t('poll.unavailable')}</p>
+  </noscript>
+</pu-poll>
+
+<script>
+  import '../scripts/poll';
+</script>

@@ -1,0 +1,33 @@
+---
+// §6's top-2-plus-remainder readout, and — with `top={1}` and no remainder —
+// §7's "current mood" teaser. Rendered server-side as the §9 empty line so a
+// visitor with no JavaScript, or a build with no database behind it, sees the
+// deadpan copy rather than a gap.
+import { t } from '../i18n';
+
+interface Props {
+  /** The idea's slug; the key the batched counts request is made under. */
+  slug: string;
+  /** How many leading reactions to show. §6 says two on a card. */
+  top?: number;
+  /** Whether to print `+ N other questionable opinions` under them. */
+  showRemainder?: boolean;
+  class?: string;
+}
+
+const { slug, top = 2, showRemainder = true, class: className } = Astro.props;
+---
+
+<pu-vote-summary
+  class:list={['vote-summary', className]}
+  data-slug={slug}
+  data-top={String(top)}
+  data-remainder={String(showRemainder)}
+  data-others={t('poll.others')}
+>
+  <p class="vote-summary-empty">{t('poll.empty')}</p>
+</pu-vote-summary>
+
+<script>
+  import '../scripts/vote-summary';
+</script>
