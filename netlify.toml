@@ -1,0 +1,9 @@
+# Netlify build config. The Astro adapter emits its own redirects and function
+# bundle into `.netlify/`, so nothing is declared here beyond the build itself.
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  # Keep in lockstep with .nvmrc.
+  NODE_VERSION = "22"
