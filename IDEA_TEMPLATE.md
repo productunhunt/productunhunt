@@ -23,8 +23,10 @@ author:
   bio: null # Optional. One line. No follower counts, ever.
   source: PR
 
-# Leave as `unbuilt`. The other two — someone-built-it, still-a-threat — are
-# editor-assigned, and neither is a compliment.
+# Leave as `unbuilt`. The others — someone-built-it, still-a-threat,
+# author-relapsed — are editor-assigned, and none is a compliment. The last
+# one also requires a `relapse` block (url + extent), which is likewise the
+# editor's to add; it documents that somebody's discipline failed.
 status: unbuilt
 
 # Editor's. Leave them exactly as they are.

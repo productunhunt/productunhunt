@@ -92,6 +92,16 @@ export const en = {
   'status.unbuilt': 'Still roaming free',
   'status.someone-built-it': 'Unfortunately real',
   'status.still-a-threat': 'Too powerful to build',
+  'status.author-relapsed': 'Built it anyway',
+
+  // Evidence of relapse (dossier block). One line per extent — the copy
+  // escalates with how far the author's discipline actually failed.
+  'relapse.eyebrow': 'Evidence of relapse',
+  'relapse.extent.domain': 'The domain was bought at 1am. Nothing is on it. Yet.',
+  'relapse.extent.landing-page':
+    'There is a landing page. It has a call to action. We are not proud.',
+  'relapse.extent.working-app': 'It has users, which is worse.',
+  'relapse.visit': 'View the evidence ↗',
 
   // Community verdict (§9)
   'poll.heading': 'The public inquiry',

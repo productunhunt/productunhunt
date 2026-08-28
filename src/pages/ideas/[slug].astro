@@ -33,7 +33,7 @@ export const getStaticPaths = (async () => {
 // `Astro.props` is inferred from `getStaticPaths` above — an explicit `Props`
 // interface here would only be a second, driftable copy of the same shape.
 const { idea, siblings } = Astro.props;
-const { title, tagline, author, status, tags, editorStamp, heroImage } = idea.data;
+const { title, tagline, author, status, tags, editorStamp, heroImage, relapse } = idea.data;
 
 const { Content, headings } = await render(idea);
 
@@ -129,7 +129,12 @@ const breadcrumbSchema = {
           <h1>{title}</h1>
           <p class="lead idea-tagline">{tagline}</p>
           <p class="idea-disclaimer">
-            <span>Founder note</span> This is satire. Please close the pitch deck.
+            <span>Founder note</span>
+            {
+              relapse
+                ? 'This was satire. Then it wasn’t. The pitch deck reopened itself.'
+                : 'This is satire. Please close the pitch deck.'
+            }
           </p>
         </div>
 
@@ -140,6 +145,18 @@ const breadcrumbSchema = {
               <div class="editor-stamp">
                 <p class="eyebrow">{t('idea.editorStampEyebrow')}</p>
                 <p>{editorStamp}</p>
+              </div>
+            )
+          }
+          {
+            relapse && (
+              <div class="relapse-evidence">
+                <p class="eyebrow">{t('relapse.eyebrow')}</p>
+                <p>{t(`relapse.extent.${relapse.extent}`)}</p>
+                {/* Citing evidence, not passing SEO juice to our own products. */}
+                <a href={relapse.url} rel="nofollow noopener noreferrer" target="_blank">
+                  {t('relapse.visit')}
+                </a>
               </div>
             )
           }

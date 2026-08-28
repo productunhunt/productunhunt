@@ -10,4 +10,5 @@ export const STATUS_LABEL: Record<Status, string> = {
   unbuilt: t('status.unbuilt'),
   'someone-built-it': t('status.someone-built-it'),
   'still-a-threat': t('status.still-a-threat'),
+  'author-relapsed': t('status.author-relapsed'),
 };

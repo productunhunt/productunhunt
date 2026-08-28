@@ -81,6 +81,24 @@ function checkSections(idea, errors) {
   }
 }
 
+/** A `relapse` block and `unbuilt` status must never coexist — the evidence
+ *  contradicts the plea. The schema's superRefine enforces the same invariant
+ *  at build time; this repeats it here so `check:ideas` fails on its own, with
+ *  a message that names the file. */
+function checkRelapse(idea, errors) {
+  const { relapse, status } = idea.data;
+  if (relapse && status !== 'author-relapsed') {
+    errors.push(
+      `${idea.file}: has a \`relapse\` block but \`status: ${status}\` — a documented relapse requires \`status: author-relapsed\``,
+    );
+  }
+  if (!relapse && status === 'author-relapsed') {
+    errors.push(
+      `${idea.file}: \`status: author-relapsed\` without a \`relapse\` block — no evidence, no conviction`,
+    );
+  }
+}
+
 async function checkManifest(visible, errors) {
   let manifest;
   try {
@@ -107,7 +125,10 @@ const ideas = await readIdeas();
 const visible = ideas.filter((idea) => isVisible(idea.data));
 const errors = [];
 
-for (const idea of visible) checkSections(idea, errors);
+for (const idea of visible) {
+  checkSections(idea, errors);
+  checkRelapse(idea, errors);
+}
 await checkManifest(visible, errors);
 
 if (errors.length > 0) {
