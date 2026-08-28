@@ -110,6 +110,12 @@ The editor adds the publish date, the status, and — if it earns one — a
 one-line stamp. Light copy-editing is allowed. The joke stays yours; the
 commas may not.
 
+If the idea later turns out to exist anyway — a bought domain, a landing
+page, a working app — the editor sets `status: author-relapsed` and adds a
+`relapse` block (`url` + `extent: domain | landing-page | working-app`)
+linking the evidence. CI enforces that a relapse block and `unbuilt` never
+coexist. This is a confession, not a launch channel.
+
 The poll is not yours to run. Neither is the schedule.
 
 ## The deal

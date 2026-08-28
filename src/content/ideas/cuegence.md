@@ -10,8 +10,11 @@ author:
   url: null
   bio: null
   source: PR
-status: unbuilt
+status: author-relapsed
 featured: false
+relapse:
+  url: https://cuegence.com
+  extent: landing-page
 editorStamp: Customer discovery completed by one father in one sentence.
 tags:
   - AI nonsense

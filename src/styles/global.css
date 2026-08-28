@@ -1142,6 +1142,11 @@ pu-poll {
   color: var(--color-on-accent);
 }
 
+/* The dashed border is the visual record of a broken rule. */
+.status-badge.is-author-relapsed {
+  border-style: dashed;
+}
+
 /* Idea page head (§7): kicker, name, tagline, byline, stamp, mood. */
 .idea-head {
   border-bottom: var(--hairline);
@@ -1255,6 +1260,7 @@ pu-poll {
 }
 
 .editor-stamp,
+.relapse-evidence,
 .mood-teaser {
   max-width: var(--prose-width);
   margin-top: calc(var(--baseline) * 1.35);
@@ -1263,14 +1269,24 @@ pu-poll {
 }
 
 .editor-stamp .eyebrow,
+.relapse-evidence .eyebrow,
 .mood-teaser .eyebrow {
   margin-bottom: 0.3rem;
 }
 
-.editor-stamp p:last-child {
+.editor-stamp p:last-child,
+.relapse-evidence p:not(.eyebrow) {
   margin: 0;
   color: var(--color-muted);
   font-style: italic;
+}
+
+.relapse-evidence a {
+  display: inline-block;
+  margin-top: 0.45rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
 }
 
 /* Community verdict (§9). The island itself arrives in Phase 5; this is the
@@ -2291,6 +2307,7 @@ h2 em {
 }
 
 .idea-dossier .editor-stamp,
+.idea-dossier .relapse-evidence,
 .idea-dossier .mood-teaser {
   max-width: none;
   margin: 0;
@@ -2304,6 +2321,7 @@ h2 em {
 }
 
 .idea-dossier .editor-stamp p:last-child,
+.idea-dossier .relapse-evidence p:not(.eyebrow),
 .idea-dossier .vote-summary-empty,
 .idea-dossier .vote-label {
   color: var(--color-muted);
