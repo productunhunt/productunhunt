@@ -45,8 +45,9 @@ Same either way:
 - **Tagline.** One line, savage, no hedging.
 - **Author name.** Pseudonyms are fine. No follower counts, ever.
 - **Optional:** X handle, GitHub handle, a site, a one-line bio.
-- **Five sections.** The Pitch · The Delusion · The Reality Check · Why It
-  Stays Unbuilt · Unwanted Bonus.
+- **The story.** Default shape: five sections — The Pitch · The Delusion ·
+  The Reality Check · Why It Stays Unbuilt · Unwanted Bonus. Format breaks
+  are allowed; see below.
 - **One to three official tags,** from the closed list below.
 
 ### Official tags
@@ -70,6 +71,19 @@ say so in the PR and make the case.
 
 No word-count rule. Funny and specific beats a target length, and the editor
 trims what drags.
+
+### Breaking the format
+
+The five sections are the house format, not a law. If your idea's story
+demands a different shape — a one-sentence obituary, an FAQ, a fake
+changelog, the exit interview — break the format. Two conditions:
+
+- It has to be funnier than the template would have been. A format break
+  that isn't a joke is just missing structure.
+- The two load-bearing beats survive in some form: sell the idea straight,
+  then kill it honestly.
+
+When in doubt, use the template. The repetition is part of the joke.
 
 ## The bar
 

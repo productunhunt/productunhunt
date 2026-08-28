@@ -29,7 +29,7 @@ const licenseParagraphs = t('license.body').split('\n\n');
         <p>
           Copy <code>IDEA_TEMPLATE.md</code>, fill it in, and add it as
           <code>src/content/ideas/your-slug.mdx</code>. The frontmatter is validated at build time,
-          so a bad tag or a missing section fails CI rather than the site.
+          so a bad tag fails CI rather than the site.
         </p>
         <div class="action-row">
           <a class="button" href={`${REPO_URL}/pulls`} rel="noopener noreferrer" target="_blank">
@@ -64,8 +64,9 @@ const licenseParagraphs = t('license.body').split('\n\n');
         <li><strong>Author name.</strong> Pseudonyms are fine. No follower counts, ever.</li>
         <li><strong>Optional:</strong> X handle, GitHub handle, a site, a one-line bio.</li>
         <li>
-          <strong>Five sections.</strong> The Pitch · The Delusion · The Reality Check · Why It Stays
-          Unbuilt · Unwanted Bonus.
+          <strong>The story.</strong> Default shape: The Pitch · The Delusion · The Reality Check · Why
+          It Stays Unbuilt · Unwanted Bonus. Break the format if your idea demands it — as long as the
+          break is funnier than the template, and you still sell it straight, then kill it honestly.
         </li>
         <li><strong>One to three official tags,</strong> from the closed list below.</li>
       </ul>

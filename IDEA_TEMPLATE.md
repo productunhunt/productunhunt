@@ -43,8 +43,14 @@ heroImage: null
 ---
 
 <!--
-  Five sections, all five required, in this order. No word-count rule —
-  funny and specific beats a target length, and the editor trims what drags.
+  Five sections, in this order — the house format and the default. No
+  word-count rule — funny and specific beats a target length, and the editor
+  trims what drags.
+
+  If your idea's story demands a different shape, break the format — but the
+  break has to be funnier than the template, and the two load-bearing beats
+  must survive in some form: sell the idea straight, then kill it honestly.
+  When in doubt, use the template. The repetition is part of the joke.
 
   Write it straight. The joke is the seriousness.
 -->
