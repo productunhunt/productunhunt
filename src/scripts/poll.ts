@@ -146,6 +146,9 @@ class PollElement extends HTMLElement {
       const share = total > 0 ? (count / total) * 100 : 0;
       button.querySelector<HTMLElement>('[data-bar]')!.style.width = `${share.toFixed(1)}%`;
       button.querySelector<HTMLElement>('[data-your-vote]')!.hidden = !chosen;
+      button.querySelector<HTMLElement>('[data-action]')!.textContent = chosen
+        ? 'Selected ✓'
+        : 'Choose';
     }
 
     if (total === 0) {

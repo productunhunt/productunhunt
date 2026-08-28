@@ -23,6 +23,16 @@ const { slug } = Astro.props;
   data-failed={t('poll.failed')}
   data-unavailable={t('poll.unavailable')}
 >
+  <div class="poll-intro">
+    <div>
+      <p class="poll-step">YOUR ONE COMPLETELY BINDING VOTE</p>
+      <h2>How bad is it, really?</h2>
+    </div>
+    <p>
+      Pick the reaction that feels most legally defensible. You can change it later. We do not ask
+      for your email, dignity, or a twelve-word seed phrase.
+    </p>
+  </div>
   <ul class="poll-options" aria-label={t('poll.label')}>
     {
       POLL_OPTIONS.map((option) => (
@@ -42,6 +52,9 @@ const { slug } = Astro.props;
               {t('poll.yourVote')}
             </span>
             <span class="poll-count" data-count />
+            <span class="poll-action" data-action aria-hidden="true">
+              Choose
+            </span>
             <span class="poll-bar" aria-hidden="true">
               <span class="poll-bar-fill" data-bar style="width: 0%" />
             </span>

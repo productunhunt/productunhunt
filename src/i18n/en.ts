@@ -95,13 +95,13 @@ export const en = {
   'status.still-a-threat': 'Do not encourage',
 
   // Community verdict (§9)
-  'poll.heading': 'Community verdict',
+  'poll.heading': 'The public inquiry',
   'poll.label': 'Community verdict poll',
-  'poll.empty': 'Nobody has incriminated themselves yet',
+  'poll.empty': 'No verdicts yet. Be the first brave witness.',
   'poll.others': '+ {count} other questionable opinions',
   'poll.votes': '{count} votes',
   'poll.votesOne': '1 vote',
-  'poll.yourVote': 'Your verdict',
+  'poll.yourVote': 'Selected',
   'poll.unavailable': 'Voting is unavailable right now. The ideas remain bad regardless.',
   'poll.failed': 'That vote did not go through. Try again.',
 

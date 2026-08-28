@@ -42,18 +42,53 @@ const websiteSchema = {
   <StructuredData slot="head" schema={websiteSchema} />
 
   <section class="hero section">
-    <p class="eyebrow">Ideas, correctly abandoned</p>
-    <h1>{SITE.description}</h1>
-    <div class="action-row" aria-label={t('home.primaryLinks')}>
-      <a class="button" href={withBase('/contribute/')}>{t('cta.submit')}</a>
-      <a class="text-link" href={withBase('/how-it-works/')}>{t('cta.howThisWorks')}</a>
+    <div class="hero-copy">
+      <p class="hero-kicker">
+        <span aria-hidden="true">●</span> No waitlist. No product. No problem.
+      </p>
+      <h1>Where bad ideas come to <em>die beautifully.</em></h1>
+      <p class="hero-lead">
+        A launch platform for products that should never launch. Read the pitch, enjoy the delusion,
+        and help deliver the final verdict.
+      </p>
+      <div class="action-row" aria-label={t('home.primaryLinks')}>
+        <a class="button hero-primary" href="#recently-not-built"
+          >Browse the wreckage <span>↓</span></a
+        >
+        <a class="button button-ghost" href={withBase('/contribute/')}>Submit your worst idea</a>
+      </div>
+      <div class="hero-proof" aria-label="ProductUnhunt in numbers">
+        <p><strong>{ideas.length}</strong><span>ideas spared<br />from production</span></p>
+        <p><strong>$0</strong><span>venture capital<br />needlessly deployed</span></p>
+        <p><strong>100%</strong><span>pre-revenue,<br />post-common sense</span></p>
+      </div>
+    </div>
+
+    <div class="hero-art" aria-hidden="true">
+      <div class="hero-orbit orbit-one">BAD<br />IDEA</div>
+      <div class="hero-orbit orbit-two">SHIPN'T</div>
+      <div class="hero-image-wrap">
+        <img src={withBase('/productunhunt-rocket.webp')} alt="" width="1024" height="1536" />
+      </div>
+      <span class="hero-sticker sticker-top">0% VC BACKED</span>
+      <span class="hero-sticker sticker-bottom">PROUDLY<br />PRE-LAUNCH</span>
     </div>
   </section>
 
+  <div class="unhunt-ticker" aria-hidden="true">
+    <div>
+      <span>✦ Ideas nobody asked for</span><span>✦ Due diligence by vibes</span><span
+        >✦ Zero users affected</span
+      ><span>✦ Now disrupting absolutely nothing</span><span>✦ Ideas nobody asked for</span><span
+        >✦ Due diligence by vibes</span
+      ><span>✦ Zero users affected</span><span>✦ Now disrupting absolutely nothing</span>
+    </div>
+  </div>
+
   <section class="section index-feed" aria-labelledby="recently-not-built">
     <div class="section-heading">
-      <p class="eyebrow">{t('ideas.eyebrow')}</p>
-      <h2 id="recently-not-built">{t('home.recentlyNotBuilt')}</h2>
+      <p class="eyebrow">Freshly abandoned</p>
+      <h2 id="recently-not-built">The latest <em>non-launches.</em></h2>
       <a class="text-link" href={withBase('/ideas/')}>{t('cta.fullPile')}</a>
     </div>
 

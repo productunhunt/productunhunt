@@ -23,6 +23,7 @@ const href = withBase(`/ideas/${idea.id}/`);
 ---
 
 <article class="idea-card">
+  <span class="idea-card-index" aria-hidden="true"></span>
   <Heading class="idea-card-name">
     {
       /* The whole card is not a link: the tag chips inside it are their own
@@ -50,4 +51,8 @@ const href = withBase(`/ideas/${idea.id}/`);
 
   {/* §6: the top two reactions and the remainder line — never the full poll. */}
   <VoteSummary slug={idea.id} />
+
+  <a class="idea-card-open" href={href} aria-label={`Read the full roast of ${title}`}>
+    Read the roast <span aria-hidden="true">↗</span>
+  </a>
 </article>

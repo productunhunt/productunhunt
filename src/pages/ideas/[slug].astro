@@ -114,40 +114,42 @@ const breadcrumbSchema = {
 
   <article>
     <header class="section article-head idea-head">
-      {/* 1. Kicker — status + tags */}
-      <p class="idea-kicker">
-        <StatusBadge status={status} />
-        <span class="idea-kicker-tags">
-          {tags.map((tag) => <a href={withBase(`/ideas/tags/${tagSlug(tag)}/`)}>{tag}</a>)}
-        </span>
-      </p>
+      <a class="idea-back" href={withBase('/ideas/')}
+        ><span aria-hidden="true">←</span> Back to bad decisions</a
+      >
 
-      {/* 2–3. Product name and tagline */}
-      <h1>{title}</h1>
-      <p class="lead idea-tagline">{tagline}</p>
+      <div class="idea-hero-grid">
+        <div class="idea-hero-main">
+          <p class="idea-kicker">
+            <StatusBadge status={status} />
+            <span class="idea-kicker-tags">
+              {tags.map((tag) => <a href={withBase(`/ideas/tags/${tagSlug(tag)}/`)}>{tag}</a>)}
+            </span>
+          </p>
+          <h1>{title}</h1>
+          <p class="lead idea-tagline">{tagline}</p>
+          <p class="idea-disclaimer">
+            <span>Founder note</span> This is satire. Please close the pitch deck.
+          </p>
+        </div>
 
-      {/* 4. Byline */}
-      <AuthorCard author={author} />
-
-      {/* 5. Editor stamp — one dry line, when there is one */}
-      {
-        editorStamp && (
-          <aside class="editor-stamp">
-            <p class="eyebrow">{t('idea.editorStampEyebrow')}</p>
-            <p>{editorStamp}</p>
-          </aside>
-        )
-      }
-
-      {
-        /* 6. Current mood teaser — the leading reaction only, never the
-           widget. It shares the page's single batched counts request with the
-           poll below rather than fetching for itself. */
-      }
-      <aside class="mood-teaser">
-        <p class="eyebrow">{t('idea.moodEyebrow')}</p>
-        <VoteSummary slug={idea.id} top={1} showRemainder={false} class="mood-value" />
-      </aside>
+        <aside class="idea-dossier" aria-label="Idea case file">
+          <p class="dossier-label">CASE FILE / {idea.id.toUpperCase()}</p>
+          {
+            editorStamp && (
+              <div class="editor-stamp">
+                <p class="eyebrow">{t('idea.editorStampEyebrow')}</p>
+                <p>{editorStamp}</p>
+              </div>
+            )
+          }
+          <div class="mood-teaser">
+            <p class="eyebrow">{t('idea.moodEyebrow')}</p>
+            <VoteSummary slug={idea.id} top={1} showRemainder={false} class="mood-value" />
+          </div>
+          <AuthorCard author={author} />
+        </aside>
+      </div>
     </header>
 
     {
@@ -166,7 +168,11 @@ const breadcrumbSchema = {
     }
 
     {/* 7. The roast */}
-    <div class:list={['section', showToc && 'article-layout']}>
+    <div class:list={['section', 'roast-section', showToc && 'article-layout']}>
+      <div class="roast-flag" aria-hidden="true">
+        <span>THE ROAST</span>
+        <small>Read time: shorter than the investor update</small>
+      </div>
       {
         showToc && (
           <aside class="article-toc" aria-label={t('idea.tocLabel')} data-pagefind-ignore>
@@ -185,8 +191,8 @@ const breadcrumbSchema = {
     </div>
 
     {/* 8. Community verdict — all six options with counts and a thin bar. */}
-    <section class="section poll-section" aria-labelledby="verdict-heading">
-      <p class="eyebrow" id="verdict-heading">{t('poll.heading')}</p>
+    <section class="section poll-section" aria-label="Community verdict">
+      <p class="eyebrow poll-eyebrow">{t('poll.heading')}</p>
       <Poll slug={idea.id} />
     </section>
 
