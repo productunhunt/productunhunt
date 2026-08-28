@@ -80,10 +80,7 @@ export interface GiscusConfig {
   inputPosition: 'top' | 'bottom';
   /** Giscus UI language, e.g. `en`, `ja`, `fr`. */
   lang: string;
-  /** Giscus theme used while the site is in light mode. */
-  lightTheme: string;
-  /** Giscus theme used while the site is in dark mode. The widget is told to
-   *  switch live when the header toggle flips. */
+  /** Giscus widget theme. The site is dark-only, so this is a constant. */
   darkTheme: string;
 }
 
@@ -103,7 +100,6 @@ export const GISCUS: GiscusConfig = {
   reactionsEnabled: true,
   inputPosition: 'bottom',
   lang: 'en',
-  lightTheme: 'light',
   darkTheme: 'dark',
 };
 

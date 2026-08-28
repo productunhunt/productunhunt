@@ -31,15 +31,15 @@ export const getStaticPaths = (async () => {
   }));
 }) satisfies GetStaticPaths;
 
-// Satori has no oklch() support, so these are sRGB conversions of the
-// light-theme tokens in `src/styles/global.css` — the fifth and last copy of
-// the palette. Change a token there and this object has to move with it, or
-// share cards ship the previous accent while the site shows the new one.
+// Copies of the (dark-only) palette tokens in `src/styles/global.css` —
+// satori can't read CSS custom properties. Change a token there and this
+// object has to move with it, or share cards ship the previous accent while
+// the site shows the new one.
 const COLOR = {
-  bg: '#fcfcfa', // --color-bg      oklch(0.99 0.003 100)
-  text: '#1e2226', // --color-text    oklch(0.25 0.01 250)
-  muted: '#5e646a', // --color-muted   oklch(0.5 0.012 250)
-  accent: '#916a0b', // --color-accent  oklch(0.55 0.11 82)
+  bg: '#121014', // --color-bg
+  text: '#fdfdfe', // --color-text
+  muted: '#9b97a2', // --color-muted
+  accent: '#ff570a', // --color-accent
 };
 
 const require = createRequire(import.meta.url);

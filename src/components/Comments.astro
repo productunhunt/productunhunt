@@ -34,8 +34,7 @@ const discussionsLink = `<a href="${discussionsUrl}" target="_blank" rel="noopen
         data-reactions-enabled={GISCUS.reactionsEnabled ? '1' : '0'}
         data-input-position={GISCUS.inputPosition}
         data-lang={GISCUS.lang}
-        data-light-theme={GISCUS.lightTheme}
-        data-dark-theme={GISCUS.darkTheme}
+        data-theme={GISCUS.darkTheme}
       >
         {/* Shown if the widget never appears — a blocked request, an offline
             reader, or a repository whose Giscus setup is unfinished. Without
@@ -84,7 +83,6 @@ const discussionsLink = `<a href="${discussionsUrl}" target="_blank" rel="noopen
 
           const config = mount.dataset;
           const fallback = mount.querySelector('[data-giscus-fallback]');
-          const themeFor = (scheme) => (scheme === 'dark' ? config.darkTheme : config.lightTheme);
 
           // Long enough that a slow connection is not mistaken for a failure.
           const FALLBACK_DELAY = 8000;
@@ -108,7 +106,8 @@ const discussionsLink = `<a href="${discussionsUrl}" target="_blank" rel="noopen
             script.setAttribute('data-input-position', config.inputPosition);
             script.setAttribute('data-lang', config.lang);
             script.setAttribute('data-loading', 'lazy');
-            script.setAttribute('data-theme', themeFor(document.documentElement.dataset.theme));
+            // The site is dark-only, so the widget theme is a constant.
+            script.setAttribute('data-theme', config.theme);
             mount.appendChild(script);
             fallbackTimer = window.setTimeout(() => {
               if (!mount.querySelector('iframe.giscus-frame') && fallback) fallback.hidden = false;
@@ -142,29 +141,12 @@ const discussionsLink = `<a href="${discussionsUrl}" target="_blank" rel="noopen
           });
           frameObserver.observe(mount, { childList: true, subtree: true });
 
-          // Keep the widget in sync with the header toggle. The theme lives on
-          // `<html data-theme>`, so watch that attribute rather than the button.
-          const syncTheme = () => {
-            const frame = mount.querySelector('iframe.giscus-frame');
-            if (!frame) return;
-            frame.contentWindow?.postMessage(
-              { giscus: { setConfig: { theme: themeFor(document.documentElement.dataset.theme) } } },
-              'https://giscus.app',
-            );
-          };
-          const themeObserver = new MutationObserver(syncTheme);
-          themeObserver.observe(document.documentElement, {
-            attributes: true,
-            attributeFilter: ['data-theme'],
-          });
-
           // A reader who navigates away before scrolling this far would
           // otherwise strand these on a detached mount — one set per soft
           // navigation, with no upper bound over a session.
           document.addEventListener(
             'astro:before-swap',
             () => {
-              themeObserver.disconnect();
               frameObserver.disconnect();
               observer?.disconnect();
               window.clearTimeout(fallbackTimer);

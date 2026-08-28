@@ -46,6 +46,7 @@ const title = isFirstPage ? t('ideas.title') : t('ideas.titlePaged', { page: pag
       label={t('ideas.listLabel')}
       empty={t('ideas.empty')}
       headingLevel="h2"
+      start={page.start}
     />
     <Pagination page={page} />
   </section>

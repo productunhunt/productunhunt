@@ -24,7 +24,6 @@ export const en = {
   'nav.search': 'Search',
   'nav.label': 'Main navigation',
   'nav.brandHome': '{site} home',
-  'theme.toggle': 'Toggle color theme',
   'footer.label': 'Footer navigation',
   'social.label': 'Social links',
 

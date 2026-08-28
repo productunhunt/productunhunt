@@ -1,22 +1,8 @@
 :root {
-  color-scheme: light;
-  /* Cheap gold (§2). The accent is declared in FOUR blocks in this file —
-     here, the `prefers-color-scheme: dark` media query, and the two
-     `[data-theme]` overrides — and a fifth time as hex in
-     `src/pages/og/.../[slug].png.ts`, because satori cannot parse oklch().
-     Retune all five together or the share cards ship the old accent. */
-  --color-accent: oklch(0.55 0.11 82);
-  --color-accent-hover: color-mix(in oklch, var(--color-accent), black 12%);
-  --color-accent-soft: color-mix(in oklch, var(--color-accent), transparent 84%);
-  /* Text/icon color on top of a filled accent surface. */
-  --color-on-accent: oklch(0.99 0.003 100);
-  --color-bg: oklch(0.99 0.003 100);
-  --color-surface: oklch(0.965 0.004 100);
-  --color-text: oklch(0.25 0.01 250);
-  --color-muted: oklch(0.5 0.012 250);
-  --color-line: oklch(0.86 0.008 100);
-  --color-line-strong: oklch(0.72 0.012 120);
-  --color-soft: oklch(0.94 0.006 100);
+  /* Type and layout primitives. The single dark palette lives in the
+     "anti-launch redesign" `:root` block further down; its one hex twin is
+     `src/pages/og/.../[slug].png.ts` — retune both together or the share
+     cards ship the previous colors. */
   --font-display: 'Fraunces Variable', Georgia, serif;
   --font-body: 'Public Sans', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono Variable', ui-monospace, monospace;
@@ -26,56 +12,6 @@
   --baseline: 1.5rem;
   --hairline: 1px solid var(--color-line);
   --focus-ring: 0 0 0 3px var(--color-accent-soft);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    color-scheme: dark;
-    --color-accent: oklch(0.82 0.13 88);
-    --color-accent-hover: color-mix(in oklch, var(--color-accent), white 10%);
-    --color-accent-soft: color-mix(in oklch, var(--color-accent), transparent 78%);
-    /* The dark-scheme accent is light, so filled surfaces need dark text. */
-    --color-on-accent: oklch(0.18 0.009 250);
-    --color-bg: oklch(0.18 0.009 250);
-    --color-surface: oklch(0.22 0.01 250);
-    --color-text: oklch(0.93 0.006 95);
-    --color-muted: oklch(0.69 0.012 250);
-    --color-line: oklch(0.34 0.012 250);
-    --color-line-strong: oklch(0.44 0.016 230);
-    --color-soft: oklch(0.26 0.01 250);
-  }
-}
-
-:root[data-theme='light'] {
-  color-scheme: light;
-  --color-accent: oklch(0.55 0.11 82);
-  --color-accent-hover: color-mix(in oklch, var(--color-accent), black 12%);
-  --color-accent-soft: color-mix(in oklch, var(--color-accent), transparent 84%);
-  /* Text/icon color on top of a filled accent surface. */
-  --color-on-accent: oklch(0.99 0.003 100);
-  --color-bg: oklch(0.99 0.003 100);
-  --color-surface: oklch(0.965 0.004 100);
-  --color-text: oklch(0.25 0.01 250);
-  --color-muted: oklch(0.5 0.012 250);
-  --color-line: oklch(0.86 0.008 100);
-  --color-line-strong: oklch(0.72 0.012 120);
-  --color-soft: oklch(0.94 0.006 100);
-}
-
-:root[data-theme='dark'] {
-  color-scheme: dark;
-  --color-accent: oklch(0.82 0.13 88);
-  --color-accent-hover: color-mix(in oklch, var(--color-accent), white 10%);
-  --color-accent-soft: color-mix(in oklch, var(--color-accent), transparent 78%);
-  /* The dark-scheme accent is light, so filled surfaces need dark text. */
-  --color-on-accent: oklch(0.18 0.009 250);
-  --color-bg: oklch(0.18 0.009 250);
-  --color-surface: oklch(0.22 0.01 250);
-  --color-text: oklch(0.93 0.006 95);
-  --color-muted: oklch(0.69 0.012 250);
-  --color-line: oklch(0.34 0.012 250);
-  --color-line-strong: oklch(0.44 0.016 230);
-  --color-soft: oklch(0.26 0.01 250);
 }
 
 * {
@@ -196,34 +132,6 @@ a:not(.brand, .button):hover {
 .site-nav a[aria-current='page'] {
   color: var(--color-text);
   background-size: 100% 1px;
-}
-
-.theme-toggle {
-  display: grid;
-  width: 2.35rem;
-  height: 2.35rem;
-  place-items: center;
-  border: var(--hairline);
-  border-radius: 50%;
-  background: var(--color-bg);
-  color: var(--color-text);
-  cursor: pointer;
-  transition:
-    border-color 180ms ease,
-    color 180ms ease;
-}
-
-.theme-toggle:hover {
-  border-color: var(--color-accent);
-  color: var(--color-accent);
-}
-
-.theme-toggle span {
-  width: 0.88rem;
-  height: 0.88rem;
-  border: 1px solid currentColor;
-  border-radius: 50%;
-  background: linear-gradient(90deg, currentColor 50%, transparent 50%);
 }
 
 .hero {
@@ -752,19 +660,12 @@ pre code {
   margin-block: calc(var(--baseline) * 1.5);
 }
 
-/* Shiki dual themes: github-light by default, github-dark under data-theme. */
+/* Shiki still emits dual-theme variables; dark-only means the dark set is
+   simply the one that renders. */
 .astro-code,
 .astro-code span {
-  color: var(--shiki-light);
-  background-color: transparent;
-  font-style: var(--shiki-light-font-style);
-  font-weight: var(--shiki-light-font-weight);
-  text-decoration: var(--shiki-light-text-decoration);
-}
-
-:root[data-theme='dark'] .astro-code,
-:root[data-theme='dark'] .astro-code span {
   color: var(--shiki-dark);
+  background-color: transparent;
   font-style: var(--shiki-dark-font-style);
   font-weight: var(--shiki-dark-font-weight);
   text-decoration: var(--shiki-dark-text-decoration);
@@ -1006,12 +907,6 @@ pre code {
 @media (max-width: 760px) {
   .site-header {
     grid-template-columns: 1fr auto;
-  }
-
-  .theme-toggle {
-    grid-column: 2;
-    grid-row: 1;
-    justify-self: end;
   }
 
   .site-nav {
@@ -1643,44 +1538,33 @@ pu-poll {
 /* ==========================================================================
    ProductUnhunt 2026 — the anti-launch redesign
    ========================================================================== */
+/* The single (dark-only) palette: white, black, and one hot orange —
+   the CodeRabbit-blog combination. The "secondary" slot is the white chip
+   fill (their CTA-button move), so orange stays a sprinkle. */
 :root {
-  --color-accent: #ff5f43;
-  --color-accent-hover: #e33c24;
-  --color-accent-soft: #ffe2db;
+  color-scheme: dark;
+  --color-accent: #ff570a;
+  --color-accent-hover: #ff7a33;
+  --color-accent-soft: #3d1f0e;
+  /* Accent for small type. The fill accent is tuned for slabs and display
+     sizes; 0.7rem mono needs the lighter cut to stay legible on the dark. */
+  --color-accent-ink: #f48e5a;
   --color-on-accent: #17130f;
-  --color-bg: #fff9ef;
-  --color-surface: #f5eddf;
-  --color-text: #17130f;
-  --color-muted: #6d655c;
-  --color-line: #cfc3b2;
-  --color-line-strong: #17130f;
-  --color-soft: #eee4d5;
-  --color-secondary: #a8b4ff;
-  --color-secondary-soft: #d9d2ff;
-  --color-ink: #17130f;
+  --color-bg: #121014;
+  --color-surface: #1c1a1f;
+  --color-text: #fdfdfe;
+  --color-muted: #9b97a2;
+  --color-line: #2f2c34;
+  --color-line-strong: #fdfdfe;
+  --color-soft: #232026;
+  --color-secondary: #fdfdfe;
+  --color-secondary-soft: #e9e7ed;
+  --color-ink: #fdfdfe;
   --content-width: 1180px;
   --prose-width: 66ch;
   --page-pad: clamp(1rem, 3vw, 2rem);
   --hairline: 1.5px solid var(--color-line-strong);
   --hard-shadow: 5px 5px 0 var(--color-ink);
-}
-
-:root[data-theme='dark'] {
-  --color-accent: #ff735b;
-  --color-accent-hover: #ff927e;
-  --color-accent-soft: #4c2b25;
-  --color-on-accent: #17130f;
-  --color-bg: #171512;
-  --color-surface: #24201b;
-  --color-text: #fff9ef;
-  --color-muted: #bdb3a7;
-  --color-line: #4b443b;
-  --color-line-strong: #fff9ef;
-  --color-soft: #2e2923;
-  --color-secondary: #a8b4ff;
-  --color-secondary-soft: #d9d2ff;
-  --color-ink: #fff9ef;
-  --hard-shadow: 5px 5px 0 #fff9ef;
 }
 
 html {
@@ -1690,17 +1574,14 @@ html {
 
 body {
   background-color: var(--color-bg);
-  background-image: radial-gradient(
-    color-mix(in srgb, var(--color-text), transparent 89%) 0.7px,
-    transparent 0.7px
-  );
-  background-size: 10px 10px;
 }
 
+/* Full-bleed like the hero and footer, so the bottom rule runs edge to edge;
+   the inline padding keeps brand and nav on the content rails. */
 .site-header {
-  width: min(var(--content-width), calc(100% - var(--page-pad) * 2));
+  width: 100%;
   min-height: 4.4rem;
-  padding: 0.6rem 0;
+  padding: 0.6rem max(var(--page-pad), calc((100% - var(--content-width)) / 2));
   border-bottom: 2px solid var(--color-text);
   background: color-mix(in srgb, var(--color-bg), transparent 7%);
   backdrop-filter: blur(14px);
@@ -1744,6 +1625,10 @@ body {
 }
 
 .site-nav {
+  /* The header's middle column is 1fr; without this the pill stretches
+     edge-to-edge and reads as an empty input. */
+  justify-self: end;
+  width: max-content;
   gap: 0.25rem;
   padding: 0.25rem;
   border: 1px solid var(--color-line);
@@ -1765,13 +1650,6 @@ body {
 .site-nav a[aria-current='page'] {
   background: var(--color-text);
   color: var(--color-bg);
-}
-
-.theme-toggle {
-  width: 2.2rem;
-  height: 2.2rem;
-  border: 1.5px solid var(--color-text);
-  box-shadow: 2px 2px 0 var(--color-text);
 }
 
 .section {
@@ -1810,6 +1688,9 @@ h2 em {
 }
 
 .eyebrow {
+  /* Now that it is a bordered chip, it must hug its text — as a stretched
+     grid item it turns into a page-wide empty pill. */
+  width: fit-content;
   gap: 0.55rem;
   padding: 0.28rem 0.58rem;
   border: 1px solid currentColor;
@@ -1823,6 +1704,23 @@ h2 em {
   width: 0.4rem;
   height: 0.4rem;
   border-radius: 50%;
+}
+
+/* Eyebrows are quiet white chips — the CodeRabbit kicker-label move — so the
+   orange stays reserved for emphasis and verdicts. */
+.eyebrow {
+  color: var(--color-secondary);
+}
+
+/* Small accent type uses the light cut of the accent; the fill accent stays
+   on slabs, bars, and display-size glyphs. */
+.meta,
+.idea-card-index,
+.poll-step,
+.vote-count,
+.idea-disclaimer span,
+.about-ledger span {
+  color: var(--color-accent-ink);
 }
 
 .button {
@@ -1856,14 +1754,18 @@ h2 em {
   text-underline-offset: 0.25em;
 }
 
-/* Homepage hero */
+/* Homepage hero. Full-bleed so the blueprint-grid texture runs edge to edge
+   (the CodeRabbit-blog look); the inline padding re-centers the content on
+   the same rails as every width-capped section below. */
 .hero {
   display: grid;
+  width: 100%;
   min-height: auto;
   grid-template-columns: minmax(0, 1.08fr) minmax(20rem, 0.92fr);
   gap: clamp(2rem, 6vw, 5rem);
   align-items: center;
   padding-block: clamp(3.5rem, 6vw, 5.75rem);
+  padding-inline: max(var(--page-pad), calc((100% - var(--content-width)) / 2));
   overflow: hidden;
   border-bottom: 0;
 }
@@ -2024,11 +1926,15 @@ h2 em {
   transform: rotate(-8deg);
 }
 
+/* The one orbit filled with the page color needs page-colored ink, not the
+   sticker ink — black on the near-black bg would vanish. */
 .hero-orbit {
   width: 4rem;
   height: 4rem;
   border-radius: 50%;
+  border-color: var(--color-text);
   background: var(--color-bg);
+  color: var(--color-text);
   font-size: 0.58rem;
 }
 
@@ -2045,16 +1951,20 @@ h2 em {
   height: auto;
   padding: 0.45rem 0.7rem;
   border-radius: 0;
+  border-color: #17130f;
   background: var(--color-secondary);
+  color: #17130f;
   transform: rotate(6deg);
 }
 
+/* Dark marquee with orange type — the band was the loudest orange slab on
+   the page, and the sprinkle budget spends better elsewhere. */
 .unhunt-ticker {
   width: 100%;
   overflow: hidden;
-  border-block: 2px solid #17130f;
-  background: var(--color-accent);
-  color: #17130f;
+  border-block: 2px solid var(--color-ink);
+  background: var(--color-bg);
+  color: var(--color-accent);
   font-family: var(--font-mono);
   font-size: 0.72rem;
   font-weight: 800;
@@ -2075,6 +1985,12 @@ h2 em {
 /* Feed and cards */
 .index-feed {
   border-top: 0;
+}
+
+/* A card block that continues the pile above it — full section padding on
+   both sides was opening a ~10rem hole between two rows of the same feed. */
+.pile-continued {
+  padding-block-start: 0;
 }
 
 .section-heading {
@@ -2102,7 +2018,7 @@ h2 em {
 
 .idea-card {
   position: relative;
-  min-height: 25rem;
+  min-height: 22rem;
   padding: 1.35rem;
   overflow: hidden;
   border: 1.5px solid var(--color-text);
@@ -2119,6 +2035,8 @@ h2 em {
   transform: translate(-3px, -3px) rotate(-0.35deg);
 }
 
+/* Neutral punched-corner circle; the tinted version read as a stain once the
+   palette narrowed to white/black/orange. */
 .idea-card::after {
   content: '';
   position: absolute;
@@ -2128,7 +2046,7 @@ h2 em {
   height: 5rem;
   border: 1.5px solid var(--color-text);
   border-radius: 50%;
-  background: var(--color-accent-soft);
+  background: var(--color-soft);
 }
 
 .idea-card-index {
@@ -2136,14 +2054,14 @@ h2 em {
   z-index: 1;
   display: block;
   margin-bottom: 2.7rem;
-  color: var(--color-accent);
+  color: var(--color-accent-ink);
   font-family: var(--font-mono);
   font-size: 0.7rem;
   font-weight: 800;
 }
 
 .idea-card-index::before {
-  content: 'CASE 0' counter(idea-card);
+  content: 'CASE ' counter(idea-card, decimal-leading-zero);
 }
 
 .idea-card-name {
@@ -2172,10 +2090,10 @@ h2 em {
   font-size: 0.9rem;
 }
 
+/* One of the deliberate orange sprinkles. */
 .author-chip::before {
   border-radius: 50%;
-  background: var(--color-secondary);
-  box-shadow: 0 0 0 1px var(--color-text);
+  background: var(--color-accent);
 }
 
 .tag-list li,
@@ -2250,7 +2168,7 @@ h2 em {
   position: absolute;
   top: -1.6rem;
   right: 1.5rem;
-  color: var(--color-accent-soft);
+  color: color-mix(in srgb, var(--color-accent) 32%, var(--color-surface));
   font-family: var(--font-display);
   font-size: 10rem;
   line-height: 1;
@@ -2271,6 +2189,13 @@ h2 em {
   gap: 1rem;
   border: 0;
   background: transparent;
+}
+
+/* The 1px accent tick was the editorial design's card marker; on a rounded,
+   hard-shadowed card it reads as a rendering glitch. */
+.feature-list article::before,
+.about-ledger article::before {
+  display: none;
 }
 
 .feature-list article,
@@ -2339,7 +2264,7 @@ h2 em {
 }
 
 .idea-disclaimer span {
-  color: var(--color-accent);
+  color: var(--color-accent-ink);
   font-family: var(--font-mono);
   font-weight: 800;
   text-transform: uppercase;
@@ -2349,8 +2274,8 @@ h2 em {
   padding: 1.2rem;
   border: 1.5px solid var(--color-text);
   border-radius: 0.6rem;
-  background: #17130f;
-  color: #fff9ef;
+  background: var(--color-surface);
+  color: var(--color-text);
   box-shadow: 7px 7px 0 var(--color-accent);
   transform: rotate(0.7deg);
 }
@@ -2358,7 +2283,7 @@ h2 em {
 .dossier-label {
   margin: 0 0 1.1rem;
   padding-bottom: 0.8rem;
-  border-bottom: 1px dashed #70685f;
+  border-bottom: 1px dashed var(--color-line);
   color: var(--color-secondary);
   font-family: var(--font-mono);
   font-size: 0.66rem;
@@ -2371,7 +2296,7 @@ h2 em {
   margin: 0;
   padding: 0.9rem 0;
   border: 0;
-  border-bottom: 1px solid #403b35;
+  border-bottom: 1px solid var(--color-line);
 }
 
 .idea-dossier .eyebrow {
@@ -2381,7 +2306,7 @@ h2 em {
 .idea-dossier .editor-stamp p:last-child,
 .idea-dossier .vote-summary-empty,
 .idea-dossier .vote-label {
-  color: #d1c9c0;
+  color: var(--color-muted);
 }
 
 .idea-dossier .author-card {
@@ -2391,12 +2316,12 @@ h2 em {
 }
 
 .idea-dossier .author-avatar {
-  border-color: #70685f;
-  background: #2f2a25;
+  border-color: var(--color-line);
+  background: var(--color-soft);
 }
 
 .idea-dossier .author-name {
-  color: #fff9ef;
+  color: var(--color-text);
 }
 
 .roast-section {
@@ -2472,7 +2397,7 @@ h2 em {
   padding: clamp(1.2rem, 3vw, 2rem);
   border: 1.5px solid var(--color-text);
   border-radius: 0.75rem;
-  background: var(--color-accent-soft);
+  background: var(--color-surface);
   box-shadow: 7px 7px 0 var(--color-text);
 }
 
@@ -2510,7 +2435,7 @@ h2 em {
 
 .poll-step {
   margin: 0 0 0.5rem;
-  color: var(--color-accent);
+  color: var(--color-accent-ink);
   font-family: var(--font-mono);
   font-size: 0.65rem;
   font-weight: 800;
@@ -2535,9 +2460,12 @@ h2 em {
     background 150ms ease;
 }
 
+/* The lavender fill needs dark text in BOTH themes — in dark mode the
+   inherited cream text would sit illegibly on it. */
 .poll-option:not(:disabled):hover {
   border-color: var(--color-text);
   background: var(--color-secondary);
+  color: #17130f;
   box-shadow: 1px 1px 0 var(--color-text);
   transform: translate(2px, 2px);
 }
@@ -2545,7 +2473,15 @@ h2 em {
 .poll-option[aria-pressed='true'] {
   border-color: var(--color-text);
   background: var(--color-secondary);
+  color: #17130f;
   box-shadow: 1px 1px 0 var(--color-text);
+}
+
+.poll-option:not(:disabled):hover .poll-count,
+.poll-option:not(:disabled):hover .poll-action,
+.poll-option[aria-pressed='true'] .poll-count,
+.poll-option[aria-pressed='true'] .poll-action {
+  color: inherit;
 }
 
 .poll-emoji {
@@ -2629,28 +2565,45 @@ h2 em {
   border: 0;
 }
 
+/* Boxed like .page-head and .poll-section, so the three big non-card modules
+   share one design language instead of one of them being a bare slab. */
 .interstitial {
-  border-block: 2px solid var(--color-text);
-  background: var(--color-secondary);
-  color: #17130f;
+  margin-block: clamp(1rem, 2vw, 1.5rem);
+  padding: clamp(2.25rem, 4.5vw, 3.75rem) clamp(1.35rem, 4vw, 3.5rem);
+  border: 1.5px solid var(--color-text);
+  border-radius: 0.7rem;
+  background: var(--color-surface);
+  box-shadow: 6px 6px 0 var(--color-text);
 }
 
-.interstitial h2,
-.interstitial p,
-.interstitial .eyebrow {
-  color: #17130f;
+/* The CodeRabbit-blog texture: a faint blueprint grid and a breath of orange
+   over the panel tone. Declared after the panels' own `background` shorthands
+   so the image layers survive the cascade. */
+.hero,
+.page-head,
+.interstitial,
+.poll-section {
+  background-image:
+    linear-gradient(to right, rgb(253 253 254 / 4.5%) 1px, transparent 1px),
+    linear-gradient(rgb(253 253 254 / 4.5%) 1px, transparent 1px),
+    radial-gradient(90% 70% at 50% 0%, rgb(255 87 10 / 7%), transparent 65%);
+  background-size:
+    72px 72px,
+    72px 72px,
+    100% 100%;
 }
 
+/* A step darker than the page so the footer reads as the floor, not more page. */
 .site-footer {
   width: 100%;
   padding: 2rem max(var(--page-pad), calc((100vw - var(--content-width)) / 2));
   border-top: 2px solid var(--color-text);
-  background: #17130f;
-  color: #d8d0c6;
+  background: #0b0a0d;
+  color: var(--color-muted);
 }
 
 .site-footer a {
-  color: #fff9ef;
+  color: var(--color-text);
 }
 
 /* Motion */
@@ -2757,7 +2710,7 @@ h2 em {
   }
 
   .hero-art {
-    min-height: 27rem;
+    min-height: 24rem;
     grid-row: 1;
   }
 
@@ -2765,8 +2718,24 @@ h2 em {
     grid-row: 2;
   }
 
+  /* Less overshoot than desktop: the top inset was beheading the rocket
+     against the section's overflow clip, and the bottom overshoot slid the
+     basket art underneath the headline. The img height is fixed in rem
+     because a % height inside the centered grid falls back to the image's
+     intrinsic aspect ratio and overflows the art box. */
   .hero-image-wrap {
-    inset: -17% -2% -13%;
+    inset: -6% -2% 0;
+  }
+
+  .hero-image-wrap img {
+    width: auto;
+    max-width: none;
+    height: 25rem;
+  }
+
+  .orbit-one,
+  .orbit-two {
+    left: 0;
   }
 
   .hero-proof {
@@ -2795,7 +2764,7 @@ h2 em {
   }
 
   .hero-proof span {
-    font-size: 0.5rem;
+    font-size: 0.58rem;
   }
 
   .section-heading {
@@ -2810,8 +2779,10 @@ h2 em {
     grid-template-columns: 1fr;
   }
 
+  /* Stacked single-column cards size to their content; a fixed floor just
+     inserts dead space between the tags and the verdict. */
   .idea-card {
-    min-height: 23rem;
+    min-height: 0;
   }
 
   .idea-dossier {
@@ -2853,22 +2824,12 @@ h2 em {
     box-shadow: 4px 4px 0 var(--color-text);
   }
 
+  .interstitial {
+    padding: 2rem 1.25rem;
+    box-shadow: 4px 4px 0 var(--color-text);
+  }
+
   .site-footer {
     align-items: flex-start;
   }
-}
-
-/* Explicit light theme wins over the legacy theme block above. */
-:root[data-theme='light'] {
-  --color-accent: #ff5f43;
-  --color-accent-hover: #e33c24;
-  --color-accent-soft: #ffe2db;
-  --color-on-accent: #17130f;
-  --color-bg: #fff9ef;
-  --color-surface: #f5eddf;
-  --color-text: #17130f;
-  --color-muted: #6d655c;
-  --color-line: #cfc3b2;
-  --color-line-strong: #17130f;
-  --color-soft: #eee4d5;
 }

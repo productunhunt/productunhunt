@@ -11,14 +11,22 @@ interface Props {
   /** Shown when there is nothing to list. */
   empty?: string;
   headingLevel?: 'h2' | 'h3';
+  /** Offset for the CASE NN counter, so a page that splits one pile across
+   *  several lists keeps numbering through instead of restarting at 01. */
+  start?: number;
 }
 
-const { ideas, label, empty, headingLevel } = Astro.props;
+const { ideas, label, empty, headingLevel, start = 0 } = Astro.props;
 ---
 
 {
   ideas.length > 0 ? (
-    <div class="idea-list" role="list" aria-label={label}>
+    <div
+      class="idea-list"
+      role="list"
+      aria-label={label}
+      style={start > 0 ? `counter-reset: idea-card ${start}` : undefined}
+    >
       {ideas.map((idea) => (
         <div role="listitem">
           <IdeaCard idea={idea} headingLevel={headingLevel} />
