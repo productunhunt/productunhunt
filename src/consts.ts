@@ -26,7 +26,7 @@ export const SITE = {
   description:
     'The internet has enough serious people building serious products to solve serious problems. ProductUnhunt is for the rest of us.',
   /** Description of the RSS feed at /rss.xml. */
-  rssDescription: 'Business ideas that were considered and correctly abandoned.',
+  rssDescription: 'Business ideas that were considered and set free instead of built.',
   /** Default social share image, relative to the site root (see public/).
    *  Per-idea cards are generated at build time; this is the fallback. */
   ogImage: '/og.jpg',
@@ -34,7 +34,7 @@ export const SITE = {
    *  explicit that JSON-LD reads that, not this. */
   author: 'Ravi — Chief Unhunter',
   /** Footer credit line (§2). */
-  footerText: 'Built for ideas that should stay theoretical.',
+  footerText: 'Built for ideas that get to stay free.',
 } as const;
 
 /** Icons bundled with the theme — see `src/components/SocialLinks.astro`. */

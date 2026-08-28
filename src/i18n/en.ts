@@ -46,28 +46,28 @@ export const en = {
   // Homepage (§5). The manifesto line itself is SITE.description.
   'home.primaryLinks': 'Primary links',
   'home.recentlyNotBuilt': 'Recently not built',
-  'home.featuredHeading': 'Most unhinged this week',
-  'home.contributeHeading': 'You have bad ideas too',
+  'home.featuredHeading': 'Most gloriously impractical this week',
+  'home.contributeHeading': 'You have ideas like these too',
   'home.contributeLead':
     'Two doors, one format: open a pull request, or email it and let someone else do the YAML.',
-  'home.empty': 'Nothing has been correctly abandoned yet. Give it a moment.',
+  'home.empty': 'Nothing has been set free yet. Give it a moment.',
 
   // Idea archive (§3) — the pile, with no manifesto essay on top.
   'ideas.title': 'The full pile',
   'ideas.titlePaged': 'The full pile · Page {page}',
   'ideas.eyebrow': 'Archive',
-  'ideas.description': 'Every idea considered and correctly abandoned on {site}.',
-  'ideas.lead': 'Everything considered and correctly abandoned, newest first.',
-  'ideas.listLabel': 'Abandoned ideas',
+  'ideas.description': 'Every idea considered and set free on {site}.',
+  'ideas.lead': 'Everything considered and set free, newest first.',
+  'ideas.listLabel': 'Unbuilt ideas',
   'ideas.empty': 'The pile is empty. Enjoy it while it lasts.',
 
   // Tag archive — every string here is generated from a tag, which is why it
   // stays in the dictionary even though it reads like page copy.
   'tag.title': 'Ideas tagged “{tag}”',
   'tag.titlePaged': 'Ideas tagged “{tag}” · Page {page}',
-  'tag.description': 'Abandoned ideas tagged {tag} on {site}.',
+  'tag.description': 'Unbuilt ideas tagged {tag} on {site}.',
   'tag.eyebrow': 'Tag',
-  'tag.lead': 'Bad ideas filed under {tag}.',
+  'tag.lead': 'Free-range ideas filed under {tag}.',
   'tag.listLabel': '{tag} ideas',
   'tag.moreTagsEyebrow': 'More tags',
   'tag.otherTagsNavLabel': 'Other tags',
@@ -79,9 +79,9 @@ export const en = {
   'idea.moodEyebrow': 'Current mood',
   'idea.tocLabel': 'Table of contents',
   'idea.contentsEyebrow': 'Contents',
-  'idea.relatedEyebrow': 'Similar mistakes',
-  'idea.relatedLabel': 'Similar mistakes',
-  'idea.submitEyebrow': 'Submit a worse one',
+  'idea.relatedEyebrow': 'Kindred ideas',
+  'idea.relatedLabel': 'Kindred ideas',
+  'idea.submitEyebrow': 'Set one free',
   'idea.breadcrumbHome': 'Home',
   'idea.breadcrumbIdeas': 'Ideas',
   'idea.authorSourcePR': 'Submitted by pull request',
@@ -89,9 +89,9 @@ export const en = {
 
   // Status badges (§8). `src/lib/status.ts` maps a frontmatter key to one of
   // these, so the label is written down exactly once.
-  'status.unbuilt': 'Regrettably unbuilt',
+  'status.unbuilt': 'Still roaming free',
   'status.someone-built-it': 'Unfortunately real',
-  'status.still-a-threat': 'Do not encourage',
+  'status.still-a-threat': 'Too powerful to build',
 
   // Community verdict (§9)
   'poll.heading': 'The public inquiry',
@@ -101,7 +101,7 @@ export const en = {
   'poll.votes': '{count} votes',
   'poll.votesOne': '1 vote',
   'poll.yourVote': 'Selected',
-  'poll.unavailable': 'Voting is unavailable right now. The ideas remain bad regardless.',
+  'poll.unavailable': 'Voting is unavailable right now. The ideas remain free regardless.',
   'poll.failed': 'That vote did not go through. Try again.',
 
   // Comments (§10) — rendered only when GISCUS.enabled
@@ -120,7 +120,7 @@ export const en = {
   // Contribute (§11)
   'contribute.title': 'Contribute',
   'contribute.eyebrow': 'Contribute',
-  'contribute.lead': 'Two doors, one format. The editor publishes; you supply the regret.',
+  'contribute.lead': 'Two doors, one format. The editor publishes; you supply the restraint.',
   'contribute.prEyebrow': 'For developers',
   'contribute.emailEyebrow': 'For everyone else',
   'contribute.fieldsEyebrow': 'What an entry needs',
@@ -136,7 +136,7 @@ export const en = {
   // the wording can never drift between them.
   'license.eyebrow': 'The deal',
   'license.body': [
-    'This is entertainment. Treat every idea as public and already dead.',
+    'This is entertainment. Treat every idea as public and already set free.',
     'By submitting, you grant ProductUnhunt a perpetual license to publish, edit, and roast it. You keep whatever rights you think you had. We promise nothing.',
     'Do not send confidential plans, client work, or anything you would mind seeing next to Founder needs sleep.',
     'Published ideas may be copy-edited. The joke stays yours; the commas may not.',
@@ -157,9 +157,9 @@ export const en = {
 
   // 404 (§2)
   'notFound.title': 'Page not found',
-  'notFound.description': 'This page was also correctly abandoned.',
+  'notFound.description': 'This page was also set free.',
   'notFound.eyebrow': '404 — Not found',
-  'notFound.heading': 'This page was also correctly abandoned.',
+  'notFound.heading': 'This page was also set free.',
   'notFound.lead':
     'It was considered, briefly, and then it was not built. The pile below is still standing.',
   'notFound.linksLabel': 'Recovery links',

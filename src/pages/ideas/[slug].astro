@@ -2,7 +2,7 @@
 // The idea page (§7): a serious editorial profile with the judgement at the
 // end. The section order below is the spec's, in order — kicker, name,
 // tagline, byline, editor stamp, mood teaser, roast, poll, house rules,
-// comments, similar mistakes, submit a worse one.
+// comments, kindred ideas, set one free.
 import type { GetStaticPaths } from 'astro';
 import { Image } from 'astro:assets';
 import { render } from 'astro:content';
@@ -43,7 +43,7 @@ const { Content, headings } = await render(idea);
 const tocHeadings = headings.filter((heading) => heading.depth === 2);
 const showToc = tocHeadings.length > 5;
 
-// "Similar mistakes" (§7): most shared tags first, newest as the tie-break.
+// "Kindred ideas" (§7): most shared tags first, newest as the tie-break.
 const related = siblings
   .map((other) => ({
     idea: other,
@@ -115,7 +115,7 @@ const breadcrumbSchema = {
   <article>
     <header class="section article-head idea-head">
       <a class="idea-back" href={withBase('/ideas/')}
-        ><span aria-hidden="true">←</span> Back to bad decisions</a
+        ><span aria-hidden="true">←</span> Back to the pile</a
       >
 
       <div class="idea-hero-grid">
@@ -208,7 +208,7 @@ const breadcrumbSchema = {
     {/* 10. Comments — no-ops entirely while GISCUS.enabled is false */}
     <Comments />
 
-    {/* 11. Similar mistakes */}
+    {/* 11. Kindred ideas */}
     {
       related.length > 0 && (
         <section
@@ -231,10 +231,10 @@ const breadcrumbSchema = {
       )
     }
 
-    {/* 12. Submit a worse one */}
+    {/* 12. Set one free */}
     <section class="section submit-worse" aria-labelledby="submit-heading" data-pagefind-ignore>
       <p class="eyebrow" id="submit-heading">{t('idea.submitEyebrow')}</p>
-      <h2>You can do better than this. Worse, rather.</h2>
+      <h2>You have one of these too. Set it free.</h2>
       <div class="action-row">
         <a class="button" href={withBase('/contribute/')}>{t('cta.submit')}</a>
         <a class="text-link" href={`${REPO_URL}/pulls`} rel="noopener noreferrer" target="_blank">
