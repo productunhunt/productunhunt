@@ -1,0 +1,245 @@
+---
+// The idea page (§7): a serious editorial profile with the judgement at the
+// end. The section order below is the spec's, in order — kicker, name,
+// tagline, byline, editor stamp, mood teaser, roast, poll, house rules,
+// comments, similar mistakes, submit a worse one.
+import type { GetStaticPaths } from 'astro';
+import { Image } from 'astro:assets';
+import { render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import AuthorCard from '../../components/AuthorCard.astro';
+import Comments from '../../components/Comments.astro';
+import StatusBadge from '../../components/StatusBadge.astro';
+import StructuredData from '../../components/StructuredData.astro';
+import { withBase } from '../../lib/url';
+import { getPublishedIdeas, byNewest } from '../../lib/ideas';
+import { tagSlug } from '../../lib/tags';
+import { STATUS_LABEL } from '../../lib/status';
+import { CONTACT_EMAIL, REPO_URL, SITE } from '../../consts';
+import { t } from '../../i18n';
+
+export const getStaticPaths = (async () => {
+  const ideas = await getPublishedIdeas();
+  return ideas.map((idea) => ({
+    params: { slug: idea.id },
+    // The siblings travel as a prop so the page doesn't re-read the collection
+    // once per idea just to work out what else is nearby.
+    props: { idea, siblings: ideas.filter((other) => other.id !== idea.id) },
+  }));
+}) satisfies GetStaticPaths;
+
+// `Astro.props` is inferred from `getStaticPaths` above — an explicit `Props`
+// interface here would only be a second, driftable copy of the same shape.
+const { idea, siblings } = Astro.props;
+const { title, tagline, author, status, tags, editorStamp, heroImage } = idea.data;
+
+const { Content, headings } = await render(idea);
+
+// §7: "Keel TOC only if a roast is actually long." Five `##` headings is the
+// floor every idea has to clear (`check:ideas` enforces them), so a table of
+// contents only earns its space once there are more than that.
+const tocHeadings = headings.filter((heading) => heading.depth === 2);
+const showToc = tocHeadings.length > 5;
+
+// "Similar mistakes" (§7): most shared tags first, newest as the tie-break.
+const related = siblings
+  .map((other) => ({
+    idea: other,
+    shared: other.data.tags.filter((tag) => (tags as readonly string[]).includes(tag)).length,
+  }))
+  .filter((candidate) => candidate.shared > 0)
+  .sort((a, b) => b.shared - a.shared || byNewest(a.idea, b.idea))
+  .slice(0, 3)
+  .map((candidate) => candidate.idea);
+
+const site = Astro.site ?? new URL(Astro.url.origin);
+const canonical = new URL(withBase(`/ideas/${idea.id}/`), site).href;
+const ogImage = withBase(`/og/ideas/${idea.id}.png`);
+
+// §12: JSON-LD describes an article about a fictional, abandoned product, and
+// the author comes from frontmatter — never `SITE.author`, which is the house
+// byline and would misattribute every community submission.
+const authorUrl =
+  author.url ??
+  (author.github
+    ? `https://github.com/${encodeURIComponent(author.github.replace(/^@/, ''))}`
+    : undefined);
+
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: title,
+  description: tagline,
+  datePublished: idea.data.publishDate.toISOString(),
+  author: {
+    '@type': 'Person',
+    name: author.name,
+    ...(author.title ? { jobTitle: author.title } : {}),
+    ...(authorUrl ? { url: authorUrl } : {}),
+  },
+  publisher: { '@type': 'Organization', name: SITE.title, url: new URL(withBase('/'), site).href },
+  mainEntityOfPage: canonical,
+  image: new URL(ogImage, site).href,
+  keywords: tags.join(', '),
+  // The subject is the product, which does not and will not exist.
+  about: { '@type': 'Product', name: title, description: tagline },
+  creativeWorkStatus: STATUS_LABEL[status],
+};
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      name: t('idea.breadcrumbHome'),
+      item: new URL(withBase('/'), site).href,
+    },
+    {
+      '@type': 'ListItem',
+      position: 2,
+      name: t('idea.breadcrumbIdeas'),
+      item: new URL(withBase('/ideas/'), site).href,
+    },
+    { '@type': 'ListItem', position: 3, name: title, item: canonical },
+  ],
+};
+---
+
+<BaseLayout title={title} description={tagline} ogType="article" image={ogImage}>
+  <StructuredData slot="head" schema={[articleSchema, breadcrumbSchema]} />
+
+  <article>
+    <header class="section article-head idea-head">
+      {/* 1. Kicker — status + tags */}
+      <p class="idea-kicker">
+        <StatusBadge status={status} />
+        <span class="idea-kicker-tags">
+          {tags.map((tag) => <a href={withBase(`/ideas/tags/${tagSlug(tag)}/`)}>{tag}</a>)}
+        </span>
+      </p>
+
+      {/* 2–3. Product name and tagline */}
+      <h1>{title}</h1>
+      <p class="lead idea-tagline">{tagline}</p>
+
+      {/* 4. Byline */}
+      <AuthorCard author={author} />
+
+      {/* 5. Editor stamp — one dry line, when there is one */}
+      {
+        editorStamp && (
+          <aside class="editor-stamp">
+            <p class="eyebrow">{t('idea.editorStampEyebrow')}</p>
+            <p>{editorStamp}</p>
+          </aside>
+        )
+      }
+
+      {
+        /* 6. Current mood teaser — the leading reaction only, never the widget.
+           Server-rendered with the §9 empty copy; Phase 5's poll script fills
+           it from the same batched counts response the cards use. */
+      }
+      <aside class="mood-teaser" data-mood-teaser={idea.id}>
+        <p class="eyebrow">{t('idea.moodEyebrow')}</p>
+        <p class="mood-value">{t('poll.empty')}</p>
+      </aside>
+    </header>
+
+    {
+      /* A null `heroImage` must never reach <Image> — the schema allows it and
+         most ideas use it. */
+      heroImage && (
+        <figure class="section article-image">
+          <Image
+            src={heroImage}
+            alt=""
+            widths={[640, 960, 1280]}
+            sizes="(min-width: 1160px) 1160px, 100vw"
+          />
+        </figure>
+      )
+    }
+
+    {/* 7. The roast */}
+    <div class:list={['section', showToc && 'article-layout']}>
+      {
+        showToc && (
+          <aside class="article-toc" aria-label={t('idea.tocLabel')} data-pagefind-ignore>
+            <p class="eyebrow">{t('idea.contentsEyebrow')}</p>
+            <nav>
+              {tocHeadings.map((heading) => (
+                <a href={`#${heading.slug}`}>{heading.text}</a>
+              ))}
+            </nav>
+          </aside>
+        )
+      }
+      <div class="prose">
+        <Content />
+      </div>
+    </div>
+
+    {
+      /* 8. Community verdict — all six options with counts and a thin bar.
+         Phase 5 replaces this block with `<Poll>`; until then the heading and
+         the §9 empty copy hold the slot so the page order is already right. */
+    }
+    <section class="section poll-section" aria-labelledby="verdict-heading">
+      <p class="eyebrow" id="verdict-heading">{t('poll.heading')}</p>
+      <div class="poll" data-poll={idea.id} aria-label={t('poll.label')}>
+        <p class="poll-empty">{t('poll.empty')}</p>
+      </div>
+    </section>
+
+    {/* 9. House rules */}
+    <section class="section house-rules" aria-labelledby="house-rules-heading">
+      <p class="eyebrow" id="house-rules-heading">{t('houseRules.eyebrow')}</p>
+      <ul aria-label={t('houseRules.label')}>
+        <li>{t('houseRules.one')}</li>
+        <li>{t('houseRules.two')}</li>
+      </ul>
+    </section>
+
+    {/* 10. Comments — no-ops entirely while GISCUS.enabled is false */}
+    <Comments />
+
+    {/* 11. Similar mistakes */}
+    {
+      related.length > 0 && (
+        <section
+          class="section post-nav-section"
+          aria-labelledby="related-heading"
+          data-pagefind-ignore
+        >
+          <p class="eyebrow" id="related-heading">
+            {t('idea.relatedEyebrow')}
+          </p>
+          <ul class="related-list" aria-label={t('idea.relatedLabel')}>
+            {related.map((other) => (
+              <li>
+                <a href={withBase(`/ideas/${other.id}/`)}>{other.data.title}</a>
+                <p>{other.data.tagline}</p>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )
+    }
+
+    {/* 12. Submit a worse one */}
+    <section class="section submit-worse" aria-labelledby="submit-heading" data-pagefind-ignore>
+      <p class="eyebrow" id="submit-heading">{t('idea.submitEyebrow')}</p>
+      <h2>You can do better than this. Worse, rather.</h2>
+      <div class="action-row">
+        <a class="button" href={withBase('/contribute/')}>{t('cta.submit')}</a>
+        <a class="text-link" href={`${REPO_URL}/pulls`} rel="noopener noreferrer" target="_blank">
+          Open a pull request ↗
+        </a>
+        <a class="text-link" href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
+      </div>
+    </section>
+  </article>
+</BaseLayout>

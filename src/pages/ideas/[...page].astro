@@ -1,0 +1,52 @@
+---
+// §3's archive: the pile, with no manifesto essay on top. Newest first, the
+// filter row, and pagination — that's the whole job.
+import type { GetStaticPaths, Page } from 'astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import IdeaList from '../../components/IdeaList.astro';
+import Pagination from '../../components/Pagination.astro';
+import TagFilter from '../../components/TagFilter.astro';
+import { getPublishedIdeas, type Idea } from '../../lib/ideas';
+import { usedTags, type OfficialTag } from '../../lib/tags';
+import { SITE } from '../../consts';
+import { t } from '../../i18n';
+
+// Keel's blog index rendered every entry just to read its reading time off the
+// remark frontmatter. §6 forbids reading time on cards, so the `render()` loop
+// goes with it — it was also by far the slowest part of building this page.
+export const getStaticPaths = (async ({ paginate }) => {
+  const ideas = await getPublishedIdeas();
+  // The filter row lists every tag in the collection, not just the ones on the
+  // current page — otherwise page 2 would offer a different set of filters.
+  return paginate(ideas, { pageSize: 12, props: { tags: usedTags(ideas) } });
+}) satisfies GetStaticPaths;
+
+interface Props {
+  page: Page<Idea>;
+  tags: OfficialTag[];
+}
+
+const { page, tags } = Astro.props;
+
+const isFirstPage = page.currentPage === 1;
+const title = isFirstPage ? t('ideas.title') : t('ideas.titlePaged', { page: page.currentPage });
+---
+
+<BaseLayout title={title} description={t('ideas.description', { site: SITE.title })}>
+  <section class="page-head section">
+    <p class="eyebrow">{t('ideas.eyebrow')}</p>
+    <h1>{t('ideas.title')}</h1>
+    <p class="lead">{t('ideas.lead')}</p>
+  </section>
+
+  <section class="section archive-section">
+    <TagFilter tags={tags} />
+    <IdeaList
+      ideas={page.data}
+      label={t('ideas.listLabel')}
+      empty={t('ideas.empty')}
+      headingLevel="h2"
+    />
+    <Pagination page={page} />
+  </section>
+</BaseLayout>

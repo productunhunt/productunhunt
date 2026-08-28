@@ -1,0 +1,60 @@
+---
+// The feed card (§6), shared by `/`, `/ideas/` and the tag archives — a
+// deadpan product listing, not an essay teaser. Deliberately absent: comment
+// count, reading time, publish date, and the full six-option poll.
+import { withBase } from '../lib/url';
+import type { Idea } from '../lib/ideas';
+import { tagSlug } from '../lib/tags';
+import AuthorChip from './AuthorChip.astro';
+import StatusBadge from './StatusBadge.astro';
+import { t } from '../i18n';
+
+interface Props {
+  idea: Idea;
+  /** Heading level to render the product name at, so the card slots under
+   *  whatever section heading the page already established. */
+  headingLevel?: 'h2' | 'h3';
+}
+
+const { idea, headingLevel: Heading = 'h3' } = Astro.props;
+const { title, tagline, author, tags, status } = idea.data;
+const href = withBase(`/ideas/${idea.id}/`);
+---
+
+<article class="idea-card">
+  <Heading class="idea-card-name">
+    {
+      /* The whole card is not a link: the tag chips inside it are their own
+        destinations, and nesting anchors is invalid. */
+    }
+    <a href={href}>{title}</a>
+  </Heading>
+  <p class="idea-card-tagline">{tagline}</p>
+
+  <p class="idea-card-byline">
+    <AuthorChip name={author.name} />
+  </p>
+
+  <ul class="tag-list" aria-label={t('idea.tagsLabel')}>
+    {
+      tags.map((tag) => (
+        <li>
+          <a href={withBase(`/ideas/tags/${tagSlug(tag)}/`)}>{tag}</a>
+        </li>
+      ))
+    }
+  </ul>
+
+  <StatusBadge status={status} class="idea-card-status" />
+
+  {
+    /* §6's top-2 summary. Rendered with the §9 empty copy and replaced
+       client-side once the batched `/api/counts` response lands — Phase 5
+       swaps this block for `<VoteSummary>` and Phase 6 supplies the data.
+       Server-rendered empty means a no-JS or no-database visit shows the
+       deadpan line rather than a hole in the card. */
+  }
+  <div class="vote-summary" data-vote-summary={idea.id}>
+    <p class="vote-summary-empty">{t('poll.empty')}</p>
+  </div>
+</article>

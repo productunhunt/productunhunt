@@ -1,15 +1,31 @@
 ---
+// The show (§5): manifesto 20%, ideas 70%, contribute 10%. The hero is short
+// on purpose — the first card has to explain the site without another
+// paragraph, so nothing stands between the manifesto line and the pile.
 import BaseLayout from '../layouts/BaseLayout.astro';
+import IdeaList from '../components/IdeaList.astro';
 import StructuredData from '../components/StructuredData.astro';
+import TagFilter from '../components/TagFilter.astro';
 import { withBase } from '../lib/url';
 import { getPublishedIdeas } from '../lib/ideas';
-import { SITE } from '../consts';
-import { formatDate, t } from '../i18n';
+import { usedTags } from '../lib/tags';
+import { CONTACT_EMAIL, REPO_URL, SITE } from '../consts';
+import { t } from '../i18n';
 
-// Phase 4 rewrites this page to the §5 layout (hero, filter row, the three
-// card modules, featured interstitial). For now it is a thin bridge that keeps
-// the homepage rendering off the new collection.
-const ideas = (await getPublishedIdeas()).slice(0, 3);
+const ideas = await getPublishedIdeas();
+const tags = usedTags(ideas);
+
+// Three modules of three, newest first. Each block renders only if it has
+// something in it, so a young pile is a short page rather than a page of
+// headings over empty grids.
+const firstBlock = ideas.slice(0, 3);
+const secondBlock = ideas.slice(3, 6);
+const thirdBlock = ideas.slice(6, 9);
+
+// §13: the featured module is manual and stays hidden until community entries
+// start arriving. With every house idea shipping `featured: false`, this is
+// empty and the interstitial never renders.
+const featured = ideas.filter((idea) => idea.data.featured);
 
 const site = Astro.site ?? new URL(Astro.url.origin);
 const websiteSchema = {
@@ -23,6 +39,7 @@ const websiteSchema = {
 
 <BaseLayout description={SITE.description}>
   <StructuredData slot="head" schema={websiteSchema} />
+
   <section class="hero section">
     <p class="eyebrow">Ideas, correctly abandoned</p>
     <h1>{SITE.description}</h1>
@@ -32,33 +49,70 @@ const websiteSchema = {
     </div>
   </section>
 
-  <section class="section index-feed" aria-labelledby="latest-ideas">
+  <section class="section index-feed" aria-labelledby="recently-not-built">
     <div class="section-heading">
       <p class="eyebrow">{t('ideas.eyebrow')}</p>
-      <h2 id="latest-ideas">{t('home.recentlyNotBuilt')}</h2>
+      <h2 id="recently-not-built">{t('home.recentlyNotBuilt')}</h2>
       <a class="text-link" href={withBase('/ideas/')}>{t('cta.fullPile')}</a>
     </div>
 
-    {
-      ideas.length > 0 ? (
-        <div class="note-list">
-          {ideas.map((idea) => (
-            <article class="note-row">
-              <div>
-                <p class="meta">{formatDate(idea.data.publishDate, 'short')}</p>
-                <h3>
-                  <a href={withBase(`/ideas/${idea.id}/`)}>{idea.data.title}</a>
-                </h3>
-                <p>{idea.data.tagline}</p>
-              </div>
-            </article>
-          ))}
+    <TagFilter tags={tags} />
+
+    <IdeaList ideas={firstBlock} label={t('ideas.listLabel')} empty={t('home.empty')} />
+  </section>
+
+  {
+    featured.length > 0 && (
+      <section
+        class="section interstitial featured-interstitial"
+        aria-labelledby="featured-heading"
+      >
+        <p class="eyebrow">{t('ideas.eyebrow')}</p>
+        <h2 id="featured-heading">{t('home.featuredHeading')}</h2>
+        <IdeaList ideas={featured.slice(0, 3)} label={t('home.featuredHeading')} />
+      </section>
+    )
+  }
+
+  {
+    secondBlock.length > 0 && (
+      <section class="section" aria-label={t('ideas.listLabel')}>
+        <IdeaList ideas={secondBlock} label={t('ideas.listLabel')} />
+      </section>
+    )
+  }
+
+  <section
+    class="section interstitial contribute-interstitial"
+    aria-labelledby="contribute-heading"
+  >
+    <div class="prose-grid">
+      <div>
+        <p class="eyebrow">{t('contribute.eyebrow')}</p>
+        <h2 id="contribute-heading">{t('home.contributeHeading')}</h2>
+      </div>
+      <div class="prose-stack">
+        <p>{t('home.contributeLead')}</p>
+        <div class="action-row">
+          <a class="button" href={withBase('/contribute/')}>{t('cta.submit')}</a>
+          <a class="text-link" href={`${REPO_URL}/pulls`} rel="noopener noreferrer" target="_blank">
+            Open a pull request ↗
+          </a>
+          <a class="text-link" href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
         </div>
-      ) : (
-        <div class="empty-state compact">
-          <p>{t('home.empty')}</p>
-        </div>
-      )
-    }
+      </div>
+    </div>
+  </section>
+
+  {
+    thirdBlock.length > 0 && (
+      <section class="section" aria-label={t('ideas.listLabel')}>
+        <IdeaList ideas={thirdBlock} label={t('ideas.listLabel')} />
+      </section>
+    )
+  }
+
+  <section class="section pile-link">
+    <a class="text-link" href={withBase('/ideas/')}>{t('cta.fullPile')} →</a>
   </section>
 </BaseLayout>

@@ -1,0 +1,88 @@
+---
+// §3: a short dry explainer. It ends on the same license paragraph as
+// /contribute/, rendered from the one `license.body` string.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { withBase } from '../../lib/url';
+import { SITE } from '../../consts';
+import { t } from '../../i18n';
+
+const licenseParagraphs = t('license.body').split('\n\n');
+---
+
+<BaseLayout
+  title={t('howItWorks.title')}
+  description={`How ideas get considered, abandoned, and published on ${SITE.title}.`}
+>
+  <section class="page-head section">
+    <p class="eyebrow">{t('howItWorks.eyebrow')}</p>
+    <h1>Someone has an idea. Then they don’t.</h1>
+    <p class="lead">
+      ProductUnhunt publishes ridiculous business ideas as serious analysis. The presentation is the
+      joke. Nothing here is looking for funding.
+    </p>
+  </section>
+
+  <section class="section" aria-label="The process">
+    <div class="feature-list process-list">
+      <article>
+        <p class="eyebrow">01</p>
+        <h3>An idea is considered.</h3>
+        <p>
+          Usually in a shower, a queue, or the twenty minutes after a bad meeting. It survives long
+          enough to be described out loud.
+        </p>
+      </article>
+      <article>
+        <p class="eyebrow">02</p>
+        <h3>It is correctly abandoned.</h3>
+        <p>
+          This is the part the internet skips. An idea qualifies here only once someone has thought
+          about building it and chosen not to.
+        </p>
+      </article>
+      <article>
+        <p class="eyebrow">03</p>
+        <h3>It gets written up in five sections.</h3>
+        <p>
+          The Pitch, The Delusion, The Reality Check, Why It Stays Unbuilt, and an Unwanted Bonus —
+          the adjacent idea that is somehow worse.
+        </p>
+      </article>
+      <article>
+        <p class="eyebrow">04</p>
+        <h3>The editor publishes it.</h3>
+        <p>
+          Anyone can submit; the editor publishes. There is no queue position, no upvote gate, and
+          no algorithm deciding what surfaces.
+        </p>
+      </article>
+      <article>
+        <p class="eyebrow">05</p>
+        <h3>You deliver a verdict.</h3>
+        <p>
+          Six options, one vote per idea, changeable. No login, no likes, and no leaderboard. It is
+          not election-grade and does not pretend to be.
+        </p>
+      </article>
+      <article>
+        <p class="eyebrow">06</p>
+        <h3>Nobody builds it.</h3>
+        <p>
+          That is the whole outcome. If an idea does become real, its status changes to
+          <em>Unfortunately real</em> and we all sit with that.
+        </p>
+      </article>
+    </div>
+  </section>
+
+  <section class="section license-section" aria-labelledby="license-heading">
+    <p class="eyebrow" id="license-heading">{t('license.eyebrow')}</p>
+    <div class="license-body">
+      {licenseParagraphs.map((paragraph) => <p>{paragraph}</p>)}
+    </div>
+    <div class="action-row">
+      <a class="button" href={withBase('/contribute/')}>{t('cta.submit')}</a>
+      <a class="text-link" href={withBase('/ideas/')}>{t('cta.fullPile')}</a>
+    </div>
+  </section>
+</BaseLayout>

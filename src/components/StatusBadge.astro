@@ -1,0 +1,16 @@
+---
+// §8's three badges. The label itself lives in `src/lib/status.ts` so the
+// badge, the OG card, and anything else that names a status read one string.
+import { STATUS_LABEL, type Status } from '../lib/status';
+
+interface Props {
+  status: Status;
+  /** Extra classes from the caller (the card and the article kicker size it
+   *  differently, but the colour rules stay here). */
+  class?: string;
+}
+
+const { status, class: className } = Astro.props;
+---
+
+<span class:list={['status-badge', `is-${status}`, className]}>{STATUS_LABEL[status]}</span>

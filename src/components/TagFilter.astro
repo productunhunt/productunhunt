@@ -1,0 +1,35 @@
+---
+// §5's filter row: `All` plus **only the tags currently in use**, never the
+// full official list — an official tag with no published ideas behind it would
+// be a link to an empty page.
+import { withBase } from '../lib/url';
+import { tagSlug, type OfficialTag } from '../lib/tags';
+import { t } from '../i18n';
+
+interface Props {
+  tags: readonly OfficialTag[];
+  /** The tag whose archive is being viewed, or `undefined` on `/` and
+   *  `/ideas/`, where `All` is the current filter. */
+  current?: OfficialTag;
+}
+
+const { tags, current } = Astro.props;
+---
+
+{
+  tags.length > 0 && (
+    <nav class="tag-filter" aria-label={t('filter.label')}>
+      <a href={withBase('/ideas/')} aria-current={current === undefined ? 'page' : undefined}>
+        {t('filter.all')}
+      </a>
+      {tags.map((tag) => (
+        <a
+          href={withBase(`/ideas/tags/${tagSlug(tag)}/`)}
+          aria-current={tag === current ? 'page' : undefined}
+        >
+          {tag}
+        </a>
+      ))}
+    </nav>
+  )
+}

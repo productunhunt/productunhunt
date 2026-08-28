@@ -1,0 +1,54 @@
+---
+// Tag archive. Every param goes through `tagSlug()`: `Who asked?` and
+// `AI nonsense` cannot survive as raw path segments.
+import type { GetStaticPaths, Page } from 'astro';
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import IdeaList from '../../../../components/IdeaList.astro';
+import Pagination from '../../../../components/Pagination.astro';
+import TagFilter from '../../../../components/TagFilter.astro';
+import { getPublishedIdeas, type Idea } from '../../../../lib/ideas';
+import { tagSlug, usedTags, type OfficialTag } from '../../../../lib/tags';
+import { SITE } from '../../../../consts';
+import { t } from '../../../../i18n';
+
+export const getStaticPaths = (async ({ paginate }) => {
+  const ideas = await getPublishedIdeas();
+  const tags = usedTags(ideas);
+
+  // `usedTags` only returns tags with published ideas behind them, so no page
+  // generated here can be empty.
+  return tags.flatMap((tag) =>
+    paginate(
+      ideas.filter((idea) => (idea.data.tags as readonly string[]).includes(tag)),
+      { pageSize: 12, params: { tag: tagSlug(tag) }, props: { tag, tags } },
+    ),
+  );
+}) satisfies GetStaticPaths;
+
+interface Props {
+  page: Page<Idea>;
+  tag: OfficialTag;
+  tags: OfficialTag[];
+}
+
+const { page, tag, tags } = Astro.props;
+
+const isFirstPage = page.currentPage === 1;
+const title = isFirstPage
+  ? t('tag.title', { tag })
+  : t('tag.titlePaged', { tag, page: page.currentPage });
+---
+
+<BaseLayout title={title} description={t('tag.description', { tag, site: SITE.title })}>
+  <section class="page-head section">
+    <p class="eyebrow">{t('tag.eyebrow')}</p>
+    <h1>{t('tag.title', { tag })}</h1>
+    <p class="lead">{t('tag.lead', { tag })}</p>
+  </section>
+
+  <section class="section archive-section">
+    <TagFilter tags={tags} current={tag} />
+    <IdeaList ideas={page.data} label={t('tag.listLabel', { tag })} headingLevel="h2" />
+    <Pagination page={page} />
+  </section>
+</BaseLayout>

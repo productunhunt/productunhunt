@@ -1,64 +1,89 @@
 ---
-// The prose on this page is placeholder copy — rewrite it as your own. It is
-// intentionally *not* in `src/i18n/`: the dictionary holds UI chrome, so a
-// translator isn't handed someone else's biography, and you don't have to open
-// a dictionary file to edit your own about page.
+// §3: who runs it, why it exists, and what it will not do. The ledger is the
+// §16 out-of-scope list, stated as a promise rather than a roadmap gap.
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { SITE } from '../../consts';
+import { withBase } from '../../lib/url';
+import { CONTACT_EMAIL, REPO_URL, SITE } from '../../consts';
 import { t } from '../../i18n';
 ---
 
-<BaseLayout
-  title={t('about.title')}
-  description={`About the author behind this ${SITE.title} site.`}
->
+<BaseLayout title={t('about.title')} description={`Who runs ${SITE.title}, and why it exists.`}>
   <section class="page-head section">
     <p class="eyebrow">{t('about.eyebrow')}</p>
-    <h1>A measured profile for the person behind the work.</h1>
+    <h1>A board of ideas nobody should build.</h1>
     <p class="lead">
-      This page is shaped for a concise biography, a working philosophy, and the handful of details
-      that help readers understand how you think.
+      The internet has enough serious people building serious products to solve serious problems.
+      This is the other pile.
     </p>
   </section>
 
   <section class="section prose-grid">
     <div>
-      <p class="eyebrow">Profile</p>
-      <h2>Quiet systems, clear writing, durable interfaces.</h2>
+      <p class="eyebrow">Who runs it</p>
+      <h2>One editor, no committee.</h2>
     </div>
     <div class="prose-stack">
       <p>
-        I work across product strategy, interface systems, and technical writing. The common thread
-        is structure: making complex material easier to scan, trust, and maintain.
+        ProductUnhunt is run by {SITE.author}. The title is not real. The job is: read what people
+        send in, publish what is funny and specific, and reject the pitch decks with the minimum of
+        ceremony.
       </p>
       <p>
-        Astro Keel leaves room for this kind of context without forcing a loud personal brand.
-        Replace this placeholder with a specific background, current role, and the constraints that
-        shape your work.
+        Most of what is here at launch was written in-house. That is a starting condition, not a
+        policy — the submission doors are open and the byline on a card is whoever thought the thing
+        up.
+      </p>
+    </div>
+  </section>
+
+  <section class="section prose-grid">
+    <div>
+      <p class="eyebrow">Why it exists</p>
+      <h2>The good part is the not-building.</h2>
+    </div>
+    <div class="prose-stack">
+      <p>
+        Every idea here cleared exactly one bar: someone thought about building it and chose not to.
+        That decision is the most common event in the industry and the least documented one. Launch
+        boards celebrate the shipping. Startup graveyards catalogue the dying. Nothing was keeping
+        the receipts for the good calls.
+      </p>
+      <p>
+        So the format is a straight face. Real editorial structure, real analysis, a status badge, a
+        community verdict — applied to a product that does not exist and will not. The presentation
+        is the joke. The abandonment is sincere.
       </p>
     </div>
   </section>
 
   <section class="section" aria-label={t('about.ledgerLabel')}>
+    <div class="section-heading">
+      <p class="eyebrow">The promises</p>
+      <h2>{t('about.ledgerLabel')}</h2>
+    </div>
     <div class="about-ledger">
       <article>
         <span>01</span>
-        <h3>Current focus</h3>
-        <p>Designing lean content systems, portfolio surfaces, and editorial product pages.</p>
+        <h3>Build any of it</h3>
+        <p>
+          No incubator, no “we validated this in the comments”, no quiet spin-out of the one idea
+          that turned out to be plausible.
+        </p>
       </article>
       <article>
         <span>02</span>
-        <h3>Background</h3>
+        <h3>Rank you</h3>
         <p>
-          Experience spanning frontend implementation, design systems, and writing for technical
-          audiences.
+          No ranking algorithm, no vote-driven featuring, no leaderboards. Newest first, and the
+          filter row is the only sort there is.
         </p>
       </article>
       <article>
         <span>03</span>
-        <h3>Contact</h3>
+        <h3>Ask for your email</h3>
         <p>
-          Use this section for availability, collaboration preferences, or a direct contact route.
+          No accounts, no newsletter, no ads, and no client-side analytics. Voting takes an
+          anonymous cookie and nothing else.
         </p>
       </article>
     </div>
@@ -66,15 +91,19 @@ import { t } from '../../i18n';
 
   <section class="section prose-grid about-closing">
     <div>
-      <p class="eyebrow">Method</p>
-      <h2>Structure before surface.</h2>
+      <p class="eyebrow">Contact</p>
+      <h2>Two doors.</h2>
     </div>
     <div class="prose-stack">
       <p>
-        The theme treats the page like a working document: hierarchy first, rhythm second, visual
-        signature third. Fine rules, generous spacing, and type contrast carry the identity without
-        competing with the content.
+        Ideas arrive as pull requests against the public repository, or as plain email. Corrections,
+        complaints, and takedown requests use the same address.
       </p>
+      <div class="action-row">
+        <a class="button" href={withBase('/contribute/')}>{t('cta.submit')}</a>
+        <a class="text-link" href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
+        <a class="text-link" href={REPO_URL} rel="noopener noreferrer" target="_blank">GitHub ↗</a>
+      </div>
     </div>
   </section>
 </BaseLayout>

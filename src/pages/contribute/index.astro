@@ -1,0 +1,111 @@
+---
+// §11: two doors, one format. Page prose lives here rather than in the
+// dictionary — only `license.body` is shared, because it also appears on
+// /how-it-works/ and the two must never drift.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { withBase } from '../../lib/url';
+import { OFFICIAL_TAGS } from '../../lib/tags';
+import { CONTACT_EMAIL, REPO_URL, SITE } from '../../consts';
+import { t } from '../../i18n';
+
+const licenseParagraphs = t('license.body').split('\n\n');
+---
+
+<BaseLayout
+  title={t('contribute.title')}
+  description={`Submit an idea you decided not to build to ${SITE.title}.`}
+>
+  <section class="page-head section">
+    <p class="eyebrow">{t('contribute.eyebrow')}</p>
+    <h1>{t('cta.submit')}</h1>
+    <p class="lead">{t('contribute.lead')}</p>
+  </section>
+
+  <section class="section" aria-label="Submission routes">
+    <div class="feature-list doors">
+      <article>
+        <p class="eyebrow">{t('contribute.prEyebrow')}</p>
+        <h3>Open a pull request.</h3>
+        <p>
+          Copy <code>IDEA_TEMPLATE.md</code>, fill it in, and add it as
+          <code>src/content/ideas/your-slug.mdx</code>. The frontmatter is validated at build time,
+          so a bad tag or a missing section fails CI rather than the site.
+        </p>
+        <div class="action-row">
+          <a class="button" href={`${REPO_URL}/pulls`} rel="noopener noreferrer" target="_blank">
+            Open a pull request ↗
+          </a>
+        </div>
+      </article>
+      <article>
+        <p class="eyebrow">{t('contribute.emailEyebrow')}</p>
+        <h3>Email it and let someone else do the YAML.</h3>
+        <p>
+          Send the same fields as plain text. There is no form, no attachment requirement, and no
+          autoresponder. Ingestion is manual, which is a polite way of saying it happens when the
+          editor gets to it.
+        </p>
+        <div class="action-row">
+          <a class="button" href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="section prose-grid" aria-labelledby="fields-heading">
+    <div>
+      <p class="eyebrow">{t('contribute.fieldsEyebrow')}</p>
+      <h2 id="fields-heading">Same fields, either door.</h2>
+    </div>
+    <div class="prose-stack">
+      <ul class="spec-list">
+        <li><strong>Product name.</strong> The kind of name that would fit on a lanyard.</li>
+        <li><strong>Tagline.</strong> One line, savage, no hedging.</li>
+        <li><strong>Author name.</strong> Pseudonyms are fine. No follower counts, ever.</li>
+        <li><strong>Optional:</strong> X handle, GitHub handle, a site, a one-line bio.</li>
+        <li>
+          <strong>Five sections.</strong> The Pitch · The Delusion · The Reality Check · Why It Stays
+          Unbuilt · Unwanted Bonus.
+        </li>
+        <li><strong>One to three official tags,</strong> from the closed list below.</li>
+      </ul>
+
+      <p class="eyebrow">Official tags</p>
+      <ul class="tag-list static">
+        {OFFICIAL_TAGS.map((tag) => <li>{tag}</li>)}
+      </ul>
+
+      <p class="confirmation">“{t('contribute.confirmation')}”</p>
+      <p>
+        That line is the entry requirement. If you are still building it, this is the wrong website.
+      </p>
+    </div>
+  </section>
+
+  <section class="section prose-grid" aria-labelledby="review-heading">
+    <div>
+      <p class="eyebrow">{t('contribute.reviewEyebrow')}</p>
+      <h2 id="review-heading">The bar is funny and specific.</h2>
+    </div>
+    <div class="prose-stack">
+      <p>
+        Published if it is funny and specific. Rejected if it is a real pitch deck, an attack on a
+        person, or another empty “Uber for X”.
+      </p>
+      <p>
+        After acceptance the editor adds the publish date, the status, and — if it earns one — a
+        one-line stamp. Light copy-editing is allowed. The poll is not yours to run.
+      </p>
+    </div>
+  </section>
+
+  <section class="section license-section" aria-labelledby="license-heading">
+    <p class="eyebrow" id="license-heading">{t('license.eyebrow')}</p>
+    <div class="license-body">
+      {licenseParagraphs.map((paragraph) => <p>{paragraph}</p>)}
+    </div>
+    <div class="action-row">
+      <a class="text-link" href={withBase('/how-it-works/')}>{t('cta.howThisWorks')}</a>
+    </div>
+  </section>
+</BaseLayout>

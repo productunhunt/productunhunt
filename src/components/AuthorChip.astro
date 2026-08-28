@@ -1,0 +1,12 @@
+---
+// §6: the feed shows a name chip and nothing else — no bio, no avatar, no
+// follower count. The idea page's fuller author card is Phase 5's
+// `AuthorCard.astro`; this is the compact form the cards share.
+interface Props {
+  name: string;
+}
+
+const { name } = Astro.props;
+---
+
+<span class="author-chip">{name}</span>

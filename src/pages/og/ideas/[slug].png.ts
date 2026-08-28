@@ -7,24 +7,26 @@ import satori from 'satori';
 import sharp from 'sharp';
 import { SITE } from '../../../consts';
 
-// Build-time generated Open Graph images for every published idea,
-// rendered in the theme's light palette (see global.css tokens). The static
-// `public/og.jpg` remains the site-wide fallback for all other pages.
+// Per-idea Open Graph cards, generated at build time (§12): cheap-gold frame,
+// PRODUCT UNHUNT lockup, status badge, product name, tagline. Deliberately
+// absent: the author's face, and vote counts — counts go stale the moment the
+// card is cached by a social network, and a wrong number is worse than none.
+// The static `public/og.jpg` remains the fallback for every other page.
 
 interface OgProps {
   title: string;
-  description: string;
-  kind: string;
+  tagline: string;
+  status: string;
 }
 
 export const getStaticPaths = (async () => {
   const ideas = await getPublishedIdeas();
   return ideas.map((idea) => ({
-    params: { collection: 'ideas', slug: idea.id },
+    params: { slug: idea.id },
     props: {
       title: idea.data.title,
-      description: idea.data.tagline,
-      kind: STATUS_LABEL[idea.data.status],
+      tagline: idea.data.tagline,
+      status: STATUS_LABEL[idea.data.status],
     } satisfies OgProps,
   }));
 }) satisfies GetStaticPaths;
@@ -37,7 +39,6 @@ const COLOR = {
   bg: '#fcfcfa', // --color-bg      oklch(0.99 0.003 100)
   text: '#1e2226', // --color-text    oklch(0.25 0.01 250)
   muted: '#5e646a', // --color-muted   oklch(0.5 0.012 250)
-  line: '#d2d1cb', // --color-line    oklch(0.86 0.008 100)
   accent: '#916a0b', // --color-accent  oklch(0.55 0.11 82)
 };
 
@@ -45,11 +46,8 @@ const require = createRequire(import.meta.url);
 const font = (pkgPath: string) => readFile(require.resolve(pkgPath));
 
 // Latin subsets, to keep the build light. Satori draws any glyph these fonts
-// lack as an empty box, which is why the `kind` labels above stay Latin rather
-// than going through the UI dictionary — `SITE.locale = 'ja'` would otherwise
-// render them as tofu in every share image. Post titles in a non-Latin script
-// hit the same limit: install a face that covers them (e.g.
-// `@fontsource/noto-sans-jp`) and point the paths below at it.
+// lack as an empty box, which is why the status labels are rendered from the
+// Latin dictionary rather than a script these faces don't cover.
 const [fraunces, publicSans] = await Promise.all([
   font('@fontsource/fraunces/files/fraunces-latin-600-normal.woff'),
   font('@fontsource/public-sans/files/public-sans-latin-400-normal.woff'),
@@ -59,7 +57,8 @@ const truncate = (text: string, max: number) =>
   text.length > max ? `${text.slice(0, max - 1).trimEnd()}…` : text;
 
 export const GET: APIRoute<OgProps> = async ({ props }) => {
-  const { title, description, kind } = props;
+  const { title, tagline, status } = props;
+  const name = truncate(title, 60);
 
   const svg = await satori(
     {
@@ -70,7 +69,7 @@ export const GET: APIRoute<OgProps> = async ({ props }) => {
           height: '100%',
           display: 'flex',
           backgroundColor: COLOR.bg,
-          padding: 40,
+          padding: 36,
           fontFamily: 'Public Sans',
         },
         children: {
@@ -81,23 +80,23 @@ export const GET: APIRoute<OgProps> = async ({ props }) => {
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'space-between',
-              border: `1px solid ${COLOR.line}`,
-              padding: '52px 60px',
+              // The cheap-gold frame (§12) — the one piece of brand furniture
+              // the card carries.
+              border: `2px solid ${COLOR.accent}`,
+              padding: '48px 56px',
             },
             children: [
+              // Lockup: the accent mark plus the spaced-caps wordmark, the
+              // same pairing as the masthead.
               {
                 type: 'div',
                 props: {
-                  style: { display: 'flex', alignItems: 'center', gap: 16 },
+                  style: { display: 'flex', alignItems: 'center', gap: 18 },
                   children: [
                     {
                       type: 'div',
                       props: {
-                        style: {
-                          width: 22,
-                          height: 22,
-                          backgroundColor: COLOR.accent,
-                        },
+                        style: { width: 20, height: 20, backgroundColor: COLOR.accent },
                       },
                     },
                     {
@@ -105,10 +104,11 @@ export const GET: APIRoute<OgProps> = async ({ props }) => {
                       props: {
                         style: {
                           fontFamily: 'Fraunces',
-                          fontSize: 30,
+                          fontSize: 26,
+                          letterSpacing: 8,
                           color: COLOR.text,
                         },
-                        children: SITE.title,
+                        children: SITE.wordmark,
                       },
                     },
                   ],
@@ -119,33 +119,27 @@ export const GET: APIRoute<OgProps> = async ({ props }) => {
                 props: {
                   style: { display: 'flex', flexDirection: 'column' },
                   children: [
+                    // Status badge, drawn as the same outlined pill the site
+                    // uses rather than a filled chip — a filled gold block at
+                    // this size reads as an advertisement.
                     {
                       type: 'div',
                       props: {
-                        style: {
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: 14,
-                          marginBottom: 28,
-                          color: COLOR.accent,
-                          fontFamily: 'Fraunces',
-                          fontSize: 24,
-                          textTransform: 'uppercase',
-                          letterSpacing: 4,
-                        },
-                        children: [
-                          {
-                            type: 'div',
-                            props: {
-                              style: {
-                                width: 40,
-                                height: 1,
-                                backgroundColor: COLOR.accent,
-                              },
+                        style: { display: 'flex', marginBottom: 30 },
+                        children: {
+                          type: 'div',
+                          props: {
+                            style: {
+                              border: `1px solid ${COLOR.accent}`,
+                              padding: '8px 18px',
+                              color: COLOR.accent,
+                              fontSize: 20,
+                              letterSpacing: 3,
+                              textTransform: 'uppercase',
                             },
+                            children: status,
                           },
-                          { type: 'div', props: { children: kind } },
-                        ],
+                        },
                       },
                     },
                     {
@@ -153,11 +147,11 @@ export const GET: APIRoute<OgProps> = async ({ props }) => {
                       props: {
                         style: {
                           fontFamily: 'Fraunces',
-                          fontSize: title.length > 55 ? 54 : 64,
-                          lineHeight: 1.15,
+                          fontSize: name.length > 32 ? 62 : 78,
+                          lineHeight: 1.05,
                           color: COLOR.text,
                         },
-                        children: truncate(title, 90),
+                        children: name,
                       },
                     },
                   ],
@@ -167,11 +161,12 @@ export const GET: APIRoute<OgProps> = async ({ props }) => {
                 type: 'div',
                 props: {
                   style: {
-                    fontSize: 26,
+                    maxWidth: 960,
+                    fontSize: 27,
                     lineHeight: 1.4,
                     color: COLOR.muted,
                   },
-                  children: truncate(description, 120),
+                  children: truncate(tagline, 130),
                 },
               },
             ],

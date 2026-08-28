@@ -1072,3 +1072,425 @@ pre code {
     max-width: 100%;
   }
 }
+
+/* ==========================================================================
+   Unhunt components (Phase 4 routes)
+
+   Everything below reuses the tokens and the existing `.section` / `.eyebrow`
+   / `.entry-list` / `.prose` rhythm above — no parallel design system.
+   ========================================================================== */
+
+/* Filter row (§5) — `All` plus only the tags currently in use. */
+.tag-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: calc(var(--baseline) * 1.25);
+}
+
+.tag-filter a {
+  display: inline-flex;
+  min-height: 2.1rem;
+  align-items: center;
+  padding: 0.3rem 0.75rem;
+  border: var(--hairline);
+  background-image: none;
+  color: var(--color-muted);
+  font-size: 0.82rem;
+  font-weight: 700;
+  transition:
+    border-color 180ms ease,
+    color 180ms ease;
+}
+
+.tag-filter a:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.tag-filter a[aria-current='page'] {
+  border-color: var(--color-accent);
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+}
+
+.archive-section {
+  padding-block-start: clamp(2rem, 4vw, 3rem);
+}
+
+/* Idea card (§6) — a deadpan product listing. The 1px grid gap over a line
+   background is the same hairline trick `.entry-list` uses. */
+.idea-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+  gap: 1px;
+  background: var(--color-line);
+  border: var(--hairline);
+}
+
+.idea-list > [role='listitem'] {
+  display: flex;
+  background: var(--color-bg);
+}
+
+.idea-card {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  padding: clamp(1.35rem, 2.6vw, 2rem);
+  background: var(--color-bg);
+}
+
+.idea-card-name {
+  max-width: 16ch;
+  margin-bottom: 0.5rem;
+  font-size: 1.5rem;
+  line-height: 1.1;
+}
+
+.idea-card-tagline {
+  margin-bottom: var(--baseline);
+  color: var(--color-muted);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.idea-card-byline {
+  margin-bottom: 0.8rem;
+}
+
+/* §6: name chip only — no avatar, no bio, no follower count. */
+.author-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: var(--color-muted);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+}
+
+.author-chip::before {
+  content: '';
+  width: 0.45rem;
+  height: 0.45rem;
+  background: var(--color-accent);
+}
+
+.idea-card .tag-list {
+  margin-top: 0;
+  margin-bottom: var(--baseline);
+}
+
+.tag-list a {
+  background-image: none;
+  color: inherit;
+}
+
+.tag-list li:hover {
+  border-color: var(--color-accent);
+}
+
+.tag-list li:hover a {
+  color: var(--color-accent);
+}
+
+.idea-card-status {
+  margin-bottom: var(--baseline);
+}
+
+/* Pinned to the bottom so cards with taglines of different lengths still line
+   their verdicts up across a row. */
+.idea-card .vote-summary {
+  margin-top: auto;
+  padding-top: calc(var(--baseline) * 0.8);
+  border-top: var(--hairline);
+}
+
+.vote-summary-empty,
+.poll-empty,
+.mood-value {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 0.85rem;
+}
+
+/* Status badges (§8). `unbuilt` is the common case and stays an outline;
+   `still-a-threat` is the only one that fills, because it is the only one
+   that is a warning. */
+.status-badge {
+  display: inline-flex;
+  align-self: flex-start;
+  align-items: center;
+  padding: 0.3rem 0.6rem;
+  border: 1px solid var(--color-accent);
+  color: var(--color-accent);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.status-badge.is-someone-built-it {
+  border-color: var(--color-line-strong);
+  color: var(--color-muted);
+}
+
+.status-badge.is-still-a-threat {
+  border-color: var(--color-accent);
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+}
+
+/* Idea page head (§7): kicker, name, tagline, byline, stamp, mood. */
+.idea-head {
+  border-bottom: var(--hairline);
+}
+
+.idea-kicker {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem 1rem;
+  margin-bottom: calc(var(--baseline) * 1.1);
+}
+
+.idea-kicker-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  color: var(--color-muted);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+}
+
+.idea-kicker-tags a {
+  background-image: none;
+}
+
+.idea-kicker-tags a:hover {
+  color: var(--color-accent);
+}
+
+.idea-tagline {
+  max-width: 34ch;
+  margin-bottom: calc(var(--baseline) * 1.5);
+  color: var(--color-text);
+  font-family: var(--font-display);
+  font-size: clamp(1.35rem, 2.4vw, 1.85rem);
+  line-height: 1.35;
+}
+
+.author-card {
+  display: flex;
+  max-width: var(--prose-width);
+  align-items: flex-start;
+  gap: 0.9rem;
+  padding-top: calc(var(--baseline) * 0.9);
+  border-top: var(--hairline);
+}
+
+.author-avatar {
+  width: 3rem;
+  height: 3rem;
+  flex: none;
+  border: var(--hairline);
+  background: var(--color-soft);
+  object-fit: cover;
+}
+
+/* No email in the schema means no Gravatar; without a GitHub handle the card
+   falls back to an initial mark rather than a stock silhouette. */
+.author-avatar.is-generated {
+  display: grid;
+  place-items: center;
+  color: var(--color-accent);
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 650;
+}
+
+.author-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.author-name {
+  margin: 0;
+  font-weight: 700;
+}
+
+.author-title {
+  color: var(--color-muted);
+  font-weight: 400;
+}
+
+.author-title::before {
+  content: ' — ';
+}
+
+.author-bio {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 0.9rem;
+}
+
+.author-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.9rem;
+  margin: 0;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.author-source {
+  margin: 0;
+  color: var(--color-muted);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.editor-stamp,
+.mood-teaser {
+  max-width: var(--prose-width);
+  margin-top: calc(var(--baseline) * 1.35);
+  padding-left: 1rem;
+  border-left: 2px solid var(--color-accent);
+}
+
+.editor-stamp .eyebrow,
+.mood-teaser .eyebrow {
+  margin-bottom: 0.3rem;
+}
+
+.editor-stamp p:last-child {
+  margin: 0;
+  color: var(--color-muted);
+  font-style: italic;
+}
+
+/* Community verdict (§9). The island itself arrives in Phase 5; this is the
+   frame it lands in, and what a no-JS visitor keeps. */
+.poll-section,
+.house-rules,
+.submit-worse {
+  padding-block-start: 0;
+}
+
+.poll {
+  max-width: var(--prose-width);
+  padding: var(--baseline);
+  border: var(--hairline);
+  background: var(--color-surface);
+}
+
+.house-rules ul {
+  max-width: var(--prose-width);
+  margin: 0;
+  padding: 0;
+  border-top: var(--hairline);
+  list-style: none;
+}
+
+.house-rules li {
+  padding-block: calc(var(--baseline) * 0.6);
+  border-bottom: var(--hairline);
+  color: var(--color-muted);
+}
+
+/* "Similar mistakes" carries a tagline instead of Keel's date, so the row has
+   to wrap onto a second line. */
+.related-list p {
+  flex-basis: 100%;
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 0.9rem;
+}
+
+/* Homepage interstitials (§5). */
+.interstitial {
+  border-top: var(--hairline);
+}
+
+.featured-interstitial h2,
+.contribute-interstitial h2 {
+  margin-bottom: calc(var(--baseline) * 1.25);
+}
+
+.pile-link {
+  padding-block: calc(var(--baseline) * 2);
+  border-top: var(--hairline);
+}
+
+/* Contribute and How it works. */
+.doors {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.process-list {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.feature-list .eyebrow {
+  margin-bottom: calc(var(--baseline) * 0.55);
+}
+
+.spec-list {
+  margin: 0;
+  padding-left: 1.1rem;
+  color: var(--color-muted);
+}
+
+.spec-list li {
+  margin-bottom: 0.5rem;
+  line-height: 1.7;
+}
+
+.spec-list strong {
+  color: var(--color-text);
+}
+
+.tag-list.static {
+  margin-top: 0;
+}
+
+/* The one line every submission has to be able to say. */
+.confirmation {
+  max-width: var(--prose-width);
+  margin: 0;
+  padding: var(--baseline);
+  border: 1px solid var(--color-accent);
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  line-height: 1.5;
+}
+
+.license-section {
+  border-top: var(--hairline);
+}
+
+.license-body {
+  max-width: var(--prose-width);
+}
+
+.license-body p {
+  color: var(--color-muted);
+}
+
+@media (max-width: 1000px) {
+  .process-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 760px) {
+  .idea-list,
+  .doors,
+  .process-list {
+    grid-template-columns: 1fr;
+  }
+}

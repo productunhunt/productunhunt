@@ -1,0 +1,35 @@
+---
+// The card grid. Three routes render the same list with the same empty state,
+// so the wrapper travels with the card rather than being retyped per page.
+import type { Idea } from '../lib/ideas';
+import IdeaCard from './IdeaCard.astro';
+
+interface Props {
+  ideas: readonly Idea[];
+  /** Accessible name for the list region. */
+  label: string;
+  /** Shown when there is nothing to list. */
+  empty?: string;
+  headingLevel?: 'h2' | 'h3';
+}
+
+const { ideas, label, empty, headingLevel } = Astro.props;
+---
+
+{
+  ideas.length > 0 ? (
+    <div class="idea-list" role="list" aria-label={label}>
+      {ideas.map((idea) => (
+        <div role="listitem">
+          <IdeaCard idea={idea} headingLevel={headingLevel} />
+        </div>
+      ))}
+    </div>
+  ) : (
+    empty && (
+      <div class="empty-state compact">
+        <p>{empty}</p>
+      </div>
+    )
+  )
+}
