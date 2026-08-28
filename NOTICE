@@ -1,0 +1,35 @@
+ProductUnhunt — names and marks
+==============================
+
+Three licenses apply to this repository, and none of them covers the brand:
+
+  LICENSE              MIT. The software, minus `src/content/`.
+  src/content/LICENSE  All rights reserved. The ideas and their prose.
+  NOTICE (this file)   The name and the marks. Not licensed at all.
+
+NOT LICENSED
+
+  - The names "ProductUnhunt" and "Product Unhunt"
+  - The `PRODUCT UNHUNT` wordmark and its lockup
+  - The status badges — "Regrettably unbuilt", "Unfortunately real",
+    "Do not encourage"
+  - The six Community verdict options, as a set
+  - The site's copy and voice: the manifesto line, the section headings
+    ("Recently not built", "The full pile", "Similar mistakes", "Most
+    unhinged this week"), and the house rules
+  - productunhunt.com and the ProductUnhunt GitHub organisation
+
+The MIT grant in `LICENSE` is a grant of copyright in the code. It is not a
+grant of trademark rights, and it does not permit anyone to run a site that
+presents itself as ProductUnhunt, or as its successor, mirror, or official
+anything.
+
+Build whatever you like on the code. Do not call it this.
+
+THIRD-PARTY
+
+The software is derived from Astro Keel (https://github.com/kpab/astro-keel),
+copyright (c) 2026 kpab, MIT-licensed. "Astro Keel" is kpab's, not ours, and
+appears here only as attribution.
+
+Questions: ideas@productunhunt.com

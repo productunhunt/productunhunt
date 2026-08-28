@@ -1,6 +1,29 @@
+ProductUnhunt — code license
+============================
+
+This MIT license covers the SOFTWARE in this repository only:
+
+  - everything under `src/` EXCEPT `src/content/`
+  - the build, config, and tooling files: `astro.config.mjs`,
+    `drizzle.config.ts`, `netlify.toml`, `tsconfig.json`, `package.json`,
+    `remark-reading-time.mjs`, `scripts/`, `integrations/`, `drizzle/`
+
+It does NOT cover:
+
+  - `src/content/` — the ideas and their prose. See `src/content/LICENSE`.
+  - The ProductUnhunt name, wordmark, status badges, and site copy.
+    See `NOTICE`.
+
+The software is derived from Astro Keel (https://github.com/kpab/astro-keel),
+which is MIT-licensed. kpab's copyright notice is retained below, as that
+license requires.
+
+--------------------------------------------------------------------------
+
 MIT License
 
-Copyright (c) 2026 kpab
+Copyright (c) 2026 kpab — Astro Keel, the theme this site is built on
+Copyright (c) 2026 Ravi Kumar Singh — ProductUnhunt modifications
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

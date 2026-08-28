@@ -1,155 +1,168 @@
-# Contributing to Astro Keel
+# Contributing to ProductUnhunt
 
-Thanks for your interest in improving the theme. Bug reports, docs fixes, and
-focused pull requests are all welcome.
+You have bad ideas too. This is where they go.
 
-## Design principles
+ProductUnhunt publishes business ideas that were considered and then correctly
+abandoned. Contributions are welcome through either of two doors, and both ask
+for exactly the same thing.
 
-Astro Keel is a **minimal** theme, and staying minimal is a feature. Two rules
-follow from that:
+## The entry requirement
 
-1. **Ship zero client-side JavaScript by default.** Anything that adds runtime
-   weight (comment widgets, analytics, animation libraries) must be opt-in via a
-   flag in `src/consts.ts` and emit nothing when disabled.
-2. **Configuration lives in one place.** New knobs go in `src/consts.ts` with a
-   doc comment, not scattered across templates. A user should be able to rebrand
-   the theme without editing `.astro` files.
+> "I thought about building this and chose not to."
 
-## Development setup
+That line is not a formality. If you are still building it, this is the wrong
+website.
 
-Requires **Node.js 22.12 or newer** (Astro 7). The release line CI builds on
-lives in `.nvmrc`, so a version manager can pick it up for you — `nvm use`,
-`fnm use`, or `mise install` in the project root.
+## Door one — open a pull request
+
+1. Copy [`IDEA_TEMPLATE.md`](./IDEA_TEMPLATE.md).
+2. Fill it in.
+3. Add it as `src/content/ideas/your-slug.mdx` (or `.md` — either works).
+4. Open a PR.
+
+The slug is lowercase, hyphenated, and matches the product name:
+`fake-vacation.md`, not `Fake Vacation Idea FINAL.md`.
+
+Frontmatter is validated at build time, so a bad tag fails CI rather than the
+site. Leave `publishDate`, `status`, `editorStamp`, and `featured` at the
+template's values — the schema needs a date and a status to be present, but
+the editor sets the real ones on the way in.
+
+## Door two — email it
+
+Send the same fields as plain text to **ideas@productunhunt.com** and let
+someone else do the YAML.
+
+There is no form, no attachment requirement, and no autoresponder. Ingestion
+is manual, which is a polite way of saying it happens when the editor gets to
+it.
+
+## The fields
+
+Same either way:
+
+- **Product name.** The kind of name that would fit on a lanyard.
+- **Tagline.** One line, savage, no hedging.
+- **Author name.** Pseudonyms are fine. No follower counts, ever.
+- **Optional:** X handle, GitHub handle, a site, a one-line bio.
+- **Five sections.** The Pitch · The Delusion · The Reality Check · Why It
+  Stays Unbuilt · Unwanted Bonus.
+- **One to three official tags,** from the closed list below.
+
+### Official tags
+
+AI nonsense · SaaS · Dating · Marketplace · Hardware · B2B · Consumer ·
+Social · Who asked? · Local · Climate · Health · Fintech · Creator economy
+
+One to three per idea. The list is closed — no free-typed tags — and the
+schema rejects anything else. If your idea genuinely needs a fifteenth tag,
+say so in the PR and make the case.
+
+### The five sections
+
+| Section              | What goes in it                                                                       |
+| -------------------- | ------------------------------------------------------------------------------------- |
+| The Pitch            | The idea, played completely straight. Sell it.                                        |
+| The Delusion         | Why it sounded good. The reasoning that got you there.                                |
+| The Reality Check    | Where it falls apart. Be specific — numbers, mechanics, the one detail that kills it. |
+| Why It Stays Unbuilt | The verdict. Short.                                                                   |
+| Unwanted Bonus       | The worse idea that fell out of the first one.                                        |
+
+No word-count rule. Funny and specific beats a target length, and the editor
+trims what drags.
+
+## The bar
+
+**Published** if it is funny and specific.
+
+**Rejected** if it is:
+
+- a real pitch deck wearing a costume
+- an attack on a person, a company's staff, or an identifiable individual
+- another empty "Uber for X" with no observation in it
+
+Rejection is not a review. There is no appeals process and no feedback
+guarantee.
+
+## After acceptance
+
+The editor adds the publish date, the status, and — if it earns one — a
+one-line stamp. Light copy-editing is allowed. The joke stays yours; the
+commas may not.
+
+The poll is not yours to run. Neither is the schedule.
+
+## The deal
+
+This is entertainment. Treat every idea as public and already dead.
+
+By submitting, you grant ProductUnhunt a perpetual, irrevocable, worldwide
+licence to publish, edit, translate, and roast it, and to keep it published.
+You keep the copyright in your idea. We promise nothing.
+
+Do not send confidential plans, client work, or anything you would mind
+seeing next to Founder needs sleep.
+
+Published ideas may be copy-edited. We can reject or unpublish anything, no
+debate.
+
+This grant runs to ProductUnhunt and is separate from the licenses on the
+repository — see [`src/content/LICENSE`](./src/content/LICENSE) for what
+everyone else may do with published ideas, and [`NOTICE`](./NOTICE) for the
+name and the marks.
+
+## Comments
+
+House rules on every idea page:
+
+- Roast the idea, not the author.
+- Pitching a real startup in the comments is a self-own and will be deleted.
+
+---
+
+## Code contributions
+
+Rarer than idea contributions, and held to a different standard.
+
+Requires **Node.js 22.12 or newer**. The version lives in `.nvmrc`, so a
+version manager can pick it up.
 
 ```sh
-git clone https://github.com/kpab/astro-keel.git
-cd astro-keel
+git clone https://github.com/productunhunt/productunhunt.git
+cd productunhunt
 nvm use          # or `fnm use` / `mise install` — reads .nvmrc
 npm install
-npm run dev      # dev server at http://localhost:4321/astro-keel/
+cp .env.example .env
+npm run dev
 ```
-
-Note the `/astro-keel/` path — `astro.config.mjs` sets `base` for the GitHub
-Pages demo. Leave it as-is in PRs; downstream users drop it for a root domain.
 
 Before pushing:
 
 ```sh
 npm run format   # Prettier — CI rejects unformatted code
 npm run check    # astro check — must report 0 errors
-npm run build    # must succeed; also runs `pagefind` via postbuild
-```
-
-`npm run check` currently emits four hints: two Zod deprecations from Astro's
-content schema API, and two unused-`Props` hints in the paginated routes. Those
-are pre-existing — new _errors_ are not acceptable, new hints should be avoided.
-
-## Formatting
-
-Prettier owns formatting, with `prettier-plugin-astro` for `.astro` files.
-`npm run format:check` runs in CI, so an unformatted PR fails before the build.
-Don't hand-tune style — run `npm run format` and let the config decide.
-
-Settings live in `.prettierrc`: single quotes and 100-column lines, chosen to
-match the code as it was already written. `.editorconfig` covers charset, line
-endings, and indentation for editors that don't run Prettier.
-
-Two paths are exempt in `.prettierignore`: `CHANGELOG.md`, whose entries are
-hand-wrapped, and `src/components/Comments.astro`, which the Astro plugin cannot
-parse — its `<style>` is wrapped in a JSX expression, the only way to scope CSS
-inside `{enabled && …}`. Keep that file tidy by hand.
-
-`src/content/` is formatted too. Prose is left alone — `proseWrap` stays at the
-default `preserve`, so paragraphs are never rewrapped — but frontmatter quoting
-is normalised and fenced code blocks are reformatted. When a code block has to
-stay verbatim, for instance because the post is about the broken formatting,
-mark it:
-
-````md
-<!-- prettier-ignore -->
-```js
-const   x=1
-```
-````
-
-Downstream users who would rather keep their own posts out of the gate can add
-`src/content/` to `.prettierignore` — the demo content in this repo stays under
-it because it ships as part of the theme.
-
-## Project structure
-
-```
-src/
-  consts.ts          # site identity, nav, social links, feature flags
-  content.config.ts  # collection schemas (Content Layer API)
-  content/           # works/ and blog/ Markdown & MDX entries
-  layouts/           # BaseLayout — head, nav, theme toggle, footer
-  components/        # Pagination, SocialLinks, CodeCopy, StructuredData…
-  pages/             # routes: /, /about, /works, /blog, tags, search, rss.xml
-  lib/url.ts         # withBase() — always use it for internal links/assets
-  styles/global.css  # design tokens (OKLCH), typography, layout primitives
-astro.config.mjs     # site URL, base path, integrations, Shiki config
+npm run build    # must succeed
 ```
 
 Two things that trip people up:
 
-- **Always route internal links through `withBase()`** (`src/lib/url.ts`).
-  Hard-coded `/blog/` links break every deployment that uses a `base` path.
-- **The theme uses View Transitions** (`<ClientRouter />`). Scripts that touch
-  the DOM must re-run after soft navigation — listen for `astro:page-load` or
-  `astro:after-swap` rather than relying on a single initial execution.
+- **Route internal links through `withBase()`** (`src/lib/url.ts`).
+  Hard-coded paths break deployments that use a `base` path.
+- **The site uses View Transitions.** Scripts that touch the DOM must re-run
+  after soft navigation — listen for `astro:page-load` or `astro:after-swap`
+  rather than relying on a single initial execution.
 
-## Pull requests
+Ground rules:
 
-- Branch from `main`. Use a descriptive branch name (`feat/…`, `fix/…`, `docs/…`).
-- **Keep commits small** — one logical change per commit.
-- Commit subjects follow [Conventional Commits](https://www.conventionalcommits.org/)
-  (`feat:`, `fix:`, `docs:`, `style:`, `refactor:`, `perf:`, `chore:`).
-- Include **light and dark mode screenshots** for any visual change.
-- One concern per PR. Unrelated drive-by refactors make review slow.
-- Add an entry under `## [Unreleased]` in [CHANGELOG.md](./CHANGELOG.md) for
-  user-visible changes.
+- Branch from `main`. Descriptive branch name (`feat/…`, `fix/…`, `docs/…`).
+- Small commits, one logical change each.
+- [Conventional Commits](https://www.conventionalcommits.org/) subjects.
+- Screenshots for any visual change.
+- One concern per PR. Drive-by refactors make review slow.
 
-## Reporting bugs
+The site ships close to zero client-side JavaScript, and keeping it that way
+is a feature rather than an accident. The vote island is the exception, and it
+had to argue for itself.
 
-Open an issue with the **Bug report** form. A reproduction — even just the exact
-frontmatter and the build output — resolves reports far faster than a
-description alone.
-
-## Release procedure
-
-Maintainers only.
-
-1. Move the `## [Unreleased]` entries in `CHANGELOG.md` into a new
-   `## [x.y.z] - YYYY-MM-DD` section and update the link definitions at the
-   bottom of the file.
-2. Bump `version` in `package.json` to match.
-3. Commit as `chore: release vx.y.z`, then tag and push:
-
-   ```sh
-   git tag vx.y.z
-   git push origin main --tags
-   ```
-
-   Pushing the tag triggers `.github/workflows/release.yml`, which extracts
-   that version's section from `CHANGELOG.md` and publishes the GitHub
-   Release with it as the body. The workflow fails if the tag has no matching
-   CHANGELOG section — that's the guard against tagging before writing notes.
-
-The Lighthouse table in the README is a hand-recorded snapshot, not a live
-badge — re-run it before cutting a release so a regression can't sit behind a
-stale 100:
-
-```sh
-npm run build && npm run preview
-npx lighthouse http://localhost:4321/astro-keel/ --preset=desktop --view
-```
-
-Versioning is [Semantic Versioning](https://semver.org/): a breaking change to
-`src/consts.ts`, the content schemas, or the required Node version bumps the
-major (or the minor, while the theme is pre-1.0).
-
-## License
-
-By contributing, you agree that your contributions are licensed under the
-[MIT License](./LICENSE).
+Code contributions are MIT-licensed — see [`LICENSE`](./LICENSE). Ideas are
+not; they are covered by the deal above.

@@ -1,0 +1,45 @@
+ProductUnhunt — content license
+==============================
+
+Copyright (c) 2026 Ravi Kumar Singh and the individual contributors named in
+each entry's frontmatter. All rights reserved.
+
+This license covers everything under `src/content/` — the ideas, their prose,
+their taglines, and their editorial stamps. The site's software is separately
+MIT-licensed; see the `LICENSE` file at the repository root.
+
+The repository is public so that ideas can be submitted as pull requests and
+so that comments can be backed by its Discussions. Public is not the same as
+unlicensed. Nothing here is placed in the public domain, and being able to
+read or fork this repository on GitHub does not grant a license to republish
+its contents elsewhere.
+
+WHAT YOU MAY DO WITHOUT ASKING
+
+  - Read it. Link to it. Send it to someone who deserves it.
+  - Quote a reasonable excerpt — a tagline, a paragraph — with attribution to
+    ProductUnhunt and a link to the idea it came from.
+  - Fork this repository on GitHub to prepare a contribution back to it.
+
+WHAT REQUIRES WRITTEN PERMISSION
+
+  - Republishing an idea, in whole or in substantial part, anywhere else.
+  - Deploying this content as a site of your own, under any name.
+  - Any commercial use, including advertising-supported reposting, and
+    including collections, compilations, or "best of" aggregations.
+  - Training or fine-tuning a machine learning model on this content.
+
+CONTRIBUTED IDEAS
+
+Contributors keep the copyright in the ideas they submit. By submitting, a
+contributor grants ProductUnhunt a perpetual, irrevocable, worldwide licence
+to publish, edit, translate, and roast the submission, and to keep it
+published. See `CONTRIBUTING.md`.
+
+That grant runs to ProductUnhunt. It does not run to you, and forking this
+repository does not put you in ProductUnhunt's position.
+
+PERMISSION
+
+Ask: ideas@productunhunt.com. The answer is usually yes, and always
+unenthusiastic.
