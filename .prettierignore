@@ -10,3 +10,9 @@ CHANGELOG.md
 # Rewriting it as `set:html` would move the CSS out of the markup just to satisfy
 # the formatter — drop this line once the plugin handles the construct.
 src/components/Comments.astro
+
+# Build-time artefact, regenerated on every build.
+src/generated/
+
+# drizzle-kit owns these and rewrites them on every `db:generate`.
+drizzle/meta/

@@ -9,6 +9,9 @@ node_modules/
 # generated types
 .astro/
 
+# build-time slug manifest, written by integrations/slug-manifest.mjs
+src/generated/
+
 # environment variables
 .env
 .env.production
