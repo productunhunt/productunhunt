@@ -540,31 +540,6 @@ pre code {
   background: var(--color-surface);
 }
 
-.article-image {
-  display: block;
-  width: 100%;
-  height: auto;
-  margin-top: calc(var(--baseline) * 2);
-  overflow: hidden;
-  border: var(--hairline);
-  background: var(--color-surface);
-}
-
-.article-image img {
-  display: block;
-  width: 100%;
-  height: auto;
-}
-
-.article-image figcaption {
-  padding: 0.75rem 1rem;
-  border-top: var(--hairline);
-  color: var(--color-muted);
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  line-height: 1.5;
-}
-
 .post-nav-section {
   padding-block-start: 0;
 }

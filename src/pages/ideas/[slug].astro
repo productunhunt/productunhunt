@@ -4,7 +4,6 @@
 // tagline, byline, editor stamp, mood teaser, roast, poll, house rules,
 // comments, kindred ideas, set one free.
 import type { GetStaticPaths } from 'astro';
-import { Image } from 'astro:assets';
 import { render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import AuthorCard from '../../components/AuthorCard.astro';
@@ -40,9 +39,6 @@ const {
   status,
   tags,
   editorStamp,
-  heroImage,
-  heroAlt,
-  heroCaption,
   relapse,
 } = idea.data;
 
@@ -179,22 +175,6 @@ const breadcrumbSchema = {
         </aside>
       </div>
     </header>
-
-    {
-      /* A null `heroImage` must never reach <Image> — the schema allows it and
-         most ideas use it. */
-      heroImage && (
-        <figure class="section article-image">
-          <Image
-            src={heroImage}
-            alt={heroAlt ?? ''}
-            widths={[640, 960, 1280]}
-            sizes="(min-width: 1160px) 1160px, 100vw"
-          />
-          {heroCaption && <figcaption>{heroCaption}</figcaption>}
-        </figure>
-      )
-    }
 
     {/* 7. The roast */}
     <div class:list={['section', 'roast-section', showToc && 'article-layout']}>
