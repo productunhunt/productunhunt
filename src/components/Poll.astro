@@ -21,6 +21,7 @@ const { slug } = Astro.props;
   data-votes={t('poll.votes')}
   data-votes-one={t('poll.votesOne')}
   data-failed={t('poll.failed')}
+  data-too-many={t('poll.tooMany')}
   data-unavailable={t('poll.unavailable')}
 >
   <div class="poll-intro">
@@ -29,8 +30,9 @@ const { slug } = Astro.props;
       <h2>How wild is it, really?</h2>
     </div>
     <p>
-      Pick the reaction that feels most legally defensible. You can change it later. We do not ask
-      for your email, dignity, or a twelve-word seed phrase.
+      Pick the reaction that feels most legally defensible. One verdict per visitor, and it is final
+      — the other five close the moment you choose. We do not ask for your email, dignity, or a
+      twelve-word seed phrase.
     </p>
   </div>
   <ul class="poll-options" aria-label={t('poll.label')}>

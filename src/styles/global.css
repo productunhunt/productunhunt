@@ -1494,11 +1494,19 @@ pu-poll {
     background 180ms ease;
 }
 
-/* Server-rendered state: visible, legible, and honestly not clickable until
-   the island upgrades it. */
+/* Two states share this: server-rendered before the island upgrades, and the
+   five options that close once a verdict is on record. Both are honestly not
+   clickable, and both should read as receded rather than broken. */
 .poll-option:disabled {
   cursor: default;
   opacity: 0.7;
+}
+
+/* The chosen row is the exception — it stays at full strength, and stops
+   pretending to be a fresh offer. */
+.poll-option[aria-pressed='true'] {
+  cursor: default;
+  opacity: 1;
 }
 
 .poll-option:not(:disabled):hover {
@@ -2496,6 +2504,13 @@ h2 em {
   background: var(--color-secondary);
   color: #17130f;
   box-shadow: 1px 1px 0 var(--color-text);
+}
+
+/* No lift on the row already chosen: the vote is cast, there is nothing left
+   to press. */
+.poll-option[aria-pressed='true']:hover {
+  box-shadow: 1px 1px 0 var(--color-text);
+  transform: none;
 }
 
 .poll-option:not(:disabled):hover .poll-count,

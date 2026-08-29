@@ -6,17 +6,18 @@
 // statically — and the no-JavaScript rendering would get worse, not better.
 //
 // The server renders all six options; this script never rebuilds that markup,
-// it only updates counts, bars, and pressed state. So the no-JS page and the
-// upgraded page are the same DOM.
+// it only updates counts, bars, pressed state, and which buttons are live. So
+// the no-JS page and the upgraded page are the same DOM.
 
 import { actions } from 'astro:actions';
 import { POLL_OPTIONS, totalVotes, type Counts, type PollOptionKey } from '../lib/poll';
-import { requestCounts, sanitize } from './counts';
+import { publish, requestCounts, sanitize } from './counts';
 
-/** Where the visitor's own choice is remembered. Purely a UI hint: the
- *  server's signed cookie is the real identity, and the counts response is
- *  edge-cached and therefore anonymous (§4 vs §9 — the cache wins, so the
- *  client has to remember this for itself). */
+/** Where the visitor's own choice is remembered. Written only after the server
+ *  has accepted the vote, so its presence means "this browser has a verdict on
+ *  record", which is what the lock below keys off. The signed cookie remains
+ *  the server's identity; this is the client's memory of the outcome, needed
+ *  because the counts response is edge-cached and therefore anonymous. */
 const choiceKey = (slug: string) => `pu_vote:${slug}`;
 
 function readChoice(slug: string): PollOptionKey | undefined {
@@ -45,6 +46,7 @@ class PollElement extends HTMLElement {
   #counts: Counts = {};
   #choice?: PollOptionKey;
   #pending = false;
+  #error?: string;
   #slug = '';
 
   connectedCallback(): void {
@@ -53,14 +55,15 @@ class PollElement extends HTMLElement {
     this.#slug = slug;
     this.#choice = readChoice(slug);
 
-    // Server-rendered disabled, enabled here: without this script a click
-    // could not do anything, and an enabled-looking button that silently
-    // ignores you is worse than one that says it is not available.
     for (const button of this.#buttons()) {
-      button.disabled = false;
       button.addEventListener('click', this.#onClick);
     }
 
+    // The buttons ship `disabled` from the server — without this script a
+    // click could not do anything, and an enabled-looking button that silently
+    // ignores you is worse than one that says it is not available. `#render`
+    // is what decides which of them come alive, because that answer depends on
+    // whether this browser has already voted.
     this.#render();
     this.#unsubscribe = requestCounts(slug, (counts) => {
       this.#counts = counts;
@@ -86,19 +89,19 @@ class PollElement extends HTMLElement {
   };
 
   async #vote(option: PollOptionKey): Promise<void> {
-    // §9 allows changing a vote, but re-clicking the option you already hold
-    // is a no-op rather than a round trip that changes nothing.
-    if (this.#pending || this.#choice === option) return;
+    // One verdict per browser: once a vote is on record the other five are
+    // disabled, so this is only ever reached by a stray programmatic click or
+    // by the option already held. Both are no-ops rather than a round trip.
+    if (this.#pending || this.#choice) return;
 
-    const previousCounts = { ...this.#counts };
-    const previousChoice = this.#choice;
+    const previousCounts = this.#counts;
     this.#pending = true;
+    this.#error = undefined;
 
-    // Optimistic: the new choice replaces the old one, exactly as the action's
-    // upsert will (§9 — a vote replaces the previous choice, it does not add).
-    if (previousChoice) {
-      this.#counts[previousChoice] = Math.max(0, (this.#counts[previousChoice] ?? 1) - 1);
-    }
+    // Optimistic. A copy rather than a mutation: `#counts` is the same object
+    // every other surface on the page was handed, and editing it in place
+    // would edit theirs.
+    this.#counts = { ...previousCounts };
     this.#counts[option] = (this.#counts[option] ?? 0) + 1;
     this.#choice = option;
     this.#render();
@@ -106,38 +109,47 @@ class PollElement extends HTMLElement {
     try {
       const { data, error } = await actions.vote({ slug: this.#slug, option });
       if (error) throw error;
+      writeChoice(this.#slug, option);
       // The action returns authoritative counts; prefer them over the guess —
       // but only when they contain something. A vote that just succeeded
       // cannot leave a total of zero, so an empty payload means the response
       // was shaped wrong, and adopting it would blank a poll that has votes.
+      //
+      // Published rather than assigned: these are the only counts on the page
+      // known to include this reader, and the mood teaser wants them too.
       const fresh = sanitize((data as { counts?: unknown } | undefined)?.counts);
-      if (fresh && totalVotes(fresh) > 0) this.#counts = fresh;
-      writeChoice(this.#slug, option);
-      this.#render();
+      if (fresh && totalVotes(fresh) > 0) publish(this.#slug, fresh);
     } catch (error) {
       this.#counts = previousCounts;
-      this.#choice = previousChoice;
-      this.#render();
-      const code = (error as { code?: string } | null)?.code;
-      this.#setStatus(
-        code === 'SERVICE_UNAVAILABLE'
-          ? (this.dataset.unavailable ?? '')
-          : (this.dataset.failed ?? ''),
-        true,
-      );
+      this.#choice = undefined;
+      this.#error = this.#messageFor((error as { code?: string } | null)?.code);
     } finally {
       this.#pending = false;
+      this.#render();
     }
+  }
+
+  /** The server's own message is deliberately not shown: §9's copy lives in
+   *  the dictionary, and an unrecognised code should read as a plain failure
+   *  rather than leaking whatever the action happened to throw. */
+  #messageFor(code: string | undefined): string {
+    if (code === 'SERVICE_UNAVAILABLE') return this.dataset.unavailable ?? '';
+    if (code === 'TOO_MANY_REQUESTS') return this.dataset.tooMany ?? '';
+    return this.dataset.failed ?? '';
   }
 
   #render(): void {
     const total = totalVotes(this.#counts);
+    // A verdict on record locks the poll: the choice stands, and the five it
+    // was chosen over stop being offers.
+    const locked = this.#choice !== undefined;
 
     for (const button of this.#buttons()) {
       const key = button.dataset.option as PollOptionKey;
       const count = this.#counts[key] ?? 0;
       const chosen = this.#choice === key;
 
+      button.disabled = this.#pending || (locked && !chosen);
       button.setAttribute('aria-pressed', String(chosen));
       button.querySelector('[data-count]')!.textContent = total > 0 ? String(count) : '';
       // Share of the total, not of the leader: the proportions are the point
@@ -148,9 +160,15 @@ class PollElement extends HTMLElement {
       button.querySelector<HTMLElement>('[data-your-vote]')!.hidden = !chosen;
       button.querySelector<HTMLElement>('[data-action]')!.textContent = chosen
         ? 'Selected ✓'
-        : 'Choose';
+        : locked
+          ? 'Locked'
+          : 'Choose';
     }
 
+    if (this.#error) {
+      this.#setStatus(this.#error, true);
+      return;
+    }
     if (total === 0) {
       this.#setStatus(this.dataset.empty ?? '', false);
       return;
