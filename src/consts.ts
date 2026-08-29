@@ -99,11 +99,11 @@ export interface GiscusConfig {
  *  degrades to no comment section rather than a broken widget. The launch bar
  *  (§14) allows this one to land post-launch. */
 export const GISCUS: GiscusConfig = {
-  enabled: false,
-  repo: '',
-  repoId: '',
+  enabled: true,
+  repo: 'productunhunt/productunhunt',
+  repoId: 'R_kgDOUHPoew',
   category: 'Ideas',
-  categoryId: '',
+  categoryId: 'DIC_kwDOUHPoe84DEcxs',
   mapping: 'pathname',
   strict: true,
   reactionsEnabled: true,
