@@ -31,3 +31,4 @@ pnpm-debug.log*
 # editor / agent local state
 .codex/
 .claude/
+.playwright-mcp/
