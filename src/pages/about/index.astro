@@ -82,10 +82,31 @@ import { t } from '../../i18n';
         <span>03</span>
         <h3>Ask for your email</h3>
         <p>
-          No accounts, no newsletter, no ads, and no client-side analytics. Voting takes an
-          anonymous cookie and nothing else.
+          No accounts, no newsletter, no ads, and no tracking that follows you anywhere. Voting
+          takes an anonymous cookie; the traffic counter takes nothing at all.
         </p>
       </article>
+    </div>
+  </section>
+
+  <section class="section prose-grid">
+    <div>
+      <p class="eyebrow">Privacy</p>
+      <h2>The complete inventory.</h2>
+    </div>
+    <div class="prose-stack">
+      <p>
+        Casting a vote sets one first-party cookie: a random, signed, anonymous ID that exists so
+        the same browser cannot vote twice, and expires after a year. Your browser also keeps a
+        local note of which way you voted, purely so the buttons remember. Vote rate-limiting uses
+        a salted hash of your IP address; the address itself is never stored. None of this happens
+        until you actually vote — reading the site sets nothing.
+      </p>
+      <p>
+        Traffic is counted with Umami, which is cookieless and aggregate: no persistent
+        identifiers, no cross-site tracking, no personal data. That is the whole list, which is
+        why there is no cookie banner — there is nothing to consent to.
+      </p>
     </div>
   </section>
 
