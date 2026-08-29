@@ -1,6 +1,7 @@
 ---
 title: Doze Division
 tagline: Competitive sleep. Ranked ladders, seasons, and playoffs for being unconscious.
+seoTitle: A competitive sleep-tracking app
 publishDate: 2026-08-29
 launchOrder: 4
 author:

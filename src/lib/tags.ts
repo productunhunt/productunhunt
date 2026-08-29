@@ -47,3 +47,24 @@ export function usedTags(ideas: readonly { data: { tags: readonly string[] } }[]
   const used = new Set(ideas.flatMap((idea) => idea.data.tags));
   return OFFICIAL_TAGS.filter((tag) => used.has(tag));
 }
+
+/** Below this many published ideas a tag archive is thinner than the ideas it
+ *  lists: it competes with them for the same query and adds index surface for
+ *  no reader. Such pages still render and still get linked — they are just
+ *  `noindex,follow` and out of the sitemap until the pile catches up.
+ *
+ *  `astro.config.mjs` filters the sitemap with its own copy of this number
+ *  (`scripts/content-seo.mjs`), because the config runs before the content
+ *  layer exists. Change one and change the other. */
+export const TAG_INDEX_MIN_IDEAS = 3;
+
+/** How many published ideas carry each used tag, in `OFFICIAL_TAGS` order. */
+export function tagCounts(
+  ideas: readonly { data: { tags: readonly string[] } }[],
+): Map<OfficialTag, number> {
+  const counts = new Map<OfficialTag, number>();
+  for (const tag of usedTags(ideas)) {
+    counts.set(tag, ideas.filter((idea) => idea.data.tags.includes(tag)).length);
+  }
+  return counts;
+}

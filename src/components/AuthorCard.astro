@@ -72,8 +72,10 @@ const sourceLabel =
         {author.bio && <p class="author-bio">{author.bio}</p>}
         {links.length > 0 && (
           <p class="author-links">
+            {/* Contributor-supplied destinations: `ugc`, which is what Google asks
+                for here — a blanket `nofollow` also disclaims links we do vouch for. */}
             {links.map((link) => (
-              <a href={link.href} rel="noopener noreferrer nofollow" target="_blank">
+              <a href={link.href} rel="noopener noreferrer ugc" target="_blank">
                 {link.label}
               </a>
             ))}

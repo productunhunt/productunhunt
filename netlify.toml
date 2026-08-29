@@ -7,3 +7,22 @@
 [build.environment]
   # Keep in lockstep with .nvmrc.
   NODE_VERSION = "22"
+
+# Deploy previews and branch deploys serve the whole site on a *.netlify.app
+# host. Without this they compete with production for the same content, so the
+# header goes on at the CDN for every context that is not `production`.
+[[context.deploy-preview.headers]]
+  for = "/*"
+  [context.deploy-preview.headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+
+[[context.branch-deploy.headers]]
+  for = "/*"
+  [context.branch-deploy.headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+
+# Astro fingerprints everything under `_astro/`, so it can be cached forever.
+[[headers]]
+  for = "/_astro/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"

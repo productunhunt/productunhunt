@@ -1,6 +1,7 @@
 ---
 title: Reply Ranch
 tagline: Rent an audience of AI superfans who comment, share, and argue in your replies until real people arrive.
+seoTitle: Renting an audience of AI superfans
 publishDate: 2026-08-29
 launchOrder: 7
 author:

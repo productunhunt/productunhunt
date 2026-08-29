@@ -30,9 +30,14 @@ const { page, tags } = Astro.props;
 
 const isFirstPage = page.currentPage === 1;
 const title = isFirstPage ? t('ideas.title') : t('ideas.titlePaged', { page: page.currentPage });
+// The page number belongs in the description too — otherwise every page past
+// the first ships a description identical to page one's.
+const description = isFirstPage
+  ? t('ideas.description', { site: SITE.title })
+  : t('ideas.descriptionPaged', { site: SITE.title, page: page.currentPage });
 ---
 
-<BaseLayout title={title} description={t('ideas.description', { site: SITE.title })}>
+<BaseLayout title={title} description={description}>
   <section class="page-head section">
     <p class="eyebrow">{t('ideas.eyebrow')}</p>
     <h1>{t('ideas.title')}</h1>

@@ -1175,6 +1175,11 @@ pu-poll {
   color: var(--color-accent);
 }
 
+.idea-dates {
+  margin-top: calc(var(--baseline) * -0.75);
+  margin-bottom: calc(var(--baseline) * 1.25);
+}
+
 .idea-tagline {
   max-width: 34ch;
   margin-bottom: calc(var(--baseline) * 1.5);

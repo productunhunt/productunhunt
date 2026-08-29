@@ -1,6 +1,7 @@
 ---
 title: Perpetual Website
 tagline: Launch once. Let the website develop opinions about itself.
+seoTitle: A website that rewrites itself
 publishDate: 2026-08-28
 author:
   name: Ravi

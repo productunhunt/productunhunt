@@ -16,6 +16,9 @@ export const SITE = {
   /** BCP 47 language tag. Sets `<html lang>`, date formatting, and the RSS feed
    *  language. Only `en` ships — §16 puts a multilingual UI out of scope. */
   locale: 'en',
+  /** Open Graph wants `language_TERRITORY`, which `locale` ('en') is not. Kept
+   *  separate so `<html lang>` and `Intl` stay on the neutral tag. */
+  ogLocale: 'en_US',
   /** Site name — used in <title>, og:site_name, and the RSS feed. */
   title: 'ProductUnhunt',
   /** The masthead lockup (§2). Spaced caps belong to the header only; `title`
@@ -30,6 +33,12 @@ export const SITE = {
   /** Default social share image, relative to the site root (see public/).
    *  Per-idea cards are generated at build time; this is the fallback. */
   ogImage: '/og.jpg',
+  /** Alt text for the fallback card. Per-idea cards pass their own. */
+  ogImageAlt: 'ProductUnhunt — business ideas that were considered and set free instead of built.',
+  /** Every share card this site emits is drawn at this size (see
+   *  `src/pages/og/ideas/[slug].png.ts` and `public/og.jpg`). */
+  ogImageWidth: 1200,
+  ogImageHeight: 630,
   /** House byline (§2). Ideas carry their own author in frontmatter — §12 is
    *  explicit that JSON-LD reads that, not this. */
   author: 'Ravi — Chief Unhunter',

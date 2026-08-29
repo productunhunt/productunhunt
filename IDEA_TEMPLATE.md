@@ -11,8 +11,18 @@ title: Your Product Name
 # One line. Savage, specific, no hedging.
 tagline: A one-line description of what this would have done to people.
 
+# What the browser tab and the search result say, after the product name:
+# "Your Product Name: <seoTitle> — ProductUnhunt". Invented names are
+# unsearchable, so this is the plain-English version of the idea. Optional,
+# but the whole line has to fit in 70 characters, so keep it short.
+seoTitle: A plain description of what this is
+
 # Today's date is fine. The editor sets the real one on the way in.
 publishDate: 2026-01-01
+
+# Only when a published idea is rewritten later. Never earlier than
+# `publishDate`. Leave null in submissions.
+updatedDate: null
 
 # Editor's launch-day tie-breaker. Leave null in submissions.
 launchOrder: null

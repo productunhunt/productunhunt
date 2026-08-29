@@ -1,6 +1,7 @@
 ---
 title: Internet Denoiser
 tagline: A recommendation engine in reverse, discovered one web search after everyone else.
+seoTitle: A recommendation engine in reverse
 publishDate: 2026-08-29
 launchOrder: 11
 author:

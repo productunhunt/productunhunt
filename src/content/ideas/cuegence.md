@@ -1,6 +1,7 @@
 ---
 title: Cuegence
 tagline: A longitudinal learning-intelligence layer designed to tell teachers what they already knew before opening the dashboard.
+seoTitle: An AI learning-analytics dashboard
 publishDate: 2026-08-29
 launchOrder: 10
 author:

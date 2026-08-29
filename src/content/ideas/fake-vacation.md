@@ -1,6 +1,7 @@
 ---
 title: Fake Vacation
 tagline: For people who want the Instagram trip without the inconvenience of actually going anywhere.
+seoTitle: AI-generated trips without travelling
 publishDate: 2026-08-29
 launchOrder: 1
 author:

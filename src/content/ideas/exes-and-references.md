@@ -1,6 +1,7 @@
 ---
 title: Exes & References
 tagline: A dating app where every profile ships with references from two exes.
+seoTitle: A dating app that calls your exes
 publishDate: 2026-08-29
 launchOrder: 6
 author:

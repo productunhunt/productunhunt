@@ -29,17 +29,40 @@ const thirdBlock = ideas.slice(6, 9);
 const featured = ideas.filter((idea) => idea.data.featured);
 
 const site = Astro.site ?? new URL(Astro.url.origin);
+const homeUrl = new URL(withBase('/'), site).href;
+
+// `@id` and `alternateName` are what Google's site-name picker reads; without
+// them it is free to invent a name off the domain.
 const websiteSchema = {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
+  '@id': `${homeUrl}#website`,
   name: SITE.title,
+  alternateName: ['Product Unhunt', 'productunhunt.com'],
   description: SITE.description,
-  url: new URL(withBase('/'), site).href,
+  url: homeUrl,
+  publisher: { '@id': `${homeUrl}#organization` },
 };
+
+// `sameAs` is deliberately absent: the only profiles that would go in it don't
+// exist yet, and pointing at 404s is worse than pointing at nothing.
+const organizationSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  '@id': `${homeUrl}#organization`,
+  name: SITE.title,
+  url: homeUrl,
+  description: SITE.description,
+  logo: new URL(withBase('/favicon-192.png'), site).href,
+};
+
+// The bare site name says nothing a searcher could have typed; the h1 keeps
+// the joke, the <title> explains what the joke is about.
+const homeTitle = 'Funny startup ideas that should stay unbuilt';
 ---
 
-<BaseLayout description={SITE.description}>
-  <StructuredData slot="head" schema={websiteSchema} />
+<BaseLayout title={homeTitle} description={SITE.description}>
+  <StructuredData slot="head" schema={[websiteSchema, organizationSchema]} />
 
   <section class="hero section">
     <div class="hero-copy">

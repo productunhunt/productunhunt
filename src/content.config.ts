@@ -28,7 +28,16 @@ const ideas = defineCollection({
       .object({
         title: z.string(),
         tagline: z.string(),
+        /** What the `<title>` says, when the product name alone says nothing.
+         *  Invented names have no search demand; this is where the idea gets
+         *  described in words someone might actually type. The site name is
+         *  appended by the layout, so the combined length is what's checked —
+         *  see the `superRefine` below. */
+        seoTitle: z.string().nullable().optional(),
         publishDate: z.coerce.date(),
+        /** Set when a published idea is materially rewritten. Drives the
+         *  visible "Updated" line, `dateModified`, and sitemap `lastmod`. */
+        updatedDate: z.coerce.date().nullable().optional(),
         /** Editor-owned tie-breaker for a coordinated launch day. */
         launchOrder: z.number().int().positive().nullable().optional(),
         author: z.object({
@@ -84,6 +93,30 @@ const ideas = defineCollection({
             path: ['relapse'],
             message:
               '`status: author-relapsed` requires a `relapse` block — no evidence, no conviction',
+          });
+        }
+
+        // The rendered `<title>`, in full. `scripts/check-seo.mjs` asserts the
+        // same 70-character budget on the built HTML; failing here first means
+        // an over-long title is a frontmatter error, not a post-build surprise.
+        if (data.seoTitle) {
+          const rendered = `${data.title}: ${data.seoTitle} — ProductUnhunt`;
+          if (rendered.length > 70) {
+            ctx.addIssue({
+              code: 'custom',
+              path: ['seoTitle'],
+              message: `\`title: seoTitle — ProductUnhunt\` is ${rendered.length} characters; trim it to 70 or fewer`,
+            });
+          }
+        }
+
+        // A modification that predates publication is a typo, and it would
+        // reach the sitemap and the article schema before anyone noticed.
+        if (data.updatedDate && data.updatedDate < data.publishDate) {
+          ctx.addIssue({
+            code: 'custom',
+            path: ['updatedDate'],
+            message: '`updatedDate` cannot be earlier than `publishDate`',
           });
         }
 

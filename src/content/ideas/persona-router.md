@@ -1,6 +1,7 @@
 ---
 title: Persona Router
 tagline: An AI that learns how you talk to everyone you know, so you never have to talk to anyone you know.
+seoTitle: An AI that replies to people for you
 publishDate: 2026-08-29
 launchOrder: 9
 author:

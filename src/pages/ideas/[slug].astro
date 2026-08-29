@@ -17,7 +17,7 @@ import { getPublishedIdeas, byNewest } from '../../lib/ideas';
 import { tagSlug } from '../../lib/tags';
 import { STATUS_LABEL } from '../../lib/status';
 import { CONTACT_EMAIL, REPO_URL, SITE } from '../../consts';
-import { t } from '../../i18n';
+import { formatDate, t } from '../../i18n';
 
 export const getStaticPaths = (async () => {
   const ideas = await getPublishedIdeas();
@@ -35,12 +35,20 @@ const { idea, siblings } = Astro.props;
 const {
   title,
   tagline,
+  seoTitle,
   author,
   status,
   tags,
   editorStamp,
   relapse,
+  publishDate,
+  updatedDate,
 } = idea.data;
+
+// The <h1> stays the invented product name — that is the joke. The <title>
+// gets `seoTitle` where an editor wrote one, because "Churnstile" on its own
+// tells a search result nothing about what it is.
+const documentTitle = seoTitle ? `${title}: ${seoTitle}` : title;
 
 const { Content, headings } = await render(idea);
 
@@ -79,7 +87,10 @@ const articleSchema = {
   '@type': 'Article',
   headline: title,
   description: tagline,
-  datePublished: idea.data.publishDate.toISOString(),
+  datePublished: publishDate.toISOString(),
+  // Google reads `dateModified` as the freshness signal; omitted rather than
+  // mirrored from `datePublished`, which would claim an edit that never happened.
+  ...(updatedDate ? { dateModified: updatedDate.toISOString() } : {}),
   author: {
     '@type': 'Person',
     name: author.name,
@@ -116,7 +127,19 @@ const breadcrumbSchema = {
 };
 ---
 
-<BaseLayout title={title} description={tagline} ogType="article" image={ogImage}>
+<BaseLayout
+  title={documentTitle}
+  description={tagline}
+  ogType="article"
+  image={ogImage}
+  imageAlt={`${title} — ${tagline}`}
+  article={{
+    publishedTime: publishDate.toISOString(),
+    modifiedTime: updatedDate?.toISOString(),
+    author: author.name,
+    tags,
+  }}
+>
   <StructuredData slot="head" schema={[articleSchema, breadcrumbSchema]} />
 
   <article>
@@ -135,6 +158,20 @@ const breadcrumbSchema = {
           </p>
           <h1>{title}</h1>
           <p class="lead idea-tagline">{tagline}</p>
+          {/* Google asks for a visible date that agrees with the JSON-LD. */}
+          <p class="entry-meta idea-dates">
+            <span>
+              Published <time datetime={publishDate.toISOString()}>{formatDate(publishDate)}</time>
+            </span>
+            {
+              updatedDate && (
+                <span>
+                  Updated{' '}
+                  <time datetime={updatedDate.toISOString()}>{formatDate(updatedDate)}</time>
+                </span>
+              )
+            }
+          </p>
           <p class="idea-disclaimer">
             <span>Founder note</span>
             {

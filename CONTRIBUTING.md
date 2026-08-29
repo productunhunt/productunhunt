@@ -24,9 +24,14 @@ The slug is lowercase, hyphenated, and matches the product name:
 `fake-vacation.md`, not `Fake Vacation Idea FINAL.md`.
 
 Frontmatter is validated at build time, so a bad tag fails CI rather than the
-site. Leave `publishDate`, `status`, `editorStamp`, and `featured` at the
-template's values — the schema needs a date and a status to be present, but
-the editor sets the real ones on the way in.
+site. Leave `publishDate`, `updatedDate`, `status`, `editorStamp`, and
+`featured` at the template's values — the schema needs a date and a status to
+be present, but the editor sets the real ones on the way in.
+
+`seoTitle` is the one extra line worth your attention: an invented product
+name tells a search result nothing, so this is where the idea gets described
+in words someone might actually type. `title: seoTitle — ProductUnhunt` has to
+fit in 70 characters, and the build says so if it doesn't.
 
 ## Door two — email it
 

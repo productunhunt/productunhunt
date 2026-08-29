@@ -7,7 +7,7 @@ import IdeaList from '../../../../components/IdeaList.astro';
 import Pagination from '../../../../components/Pagination.astro';
 import TagFilter from '../../../../components/TagFilter.astro';
 import { getPublishedIdeas, type Idea } from '../../../../lib/ideas';
-import { tagSlug, usedTags, type OfficialTag } from '../../../../lib/tags';
+import { TAG_INDEX_MIN_IDEAS, tagSlug, usedTags, type OfficialTag } from '../../../../lib/tags';
 import { SITE } from '../../../../consts';
 import { t } from '../../../../i18n';
 
@@ -17,29 +17,41 @@ export const getStaticPaths = (async ({ paginate }) => {
 
   // `usedTags` only returns tags with published ideas behind them, so no page
   // generated here can be empty.
-  return tags.flatMap((tag) =>
-    paginate(
-      ideas.filter((idea) => (idea.data.tags as readonly string[]).includes(tag)),
-      { pageSize: 12, params: { tag: tagSlug(tag) }, props: { tag, tags } },
-    ),
-  );
+  return tags.flatMap((tag) => {
+    const tagged = ideas.filter((idea) => (idea.data.tags as readonly string[]).includes(tag));
+    return paginate(tagged, {
+      pageSize: 12,
+      params: { tag: tagSlug(tag) },
+      props: { tag, tags, total: tagged.length },
+    });
+  });
 }) satisfies GetStaticPaths;
 
 interface Props {
   page: Page<Idea>;
   tag: OfficialTag;
   tags: OfficialTag[];
+  /** Published ideas under this tag across every page, not just this one. */
+  total: number;
 }
 
-const { page, tag, tags } = Astro.props;
+const { page, tag, tags, total } = Astro.props;
 
 const isFirstPage = page.currentPage === 1;
 const title = isFirstPage
   ? t('tag.title', { tag })
   : t('tag.titlePaged', { tag, page: page.currentPage });
+const description = isFirstPage
+  ? t('tag.description', { tag, site: SITE.title })
+  : t('tag.descriptionPaged', { tag, site: SITE.title, page: page.currentPage });
+
+// A tag with one or two ideas behind it is a worse version of those ideas'
+// own pages. It stays linked and crawlable; it just doesn't compete with them
+// in the index until the pile grows into it.
+const indexable = total >= TAG_INDEX_MIN_IDEAS;
 ---
 
-<BaseLayout title={title} description={t('tag.description', { tag, site: SITE.title })}>
+<BaseLayout title={title} description={description} indexable={indexable}>
   <section class="page-head section">
     <p class="eyebrow">{t('tag.eyebrow')}</p>
     <h1>{t('tag.title', { tag })}</h1>

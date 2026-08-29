@@ -1,6 +1,7 @@
 ---
 title: Student Digital Twin
 tagline: A high-resolution model of learning that predicted exactly one dropout — its own.
+seoTitle: An AI model of student learning
 publishDate: 2026-08-29
 author:
   name: Ravi

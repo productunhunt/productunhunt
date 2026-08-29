@@ -1,6 +1,7 @@
 ---
 title: Idea Harness
 tagline: Fantasy Premier League for founders, except the players don't exist either.
+seoTitle: Fantasy football for startup founders
 publishDate: 2026-08-29
 launchOrder: 12
 author:

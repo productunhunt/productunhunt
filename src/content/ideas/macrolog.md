@@ -1,6 +1,7 @@
 ---
 title: MacroLog
 tagline: Bring-your-own-API-key calorie tracking for a market of exactly one engineer. He churned.
+seoTitle: A calorie tracker with one user
 publishDate: 2026-08-29
 launchOrder: 5
 author:

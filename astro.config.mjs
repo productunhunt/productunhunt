@@ -6,6 +6,12 @@ import sitemap from '@astrojs/sitemap';
 import slugManifest from './integrations/slug-manifest.mjs';
 import { unified } from '@astrojs/markdown-remark';
 import { remarkReadingTime } from './remark-reading-time.mjs';
+import { sitemapData } from './scripts/content-seo.mjs';
+
+// Read once, at config evaluation, so the filter and serializer below are
+// synchronous. See `scripts/content-seo.mjs` for why this can't use the
+// content collection.
+const { exclude, lastmod } = await sitemapData();
 
 // https://astro.build/config
 export default defineConfig({
@@ -20,7 +26,22 @@ export default defineConfig({
   // `slugManifest` writes `src/generated/idea-slugs.json` at `astro:config:setup`,
   // before Vite resolves anything — the vote action imports that file and Vite
   // inlines it, so it cannot be produced any later. See the integration.
-  integrations: [slugManifest(), mdx(), sitemap()],
+  integrations: [
+    slugManifest(),
+    mdx(),
+    sitemap({
+      // A sitemap advertises the pages we want indexed; anything rendering
+      // `noindex` (site search, thin tag archives) is dropped here to match.
+      filter: (page) => !exclude.has(new URL(page).pathname),
+      serialize: (item) => {
+        const changed = lastmod.get(new URL(item.url).pathname);
+        // Pages with no content date behind them (about, contribute, …) get no
+        // `lastmod` at all rather than a build timestamp, which would claim
+        // every page changed on every deploy.
+        return changed ? { ...item, lastmod: changed } : item;
+      },
+    }),
+  ],
   env: {
     schema: {
       // All optional on purpose: with no Neon provisioned the build must still

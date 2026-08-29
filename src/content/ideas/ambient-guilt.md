@@ -1,6 +1,7 @@
 ---
 title: Ambient Guilt
 tagline: A beautiful walnut-framed e-ink display for your living room. It shows your unread email count. Nothing else.
+seoTitle: An e-ink display for your unread email
 publishDate: 2026-08-29
 launchOrder: 3
 author:

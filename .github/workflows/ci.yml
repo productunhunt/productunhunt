@@ -40,3 +40,7 @@ jobs:
       - name: Build
         # Also exercises the postbuild Pagefind index step.
         run: npm run build
+      - name: Check SEO
+        # Reads the built HTML: titles, descriptions, canonicals, social tags,
+        # and the agreement between `noindex` pages and the sitemap.
+        run: npm run check:seo

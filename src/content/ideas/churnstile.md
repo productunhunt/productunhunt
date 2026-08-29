@@ -1,6 +1,7 @@
 ---
 title: Churnstile
 tagline: White-label cancellation flows that make quitting your product feel like a spa visit.
+seoTitle: A startup idea for cancellation flows
 publishDate: 2026-08-29
 launchOrder: 2
 author:

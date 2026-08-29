@@ -1,0 +1,7 @@
+# Everything here is meant to be crawled. Pages that should stay out of the
+# index say so with `<meta name="robots" content="noindex,follow">` — robots.txt
+# cannot deindex anything, it can only stop a fetch.
+User-agent: *
+Allow: /
+
+Sitemap: https://productunhunt.com/sitemap-index.xml

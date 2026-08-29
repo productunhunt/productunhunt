@@ -1,6 +1,7 @@
 ---
 title: Porchlord
 tagline: Rent out your porch as a neighbourhood package depot. Airbnb, but for stoops.
+seoTitle: Renting your porch as a package depot
 publishDate: 2026-08-29
 launchOrder: 8
 author:
