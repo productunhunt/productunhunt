@@ -856,6 +856,12 @@ pre code {
   gap: 1.25rem;
 }
 
+.footer-colophon {
+  flex-basis: 100%;
+  font-size: 0.8rem;
+  color: var(--color-muted);
+}
+
 .social-links {
   display: flex;
   gap: 0.4rem;
