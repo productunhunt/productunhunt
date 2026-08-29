@@ -15,6 +15,8 @@ interface Props {
     x?: string | null;
     github?: string | null;
     url?: string | null;
+    linkedin?: string | null;
+    email?: string | null;
     bio?: string | null;
     source: 'PR' | 'email';
   };
@@ -23,8 +25,8 @@ interface Props {
 
 const { author, compact = false } = Astro.props;
 
-// The schema carries no email, so Gravatar is unreachable by design. A GitHub
-// handle gives a real avatar; everything else falls back to an initial mark.
+// The avatar never derives from email (no Gravatar); a GitHub handle gives a
+// real avatar, everything else falls back to an initial mark.
 const handle = author.github?.replace(/^@/, '');
 const avatarUrl = handle ? `https://github.com/${encodeURIComponent(handle)}.png?size=96` : null;
 const initial = [...author.name.trim()][0]?.toUpperCase() ?? '?';
@@ -33,7 +35,9 @@ const xHandle = author.x?.replace(/^@/, '');
 const links = [
   xHandle && { label: `@${xHandle}`, href: `https://x.com/${encodeURIComponent(xHandle)}` },
   handle && { label: `github/${handle}`, href: `https://github.com/${encodeURIComponent(handle)}` },
+  author.linkedin && { label: 'LinkedIn', href: author.linkedin },
   author.url && { label: 'Site', href: author.url },
+  author.email && { label: 'Email', href: `mailto:${author.email}` },
 ].filter((link): link is { label: string; href: string } => Boolean(link));
 
 const sourceLabel =

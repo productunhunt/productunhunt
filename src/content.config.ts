@@ -37,6 +37,8 @@ const ideas = defineCollection({
           x: z.string().nullable().optional(),
           github: z.string().nullable().optional(),
           url: z.url().nullable().optional(),
+          linkedin: z.url().nullable().optional(),
+          email: z.email().nullable().optional(),
           bio: z.string().nullable().optional(),
           // How the idea arrived. Defaulted so the §8 example frontmatter, which
           // omits it, still validates.

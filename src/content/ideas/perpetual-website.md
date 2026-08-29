@@ -5,9 +5,11 @@ publishDate: 2026-08-28
 author:
   name: Ravi
   title: Chief Unhunter
-  x: null
+  x: unorthodoxravi
   github: gitwithravi
   url: null
+  linkedin: https://in.linkedin.com/in/rksinghonline
+  email: ravi@raviconsults.com
   bio: Builds software long enough to eventually reinvent websites.
   source: PR
 status: unbuilt
