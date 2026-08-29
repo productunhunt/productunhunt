@@ -115,6 +115,7 @@ export const en = {
   'poll.yourVote': 'Selected',
   'poll.unavailable': 'Voting is unavailable right now. The ideas remain free regardless.',
   'poll.failed': 'That vote did not go through. Try again.',
+  'poll.tooMany': 'Slow down. Your verdicts are arriving faster than we can file them.',
 
   // Comments (§10) — rendered only when GISCUS.enabled
   'comments.eyebrow': 'Comments',

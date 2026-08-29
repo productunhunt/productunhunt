@@ -98,9 +98,10 @@ import { t } from '../../i18n';
       <p>
         Casting a vote sets one first-party cookie: a random, signed, anonymous ID that exists so
         the same browser cannot vote twice, and expires after a year. Your browser also keeps a
-        local note of which way you voted, purely so the buttons remember. Vote rate-limiting uses a
-        salted hash of your IP address; the address itself is never stored. None of this happens
-        until you actually vote — reading the site sets nothing.
+        local note of which way you voted and the tally at the time, purely so the buttons remember
+        and the count does not appear to lose your vote while the cache catches up. Vote
+        rate-limiting uses a salted hash of your IP address; the address itself is never stored.
+        None of this happens until you actually vote — reading the site sets nothing.
       </p>
       <p>
         Traffic is counted with Umami, which is cookieless and aggregate: no persistent identifiers,
