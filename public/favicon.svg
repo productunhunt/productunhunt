@@ -1,14 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
-    <!-- Cheap gold, struck through: the mark for a product that was considered
-         and then not built. Deliberately blunt, because the useful size is 16px. -->
-    <rect x="10" y="10" width="108" height="108" rx="12" fill="#916a0b" />
-    <path d="M34 94 94 34" stroke="#fcfcfa" stroke-width="16" stroke-linecap="square" />
-    <style>
-        /* The strike reads as a hole punched through the mark, so it tracks the
-           browser chrome's background rather than staying paper-white. */
-        @media (prefers-color-scheme: dark) {
-            rect { fill: #e7bf57; }
-            path { stroke: #0f1215; }
-        }
-    </style>
+    <!-- The masthead's brand mark (`.brand-mark` in src/styles/global.css): two
+         accent rules with nothing between them, because the product was never
+         built. Thickened well past the header's hairlines — 1px scales to
+         nothing at the 16px size that actually matters. -->
+    <rect width="128" height="128" rx="24" fill="#121014" />
+    <rect x="36" y="20" width="14" height="88" fill="#ff570a" />
+    <rect x="78" y="20" width="14" height="88" fill="#ff570a" />
 </svg>
