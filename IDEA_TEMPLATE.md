@@ -20,6 +20,8 @@ author:
   x: null # Optional. Handle only, no @, no URL.
   github: null # Optional. Handle only.
   url: null # Optional. Full URL, including https://.
+  linkedin: null # Optional. Full profile URL, including https://.
+  email: null # Optional. Shown publicly as a mailto link — scrapers will find it.
   bio: null # Optional. One line. No follower counts, ever.
   source: PR
 

@@ -7,10 +7,10 @@ author:
   title: Chief Unhunter
   x: unorthodoxravi
   github: gitwithravi
-  url: null
+  url: https://raviconsults.com
   linkedin: https://in.linkedin.com/in/rksinghonline
   email: ravi@raviconsults.com
-  bio: null
+  bio: Ships architecture diagrams, shelves the companies.
   source: PR
 status: someone-built-it
 featured: false

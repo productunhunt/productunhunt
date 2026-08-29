@@ -7,7 +7,7 @@ author:
   title: Chief Unhunter
   x: unorthodoxravi
   github: gitwithravi
-  url: null
+  url: https://raviconsults.com
   linkedin: https://in.linkedin.com/in/rksinghonline
   email: ravi@raviconsults.com
   bio: Builds software long enough to eventually reinvent websites.
