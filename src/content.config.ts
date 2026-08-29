@@ -29,6 +29,8 @@ const ideas = defineCollection({
         title: z.string(),
         tagline: z.string(),
         publishDate: z.coerce.date(),
+        /** Editor-owned tie-breaker for a coordinated launch day. */
+        launchOrder: z.number().int().positive().nullable().optional(),
         author: z.object({
           name: z.string(),
           // The spec's frontmatter writes literal `null` for every unset author
@@ -53,6 +55,8 @@ const ideas = defineCollection({
         tags: z.array(z.enum(OFFICIAL_TAGS)).min(1).max(3),
         draft: z.boolean().default(false),
         heroImage: image().nullable().optional(),
+        heroAlt: z.string().nullable().optional(),
+        heroCaption: z.string().nullable().optional(),
         /** Evidence that the author's discipline failed: a live URL and how far
          *  things went. Editor-assigned, like the status it forces. */
         relapse: z
@@ -80,6 +84,21 @@ const ideas = defineCollection({
             path: ['relapse'],
             message:
               '`status: author-relapsed` requires a `relapse` block — no evidence, no conviction',
+          });
+        }
+
+        if (data.heroImage && !data.heroAlt?.trim()) {
+          ctx.addIssue({
+            code: 'custom',
+            path: ['heroAlt'],
+            message: '`heroImage` requires useful `heroAlt` text',
+          });
+        }
+        if (!data.heroImage && (data.heroAlt?.trim() || data.heroCaption?.trim())) {
+          ctx.addIssue({
+            code: 'custom',
+            path: ['heroImage'],
+            message: '`heroAlt` and `heroCaption` require a `heroImage`',
           });
         }
       }),

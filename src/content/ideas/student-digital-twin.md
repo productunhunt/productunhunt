@@ -18,7 +18,7 @@ editorStamp: Already relapsed once under the name Cuegence. Filed here so the ne
 tags:
   - AI nonsense
   - B2B
-draft: false
+draft: true
 heroImage: null
 ---
 
@@ -54,17 +54,17 @@ At some point the architecture diagram was significantly more sophisticated than
 
 > What if, instead of schools storing marks, they stored an evolving model of learning?
 
-As an engineer, I still love this question. As a business owner, you're eventually required to ask a second question — *who cares enough to pay for this?* — and that one was less cooperative.
+As an engineer, I still love this question. As a business owner, you're eventually required to ask a second question — _who cares enough to pay for this?_ — and that one was less cooperative.
 
 ## The Reality Check
 
 Three problems arrived, in ascending order of severity.
 
-**The parent demo.** You proudly explain that the model estimates how different interventions affect concept mastery. The parent looks impressed, then asks: *"Does it also take into account that whenever I beat my kid, he studies 20% better for the next two days?"* And now your neutral learning-intelligence platform has entered a domain you were not expecting to model. Because technically, if the system ingests enough context, and the correlation is significant, and your objective function is simply "improve academic performance," your beautifully impartial AI may eventually surface **Parental Violence Intervention: +18.7% short-term homework completion**. Congratulations — you have built an algorithm capable of recommending the living room be converted into a UFC arena. No responsible system would ever ship that recommendation, but the absurd case exposes the real one: learning happens inside a messy human environment of sleep, stress, friendships, tuition, money, and children occasionally deciding that mathematics can go to hell today. The more accurate the twin wants to be, the more of that life it demands.
+**The parent demo.** You proudly explain that the model estimates how different interventions affect concept mastery. The parent looks impressed, then asks: _"Does it also take into account that whenever I beat my kid, he studies 20% better for the next two days?"_ And now your neutral learning-intelligence platform has entered a domain you were not expecting to model. Because technically, if the system ingests enough context, and the correlation is significant, and your objective function is simply "improve academic performance," your beautifully impartial AI may eventually surface **Parental Violence Intervention: +18.7% short-term homework completion**. Congratulations — you have built an algorithm capable of recommending the living room be converted into a UFC arena. No responsible system would ever ship that recommendation, but the absurd case exposes the real one: learning happens inside a messy human environment of sleep, stress, friendships, tuition, money, and children occasionally deciding that mathematics can go to hell today. The more accurate the twin wants to be, the more of that life it demands.
 
 **The signals.** A useful model needs continuous, rich data. But teachers already have work, students already have homework, and parents already ignore messages. Either people create signals specifically for your system — making your intelligence platform another chore — or you infer everything from existing data that isn't rich enough to justify the model's sophistication. Most valuable with deep data; least practical when collecting it. Suspiciously elegant, in the wrong direction.
 
-**The buyer.** We eventually talked to schools. The reaction was not "where has this been all our lives?" It was closer to *"we already have teachers"* — which, in retrospect, is a fairly strong competitive product. One teacher with twenty years of experience observes "he knows the answer, he panics in exams." My AI needed twelve weeks of longitudinal data, an embeddings pipeline, three confidence thresholds, and ₹40,000 of cloud credits to reach roughly the same conclusion. The teacher then drinks tea. The server keeps running.
+**The buyer.** We eventually talked to schools. The reaction was not "where has this been all our lives?" It was closer to _"we already have teachers"_ — which, in retrospect, is a fairly strong competitive product. One teacher with twenty years of experience observes "he knows the answer, he panics in exams." My AI needed twelve weeks of longitudinal data, an embeddings pipeline, three confidence thresholds, and ₹40,000 of cloud credits to reach roughly the same conclusion. The teacher then drinks tea. The server keeps running.
 
 ## Why It Stays Unbuilt
 

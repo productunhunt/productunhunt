@@ -13,10 +13,16 @@ export function isVisible(idea: Idea): boolean {
   return !idea.data.draft || process.env.CONTEXT !== 'production';
 }
 
-/** Newest first. The one ordering used by the homepage, the archive, tag pages
- *  and the feed, so "the first card" means the same thing everywhere. */
+/** Newest first, then the editor's launch-day sequence. The final id tie-break
+ *  makes archives, feeds, and related-idea lists deterministic even when an
+ *  unranked future batch shares a date. */
 export function byNewest(a: Idea, b: Idea): number {
-  return b.data.publishDate.getTime() - a.data.publishDate.getTime();
+  const byDate = b.data.publishDate.getTime() - a.data.publishDate.getTime();
+  if (byDate !== 0) return byDate;
+
+  const aOrder = a.data.launchOrder ?? Number.POSITIVE_INFINITY;
+  const bOrder = b.data.launchOrder ?? Number.POSITIVE_INFINITY;
+  return aOrder - bOrder || a.id.localeCompare(b.id);
 }
 
 /** Every idea that should be visible in this build, newest first.

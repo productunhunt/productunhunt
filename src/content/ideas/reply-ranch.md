@@ -1,7 +1,8 @@
 ---
-title: EngagementFarm
+title: Reply Ranch
 tagline: Rent an audience of AI superfans who comment, share, and argue in your replies until real people arrive.
-publishDate: 2026-08-19
+publishDate: 2026-08-29
+launchOrder: 7
 author:
   name: Ravi
   title: Chief Unhunter
@@ -27,7 +28,7 @@ heroImage: null
 
 The cold-start problem, solved. New creators post into a void; the algorithm
 only rewards engagement, and engagement only comes from an audience the
-algorithm won't give you. EngagementFarm rents you one: a stable of
+algorithm won't give you. Reply Ranch rents you one: a stable of
 persistent AI personas — each with a name, a posting history, and opinions —
 who comment on your videos, quote-post your takes, and start plausible
 arguments in your replies. The algorithm sees a conversation. The algorithm
@@ -44,8 +45,8 @@ The cold-start problem is genuinely brutal, the algorithmic logic is
 genuinely true, and the industry's open secret is that engagement pods, bought
 follows, and founder-run alt accounts already do this manually and badly.
 We'd just be automating an existing behaviour with better craftsmanship —
-the classic startup absolution. "Nobody joins an empty room" was tested on
-four creators, and all four asked for the waitlist link.
+the classic startup absolution. Nobody joins an empty room. Nobody asked who
+had filled it.
 
 ## The Reality Check
 
@@ -71,7 +72,11 @@ including it.
 
 ## Unwanted Bonus
 
-In the prototype, two personas assigned to different test accounts developed
-a running bit with each other — three weeks of escalating in-jokes about
-sourdough. It was the most authentic relationship in the dataset. We
-archived them together. It felt wrong to do anything else.
+Eventually two rented personas would develop a running bit about sourdough
+across rival customers' replies. It would be the most authentic relationship
+on the platform. Product would call it emergent behaviour. We would call it
+the first customer neither creator could cancel.
+
+---
+
+_I thought about building this and chose not to._

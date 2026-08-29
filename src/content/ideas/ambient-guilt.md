@@ -1,7 +1,8 @@
 ---
 title: Ambient Guilt
 tagline: A beautiful walnut-framed e-ink display for your living room. It shows your unread email count. Nothing else.
-publishDate: 2026-08-17
+publishDate: 2026-08-29
+launchOrder: 3
 author:
   name: Ravi
   title: Chief Unhunter
@@ -14,13 +15,15 @@ author:
   source: PR
 status: unbuilt
 featured: false
-editorStamp: The prototype currently reads 1,847.
+editorStamp: The concept mockup reads 1,847. The inbox declined to comment.
 tags:
   - Hardware
   - Consumer
   - Who asked?
 draft: false
-heroImage: null
+heroImage: ../../assets/ideas/ambient-guilt.webp
+heroAlt: A walnut-framed e-ink display on a living-room wall showing the number 1,847.
+heroCaption: Concept mockup — Ambient Guilt as an anxiety appliance in walnut. No physical prototype exists.
 ---
 
 ## The Pitch
@@ -38,8 +41,7 @@ Calm tech is having a moment, e-ink hardware margins are real, and the
 one-number purity gives it that Kickstarter-fatal combination of extremely
 easy to explain and extremely easy to film. It photographs like design press
 bait. It IS design press bait. "It's like a weather station, but for your
-obligations" closed every conversation we tested it in — though, in
-retrospect, we never checked which direction it closed them in.
+obligations" is the sort of line that closes a conversation. Direction unclear.
 
 ## The Reality Check
 
@@ -48,8 +50,8 @@ up. It goes up during dinner. It goes up, visibly, in the background of the
 video call you're taking from the sofa, where your guests, your partner, and
 your own peripheral vision can all watch your obligations compound in
 museum-grade grayscale. The one focus-group participant we still think about
-took it off the wall, unplugged it, and put it face-down in a drawer — the
-single most honest piece of product feedback this firm has ever received.
+takes it off the wall, unplugs it, and puts it face-down in a drawer. This is
+an imagined test, but the drawer is still the most honest interface in the design.
 
 Also it's hardware, so that number ships with a supply chain, a firmware
 update pipeline, and a companion app for a product whose entire feature list
@@ -68,3 +70,7 @@ correct interface all along.
 The roadmap listed Ambient Guilt Pro, which adds a second number. Slack. The
 projected attach rate was excellent, and we are confident it would have ended
 marriages.
+
+---
+
+_I thought about building this and chose not to._

@@ -62,14 +62,14 @@ say so in the PR and make the case.
 
 ### The sections
 
-| Section              | What goes in it                                                                       |
-| -------------------- | ------------------------------------------------------------------------------------- |
+| Section              | What goes in it                                                                        |
+| -------------------- | -------------------------------------------------------------------------------------- |
 | How It Started       | _Optional._ The mundane moment the idea mutated from. Two or three sentences, a scene. |
-| The Pitch            | The idea, played completely straight. Sell it.                                        |
-| The Delusion         | Why it sounded good. The reasoning that got you there.                                |
-| The Reality Check    | Where it falls apart. Be specific — numbers, mechanics, the one detail that kills it. |
-| Why It Stays Unbuilt | The verdict. Short.                                                                   |
-| Unwanted Bonus       | The worse idea that fell out of the first one.                                        |
+| The Pitch            | The idea, played completely straight. Sell it.                                         |
+| The Delusion         | Why it sounded good. The reasoning that got you there.                                 |
+| The Reality Check    | Where it falls apart. Be specific — numbers, mechanics, the one detail that kills it.  |
+| Why It Stays Unbuilt | The verdict. Short.                                                                    |
+| Unwanted Bonus       | The worse idea that fell out of the first one.                                         |
 
 How It Started is the one optional section: use it when the origin is
 genuinely a story, skip it when the Pitch already carries it. The other five

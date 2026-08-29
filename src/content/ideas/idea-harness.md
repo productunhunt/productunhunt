@@ -2,6 +2,7 @@
 title: Idea Harness
 tagline: Fantasy Premier League for founders, except the players don't exist either.
 publishDate: 2026-08-29
+launchOrder: 12
 author:
   name: Ravi
   title: Chief Unhunter
@@ -32,19 +33,15 @@ Very good. You have successfully generated LinkedIn.
 
 Good startup ideas are rarely generic. They are a weird function of what you know, where you work, who you know, what systems you can access, and which unfair advantages would sound completely irrelevant on a résumé.
 
-So Idea Harness generates ideas from **your actual context**. Not "you know FastAPI," but: you know FastAPI, work in fintech, understand reconciliation workflows, have access to three small NBFC operators, and — critically — *chacha vidhayak hain hamare*.
+So Idea Harness generates ideas from **your actual context**. Not "you know FastAPI," but: you know FastAPI, work in fintech, understand reconciliation workflows, have access to three small NBFC operators, and — critically — _chacha vidhayak hain hamare_: "our uncle is a legislator," a Hindi joke about political connections becoming distribution.
 
 The system builds a personal opportunity graph — technical skills, domain exposure, network access, geography, and your extremely sophisticated distribution advantages — then asks: **what businesses become unusually plausible for this specific person?** Maybe a compliance workflow product for regional lenders, because you understand the workflow and already have three design partners. Maybe reconciliation tooling for small fintechs, because you have personally watched that pain happen. Maybe constituency-request management software, because democracy has apparently entered the customer-acquisition funnel.
 
 The output is not necessarily novel. It is **reachable**. That distinction was the entire point.
 
-Pricing was straightforward: **$5** buys ideas tailored to you. Then capitalism begins. Want the idea improved? Credits. Competitor analysis? Credits. TAM challenged? Credits. Want the system to explain why your revolutionary SaaS already exists under fourteen different `.ai` domains? You guessed it. The first five dollars buys hope; everything after that sells due diligence.
+Five dollars buys a tailored idea. Credits buy the uncomfortable follow-up: competitors, risks, and the explanation of why your revolutionary SaaS already occupies fourteen `.ai` domains. The first purchase sells hope; everything after it sells due diligence.
 
-Then the key product moment. You brainstorm, get excited, generate the business model, research competitors, mentally spend your Series A, start thinking about the logo — and sometime around 11:30 PM, you come back to your senses. At exactly that moment, Idea Harness asks:
-
-> **Would you like to put this idea on the marketplace?**
-
-Because just because *you* shouldn't build it doesn't mean nobody should. Somebody out there has the same domain knowledge, better distribution, more time, or worse judgment. Each listing carries the problem, the research, the risks, the MVP scope — and one field no other startup marketplace offers: **why the person who spent nine hours researching it eventually walked away.**
+At 11:30 PM, after you have mentally spent the Series A and chosen a logo, sanity returns. Idea Harness asks whether to list the idea for someone with better distribution, more time, or worse judgment. Every listing includes the useful field marketplaces avoid: **why its first believer walked away.**
 
 ## The Delusion
 
@@ -58,13 +55,13 @@ Even the marketplace had a defensible core: a graveyard with asking prices, wher
 
 Then we added a leaderboard, and the product achieved intellectual maturity.
 
-Every idea gets scored — market attractiveness, founder fit, competition, defensibility — and ranked on **Top Ideas This Week**. Now everyone can see whose hypothetical company is winning. And naturally, users want to rank higher, so they can spend credits on deeper evaluations, stronger research, refined positioning.
+Ideas earned scores for market, founder fit, and defensibility. Credits improved the analysis, which improved the score.
 
-If you squint slightly, we had invented **pay-to-win entrepreneurship**. Your company does not exist. There are no customers, no revenue, no product, no incorporation, no landing page. But congratulations: you are #7 on the leaderboard. Another user spends 300 credits and overtakes you. This cannot stand. You buy more credits. You rise to #4. You have now spent $87 optimizing the ranking of a company you have deliberately chosen not to build. Silicon Valley has finally achieved abstraction.
+We had invented **pay-to-win entrepreneurship**: spend money to move an imaginary company above somebody else's imaginary company. Silicon Valley had achieved abstraction.
 
-Gamification followed on schedule. Idea streaks ("you have generated ideas for 14 consecutive days" — wonderful, please stop). Badges, including "Nobody Has Built This Yet," which should carry a warning label. Idea XP for generating, evaluating, commenting, and purchasing, until a user becomes a **Level 43 Entrepreneur** with zero entrepreneurship having taken place. There is something beautiful about transforming procrastination into a progression system, and none of it is a business.
+Streaks and badges followed. A Level 43 Entrepreneur could now have zero customers, zero revenue, and zero entrepreneurship.
 
-At some point I realized we were constructing an entire economy around companies that did not exist — which is technically consistent with several major asset classes, but felt excessive for an MVP.
+We were building an economy around companies that did not exist — technically consistent with several asset classes, but excessive for an MVP.
 
 ## Why It Stays Unbuilt
 

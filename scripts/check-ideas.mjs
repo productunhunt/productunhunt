@@ -24,6 +24,8 @@ const REQUIRED_SECTIONS = [
   'Unwanted Bonus',
 ];
 
+const CLOSING_DECLARATION = '_I thought about building this and chose not to._';
+
 /** Mirrors the glob loader's `**\/[^_]*.{md,mdx}` pattern. */
 function isIdeaFile(name) {
   return /\.mdx?$/.test(name) && !name.startsWith('_');
@@ -99,6 +101,59 @@ function checkRelapse(idea, errors) {
   }
 }
 
+function checkClosingDeclaration(idea, errors) {
+  const occurrences = idea.content.split(CLOSING_DECLARATION).length - 1;
+  if (occurrences !== 1) {
+    errors.push(
+      `${idea.file}: closing declaration must appear exactly once (found ${occurrences})`,
+    );
+    return;
+  }
+
+  const trimmed = idea.content.trimEnd();
+  if (!trimmed.endsWith(`---\n\n${CLOSING_DECLARATION}`)) {
+    errors.push(
+      `${idea.file}: closing declaration must be the final text, after an em-dash divider`,
+    );
+  }
+
+  if (trimmed.indexOf(CLOSING_DECLARATION) < trimmed.indexOf('## Unwanted Bonus')) {
+    errors.push(`${idea.file}: closing declaration must come after "## Unwanted Bonus"`);
+  }
+}
+
+function checkLaunchOrder(ideas, errors) {
+  const launchIdeas = ideas.filter((idea) => !idea.data.draft);
+  const orders = launchIdeas.map((idea) => ({
+    file: idea.file,
+    order: idea.data.launchOrder,
+  }));
+
+  for (const { file, order } of orders) {
+    if (!Number.isInteger(order) || order < 1) {
+      errors.push(`${file}: non-draft ideas require a positive integer \`launchOrder\``);
+    }
+  }
+
+  const valid = orders.filter(({ order }) => Number.isInteger(order) && order > 0);
+  const seen = new Map();
+  for (const { file, order } of valid) {
+    if (seen.has(order)) {
+      errors.push(`${file}: duplicate \`launchOrder: ${order}\` (also used by ${seen.get(order)})`);
+    } else {
+      seen.set(order, file);
+    }
+  }
+
+  const actual = [...seen.keys()].sort((a, b) => a - b);
+  const expected = Array.from({ length: launchIdeas.length }, (_, index) => index + 1);
+  if (actual.join(',') !== expected.join(',')) {
+    errors.push(
+      `non-draft launch orders must be contiguous 1–${launchIdeas.length} (found ${actual.join(', ') || 'none'})`,
+    );
+  }
+}
+
 async function checkManifest(visible, errors) {
   let manifest;
   try {
@@ -128,7 +183,9 @@ const errors = [];
 for (const idea of visible) {
   checkSections(idea, errors);
   checkRelapse(idea, errors);
+  checkClosingDeclaration(idea, errors);
 }
+checkLaunchOrder(ideas, errors);
 await checkManifest(visible, errors);
 
 if (errors.length > 0) {

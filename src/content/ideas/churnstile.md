@@ -1,7 +1,8 @@
 ---
 title: Churnstile
 tagline: White-label cancellation flows that make quitting your product feel like a spa visit.
-publishDate: 2026-08-27
+publishDate: 2026-08-29
+launchOrder: 2
 author:
   name: Ravi
   title: Chief Unhunter
@@ -20,7 +21,9 @@ tags:
   - SaaS
   - Fintech
 draft: false
-heroImage: null
+heroImage: ../../assets/ideas/churnstile.webp
+heroAlt: A concept cancellation flow with pause, save, and clearly visible cancel actions across three panels.
+heroCaption: Concept mockup — the respectful version of Churnstile, before the revenue model starts adding screens.
 ---
 
 ## The Pitch
@@ -53,10 +56,13 @@ The trapdoor: a percentage of saved revenue means Churnstile earns the most
 when cancelling is hardest. The drift into dark patterns is not a risk to be
 managed — it is the pricing model, operating as designed. Every quarterly
 review becomes a meeting about making one more screen appear between a tired
-customer and the button they came for. Meanwhile regulators have started
-writing click-to-cancel rules that make the polite version of this product a
-legal requirement, which is another way of saying a free commodity. The
-profitable version is a citation with a logo.
+customer and the button they came for.
+
+The legal shortcut is not as neat as the pitch deck claimed. The US Federal
+Trade Commission's 2024 Click-to-Cancel rule was vacated before taking effect;
+in March 2026, the agency [opened a new negative-option rulemaking](https://www.ftc.gov/news-events/news/press-releases/2026/03/ftc-seeks-public-comment-response-advance-notice-proposed-rulemaking-regarding-negative-option).
+That uncertainty makes every extra screen a future compliance meeting with
+analytics attached.
 
 And the recursion is unkind: Churnstile's own customers will eventually want
 to cancel Churnstile, at which point our cancellation flow is either a
@@ -77,3 +83,7 @@ By the end of the afternoon someone had sketched "retention insurance" —
 actuarially priced churn protection, underwritten with the benchmark data.
 It is a genuinely worse idea, and half the room wanted to pivot to it
 immediately. That was the moment we closed the whiteboard.
+
+---
+
+_I thought about building this and chose not to._

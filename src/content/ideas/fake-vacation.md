@@ -1,7 +1,8 @@
 ---
 title: Fake Vacation
 tagline: For people who want the Instagram trip without the inconvenience of actually going anywhere.
-publishDate: 2026-08-28
+publishDate: 2026-08-29
+launchOrder: 1
 author:
   name: Ravi
   title: Chief Unhunter
@@ -20,7 +21,9 @@ tags:
   - Social
   - Consumer
 draft: false
-heroImage: null
+heroImage: ../../assets/ideas/fake-vacation.webp
+heroAlt: A concept travel dossier showing one fictional traveler across six consistent Tokyo scenes.
+heroCaption: Concept mockup — a synthetic trip dossier built for story continuity, not evidence of a real customer or vacation.
 ---
 
 ## How It Started
@@ -43,11 +46,7 @@ If your fictional Delhi-to-Tokyo flight lands at 07:10 local time, your first ai
 
 The itinerary is generated day by day, and every artifact has to agree with the story.
 
-Day one might include the airport, hotel check-in, a convenience-store coffee, one slightly underwhelming dinner, and an evening street photo. Day two gets the major tourist attraction. Day three gets something obscure enough to make the trip feel lived-in rather than generated from a "Top 10 Things To Do" article.
-
 The boring photos matter most. Hotel corridors. A blurry metro shot. A badly framed breakfast. A vending machine. A photo of nothing in particular because real vacations contain a statistically significant amount of photographic garbage.
-
-Captions are included. Posting times are included. Stories and feed posts are separated. The system can even schedule one quiet day because nobody convincingly documents every waking hour of a seven-day trip.
 
 And once the vacation is over, Fake Vacation gives you the part no image model remembers to generate:
 
@@ -59,9 +58,9 @@ Where you stayed. What the neighbourhood was like. Which places you supposedly p
 
 The goal is simple: when someone asks, "How was Lisbon?", you should not answer, "Very... Portuguese."
 
-Real vacation: ₹2,00,000.
+In the fictional pricing table, the arithmetic looked decisive:
 
-Fake Vacation: ₹2,000.
+**Actual trip: ₹200,000. Synthetic trip: ₹2,000.**
 
 Same social proof. Considerably less jet lag.
 
@@ -75,20 +74,7 @@ The unit economics are beautiful. Image generation is cheap. Itinerary generatio
 
 The product also appears to contain its own distribution engine. Every customer posts the output publicly. Every generated vacation is theoretically an advertisement.
 
-You can already imagine the pricing page.
-
-**Weekend Getaway**  
-Three fictional days.
-
-**Full Vacation**  
-Seven fictional days, thirty-five photos, captions, stories, and debrief.
-
-**Influencer Vacation**  
-Fourteen days, multiple outfits, more restaurants, better sunsets, and the premium privilege of having looked mildly inconvenienced by business class.
-
-Someone eventually says "aspirational identity infrastructure."
-
-Nobody stops the meeting.
+Someone says "aspirational identity infrastructure." Nobody stops the meeting.
 
 ## The Reality Check
 
@@ -126,8 +112,6 @@ The product only works if it is undiscovered, and an undiscovered consumer produ
 
 Because the best-case scenario is that Fake Vacation becomes popular enough to make Fake Vacation useless.
 
-_I thought about building this and chose not to._
-
 ## Unwanted Bonus
 
 Fake Sabbatical.
@@ -135,3 +119,7 @@ Fake Sabbatical.
 Six months of synthetic personal growth for people who cannot take six months off. Gradually generated hiking photos, reading lists, vague reflections about slowing down, one tasteful cabin, two carefully timed posts about "re-evaluating what matters," and a final LinkedIn essay announcing that you have returned with clarity.
 
 The premium tier includes a completely fabricated personality change.
+
+---
+
+_I thought about building this and chose not to._

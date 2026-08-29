@@ -1,7 +1,8 @@
 ---
 title: MacroLog
-tagline: Bring-your-own-API-key calorie tracking for a market of exactly one engineer, whose last entry was six months ago.
+tagline: Bring-your-own-API-key calorie tracking for a market of exactly one engineer. He churned.
 publishDate: 2026-08-29
+launchOrder: 5
 author:
   name: Ravi
   title: Chief Unhunter
@@ -28,27 +29,29 @@ heroImage: null
 
 ## How It Started
 
-I was using one of those AI-enabled calorie tracking apps. You photograph your dal, the AI tells you it is dal, and everyone feels very futuristic. On day seven the trial ended and the app asked for ₹700 a month.
+I was using one of those AI-enabled calorie tracking apps. You photograph your dal, the AI tells you it is dal, and everyone feels very futuristic. On day seven the trial ended and the app asked for ₹700 a month — seven hundred Indian rupees.
 
 ₹700. A month. For inference.
 
-I did what any emotionally healthy person does when confronted with a subscription: I opened a calculator. Daily tracking through the cheaper models on OpenRouter would cost me about a dollar for the entire month. And I eat more or less the same four things every day — embed them once in pgvector and most days the "AI" doesn't even need to run. Why exactly was I paying a 20x markup for someone else to call the same API?
+I did what any emotionally healthy person does when confronted with a subscription: I opened a calculator. For my usage, I estimated that cheaper models on OpenRouter would cost roughly one US dollar for the entire month. And I eat more or less the same four things every day — embed them once in pgvector and most days the "AI" doesn't even need to run. Why was I paying a convenience premium to call the same API?
 
 This is the kind of question a normal person answers with "convenience" and moves on with their life. I answered it with a Laravel project.
 
 ## The Pitch
 
-MacroLog is calorie tracking for engineers — people who look at a ₹700/month app and see a $1/month API bill wearing a nice UI as a disguise.
+MacroLog is calorie tracking for engineers — people who look at a ₹700 monthly app and see their own tiny API bill wearing a nice UI as a disguise.
 
-You bring your own API key. You describe what you ate; a cheap model does the macro estimation; the bill goes to *your* OpenRouter account, where you can watch it fail to reach a dollar. Your meals get embedded in pgvector, so the second time you log "2 rotis and dal" — which, statistically speaking, is every time — it's a vector lookup, not an API call. The system learns the profoundly repetitive truth about your diet and stops paying to rediscover it.
+You bring your own API key. You describe what you ate; a cheap model does the macro estimation; the bill goes to _your_ OpenRouter account, where you can watch it fail to reach a dollar. Your meals get embedded in pgvector, so the second time you log "2 rotis and dal" — which, statistically speaking, is every time — it's a vector lookup, not an API call. The system learns the profoundly repetitive truth about your diet and stops paying to rediscover it.
 
-And surely I wasn't alone? Surely there was a whole population of software developers out there, tracking their protein, silently resenting their subscriptions, waiting for a platform where they could do it at cost? People who read "bring your own key" and feel *seen*?
+And surely I wasn't alone? Surely there was a whole population of software developers out there, tracking their protein, silently resenting their subscriptions, waiting for a platform where they could do it at cost? People who read "bring your own key" and feel _seen_?
 
-So I actually launched it. macrolog.online. It is live right now. It has one registered user. His last entry was six months ago. I can name him.
+So I actually launched [macrolog.online](https://macrolog.online). It is live right now. It has one registered user. His last entry was six months ago. I can name him.
+
+The name is not exclusive; other, unrelated nutrition products also call themselves MacroLog. This one is mine, which is the less reassuring distinction.
 
 ## The Delusion
 
-The math was genuinely correct — that's the trap. The unit economics of AI calorie apps really are absurd, the pgvector caching trick really works, and "BYOK so the platform can't rug you on pricing" is a real principle I still believe in.
+The estimate was genuinely persuasive — that's the trap. For my repetitive diet, the pgvector caching trick works, and "BYOK so the platform can't rug you on pricing" is a principle I still believe in.
 
 The delusion was every word after "for myself." I took "I don't want to pay ₹700" and heard "there is a market of people who would rather configure an API key than pay ₹700." Do you know what those two statements have in common? Nothing. The set of people who track calories and the set of people who know what OpenRouter is do overlap — I've met the overlap, it's me — but "I am the target user" is market research the way a mirror is a focus group.
 
@@ -72,7 +75,7 @@ It doesn't. It's built, deployed, open sourced, and running — the most operati
 
 ## Unwanted Bonus
 
-**MacroLog Enterprise.** Same app, but for engineering teams: everyone's macros in a shared Postgres instance, a Slack integration that posts your protein intake to #general, and a team leaderboard for logging streaks so lunch can finally have OKRs. SSO costs extra, obviously. The pricing page charges ₹700 a month — per seat — and the FAQ explaining why is just the phrase "we have learned nothing" in six languages.
+**MacroLog Enterprise.** Shared team macros, protein updates in Slack, lunch OKRs, and SSO that costs extra. The pricing page charges ₹700 a month — per seat — and the FAQ says only: "we have learned nothing."
 
 ---
 

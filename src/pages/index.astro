@@ -52,10 +52,10 @@ const websiteSchema = {
         delusion, and help deliver the verdict.
       </p>
       <div class="action-row" aria-label={t('home.primaryLinks')}>
-        <a class="button hero-primary" href="#recently-not-built"
-          >Browse the unbuilt <span>↓</span></a
+        <a class="button hero-primary" href={withBase('/ideas/fake-vacation/')}
+          >Start with Fake Vacation <span>↗</span></a
         >
-        <a class="button button-ghost" href={withBase('/contribute/')}>Set an idea free</a>
+        <a class="button button-ghost" href="#recently-not-built">Browse the pile ↓</a>
       </div>
       <div class="hero-proof" aria-label="ProductUnhunt in numbers">
         <p><strong>{ideas.length}</strong><span>ideas spared<br />from production</span></p>

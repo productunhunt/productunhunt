@@ -33,7 +33,18 @@ export const getStaticPaths = (async () => {
 // `Astro.props` is inferred from `getStaticPaths` above — an explicit `Props`
 // interface here would only be a second, driftable copy of the same shape.
 const { idea, siblings } = Astro.props;
-const { title, tagline, author, status, tags, editorStamp, heroImage, relapse } = idea.data;
+const {
+  title,
+  tagline,
+  author,
+  status,
+  tags,
+  editorStamp,
+  heroImage,
+  heroAlt,
+  heroCaption,
+  relapse,
+} = idea.data;
 
 const { Content, headings } = await render(idea);
 
@@ -176,10 +187,11 @@ const breadcrumbSchema = {
         <figure class="section article-image">
           <Image
             src={heroImage}
-            alt=""
+            alt={heroAlt ?? ''}
             widths={[640, 960, 1280]}
             sizes="(min-width: 1160px) 1160px, 100vw"
           />
+          {heroCaption && <figcaption>{heroCaption}</figcaption>}
         </figure>
       )
     }

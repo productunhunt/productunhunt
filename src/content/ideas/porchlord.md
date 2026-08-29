@@ -1,7 +1,8 @@
 ---
 title: Porchlord
 tagline: Rent out your porch as a neighbourhood package depot. Airbnb, but for stoops.
-publishDate: 2026-08-23
+publishDate: 2026-08-29
+launchOrder: 8
 author:
   name: Ravi
   title: Chief Unhunter
@@ -25,9 +26,10 @@ heroImage: null
 
 ## The Pitch
 
-Porch piracy costs billions a year, and the solution is sitting at home all
-day two doors down from you. Porchlord lets anyone with a covered stoop and a
-flexible schedule register as a receiving point. Neighbours route deliveries
+The pitch deck opens with an enormous package-theft number and immediately
+spends it as if all of that loss were addressable by one porch two doors down.
+Porchlord lets anyone with a covered stoop and a flexible schedule register as
+a receiving point. Neighbours route deliveries
 to a Porchlord host, the host confirms receipt with a photo, and pickup
 happens on your walk home. Hosts earn per parcel. Every package is insured.
 Ratings keep everyone honest. The idle-asset playbook, applied to the last
@@ -43,9 +45,10 @@ a time. Community! Logistics! A map with dots on it.
 
 ## The Reality Check
 
-Then you do the arithmetic. A parcel is worth roughly forty cents of anyone's
-time, and a host who handles ten a day has earned a sandwich while converting
-their hallway into a bonded warehouse with a doorbell. The insurance is doing
+Then you do the doomed spreadsheet. Assume a host clears forty cents a parcel:
+ten parcels have earned a sandwich while converting their hallway into a
+bonded warehouse with a doorbell. Raise the payout and the unit economics
+collapse sooner. The insurance is doing
 unreasonable narrative work: one missing PlayStation is a claims process, a
 neighbourhood dispute, and a one-star review of a 71-year-old man named Bill,
 simultaneously. And the couriers — the single actor the entire flow depends
@@ -68,3 +71,7 @@ season of porch piracy — triples the per-parcel rate, and your neighbour
 becomes a man you pay dynamic rates to see your own Christmas presents first.
 Someone had already designed the badge for top hosts. It said "Porchlord
 Prime." We stopped there.
+
+---
+
+_I thought about building this and chose not to._

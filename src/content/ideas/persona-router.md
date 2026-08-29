@@ -2,6 +2,7 @@
 title: Persona Router
 tagline: An AI that learns how you talk to everyone you know, so you never have to talk to anyone you know.
 publishDate: 2026-08-29
+launchOrder: 9
 author:
   name: Ravi
   title: Chief Unhunter
@@ -14,7 +15,7 @@ author:
   source: PR
 status: unbuilt
 featured: false
-editorStamp: null
+editorStamp: The risk matrix survived. The product did not.
 tags:
   - AI nonsense
   - Consumer
@@ -35,13 +36,13 @@ Why stop at platforms? People don't just have different voices for different cha
 
 The way you email your manager is not how you message your team. The message "Deployment is delayed, we found an issue during migration" should not be rewritten in the same persona as "will be late, want me to bring something?"
 
-Persona Router would connect to everything — email, Slack, WhatsApp, Telegram, LinkedIn, anything else willing to participate in the destruction of your privacy — and observe how you actually communicate with each person. Over time it builds relationship-specific profiles. Your manager gets concise, respectful, problems-before-explanations, 3–5 sentences. Your engineering team gets direct, technical, occasional sarcasm. Your vendor gets polite-but-firm with deadlines repeated. Your oldest friend gets Hinglish with no punctuation and no context, because friendship is just lossy compression.
+Persona Router would connect to your messages — anything willing to participate in the destruction of your privacy — and learn relationship-specific profiles. Your manager gets concise, problems-before-explanations. Your vendor gets polite-but-firm. Your oldest friend gets Hinglish with no punctuation and no context, because friendship is lossy compression.
 
 The key distinction: most AI assistants maintain knowledge about **you**. Persona Router maintains knowledge about **you in relation to someone else**. These are not global preferences. They are edges in a relationship graph. Your corrections become training signals — if you keep editing "Could you please look into this?" down to "Please check this," it learns that this particular relationship does not require twelve grams of corporate politeness per sentence.
 
 Then the interaction becomes intent-first. You don't say "draft a professional but concise email informing my manager that Monday's deployment is delayed due to a database migration issue." You say "tell my manager the deployment is moving because the migration isn't safe yet." It already knows who your manager is, which channel they prefer, which project you mean, and whether you normally review such messages before sending.
 
-From there, the inbox agent. You say "handle whatever can be handled," and it triages: seven messages need no response, four are safe to auto-reply, three have drafts ready, two need actual decisions from you, one is emotionally sensitive, and one is somebody selling SEO services and has therefore been returned to nature. You stop managing inboxes. You manage exceptions.
+From there, the inbox agent. You say "handle whatever can be handled." It ignores noise, drafts routine replies, and escalates decisions or anything emotionally sensitive. The SEO pitch is returned to nature. You stop managing inboxes. You manage exceptions.
 
 Delegation policies keep it safe. Every relationship gets a risk matrix:
 
@@ -71,11 +72,9 @@ There is a legitimate problem underneath all of this, which is what made it dang
 
 Writing is not the hard part of communication. The hard part is the subconscious checklist you run before every message: Who am I talking to? What do they already know? How formal should I be? What have I already promised them? Can this be misunderstood? Do I need to respond at all? People burn a remarkable amount of cognitive effort switching between these contexts all day.
 
-LLMs are unusually good at exactly this kind of contextual transformation. And unlike every generic "AI email writer," relationship-specific memory would be a real, noticeable improvement — a moat, even, said a voice in my head that has caused more unnecessary software than PHP.
+LLMs are unusually good at contextual transformation. Unlike a generic "AI email writer," relationship-specific memory could be a noticeable improvement — a moat, said the voice in my head with commit access.
 
-The interface would be ridiculously natural. While cooking: "Tell the team I'll join ten minutes late." Done. While driving: "Reply to the vendor that the quote is too high." Drafted in your vendor persona. While working: "Tell everyone waiting for the report they'll have it tomorrow." It finds the relevant threads and handles them.
-
-Which is exactly why I spent more time on the architecture than this idea deserved. I had an identity graph mapping people across services, a relationship store, a context-retrieval layer, a five-layer persona stack, and connectors with full audit logging — because if an AI is going to destroy your marriage, the least we can provide is an audit trail.
+The interface felt natural: "Tell the team I'll join ten minutes late." Done. This is why I spent more time than the idea deserved on identity graphs, relationship memory, approval policies, and audit logs. If an AI is going to destroy your marriage, the least we can provide is an audit trail.
 
 ## The Reality Check
 
@@ -93,7 +92,7 @@ That is the problem. There is a point where communication stops being informatio
 
 The product is also trapped between its two viable versions. The valuable version requires enormous trust; the safe version requires constant approval. If users approve every message, you've built a very sophisticated rewriting interface. If they don't, you've built an autonomous system that can accidentally negotiate with your vendor, annoy your manager, or end a relationship while you're making dinner. Somewhere between those two is the product, and nobody knows the coordinates.
 
-And the privacy pitch writes itself, badly: **please upload your entire social existence so we can save you approximately seven minutes per day.** Yes, a self-hosted version helps — in the way that owning your own surveillance camera makes surveillance feel artisanal. On top of that sit the API restrictions, the enterprise compliance problems, and the approximately forty-seven distinct incident reports that begin with the sentence "the AI sent that."
+The privacy pitch writes itself, badly: **please upload your entire social existence so we can save you a few minutes per day.** Self-hosting helps in the way that owning your surveillance camera makes surveillance feel artisanal. Every incident report still begins: "the AI sent that."
 
 ## Why It Stays Unbuilt
 

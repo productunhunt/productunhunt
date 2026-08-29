@@ -14,6 +14,9 @@ tagline: A one-line description of what this would have done to people.
 # Today's date is fine. The editor sets the real one on the way in.
 publishDate: 2026-01-01
 
+# Editor's launch-day tie-breaker. Leave null in submissions.
+launchOrder: null
+
 author:
   name: Your Name # Pseudonyms are fine.
   title: null # Optional. Yours, not ours — "Chief Unhunter" is taken.
@@ -44,6 +47,8 @@ tags:
 
 draft: false
 heroImage: null
+heroAlt: null # Editor's. Required when heroImage is set.
+heroCaption: null # Editor's. Labels mockups and adds useful context.
 ---
 
 <!--

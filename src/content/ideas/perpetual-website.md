@@ -19,8 +19,10 @@ tags:
   - AI nonsense
   - SaaS
   - B2B
-draft: false
+draft: true
 heroImage: null
+heroAlt: null
+heroCaption: null
 ---
 
 ## How It Started

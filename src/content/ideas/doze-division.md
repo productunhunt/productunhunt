@@ -1,7 +1,8 @@
 ---
-title: SleepLeague
+title: Doze Division
 tagline: Competitive sleep. Ranked ladders, seasons, and playoffs for being unconscious.
-publishDate: 2026-08-21
+publishDate: 2026-08-29
+launchOrder: 4
 author:
   name: Ravi
   title: Chief Unhunter
@@ -25,7 +26,7 @@ heroImage: null
 
 ## The Pitch
 
-Your watch already scores your sleep. SleepLeague makes the score mean
+Your watch already scores your sleep. Doze Division makes the score mean
 something: weekly leagues of twenty strangers, promotion and relegation,
 seasonal playoffs, a global ladder. Streak bonuses for consistent bedtimes.
 Rivalries. A highlight reel, generated every morning, of a thing you cannot
@@ -45,11 +46,13 @@ astonishing amount of scrutiny before it collapses.
 ## The Reality Check
 
 It collapses on contact with the actual sport. Competitive pressure about
-sleep destroys sleep — sleep clinicians already have a name for it,
-orthosomnia, coined for people whose trackers made them worse. Our core loop
-is a disease vector with seasons. Nothing ruins a Tuesday night like needing
-eight competitive hours to stay in Division 2, checking the rank at 1 a.m.,
-and watching your own cortisol relegate you in real time.
+sleep can destroy sleep. In a 2017 case report, researchers coined
+[orthosomnia](https://pubmed.ncbi.nlm.nih.gov/27855740/) for an unhealthy
+preoccupation with improving sleep data from wearables. It is not a diagnosis
+or proof that every tracker harms sleep. It is, however, an excellent warning
+against adding playoffs. Nothing ruins a Tuesday night like needing eight
+competitive hours to stay in Division 2, checking the rank at 1 a.m., and
+watching your own anxiety relegate you in real time.
 
 Cheating, meanwhile, requires no skill: the watch sleeps beautifully on a
 pillow. And our best athletes are definitionally unconscious during their
@@ -59,7 +62,7 @@ themselves win.
 ## Why It Stays Unbuilt
 
 Because retention requires making users worse at the one thing the product
-measures. The harder someone tries to win SleepLeague, the worse they sleep,
+measures. The harder someone tries to win Doze Division, the worse they sleep,
 and the worse they sleep, the more they open the app. That is a growth loop.
 It is also a medical complaint with a login screen.
 
@@ -69,3 +72,7 @@ The design file contained a spectator mode: live feeds of heart-rate graphs
 during the playoff finals, with commentary. Someone had mocked up a caster
 saying "he's entering REM early — a bold strategy." We closed the laptop
 gently, the way you'd put something to sleep.
+
+---
+
+_I thought about building this and chose not to._
