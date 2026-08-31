@@ -121,9 +121,11 @@ const isActive = (href: string) => {
     <meta name="twitter:image:alt" content={imageAlt} />
     <slot name="head" />
 
-    {/* Umami analytics. `is:inline` keeps Astro from bundling it, and the
+    {
+      /* Umami analytics. `is:inline` keeps Astro from bundling it, and the
         ClientRouter leaves an already-run external script alone, so Umami's
-        own history hooks report the client-side navigations. */}
+        own history hooks report the client-side navigations. */
+    }
     <script
       is:inline
       defer
