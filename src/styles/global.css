@@ -2882,3 +2882,187 @@ h2 em {
     align-items: flex-start;
   }
 }
+
+/* ==========================================================================
+   The submission form (/submit/)
+   ========================================================================== */
+/* The only form on the site, so every rule here is scoped to `.idea-form`
+   rather than to bare `input` / `textarea` — nothing else should inherit it.
+   Built from the tokens above only: surface and line for the boxes, accent
+   for focus, mono for labels so they read as siblings of `.eyebrow`. */
+
+.idea-form {
+  max-width: var(--prose-width);
+}
+
+.idea-form fieldset {
+  margin: 0 0 calc(var(--baseline) * 2);
+  padding: 0;
+  border: 0;
+  border-top: var(--hairline);
+  padding-top: var(--baseline);
+}
+
+.idea-form legend {
+  padding: 0;
+  color: var(--color-accent-ink);
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.field {
+  margin-top: calc(var(--baseline) * 1.2);
+}
+
+.field label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.02em;
+}
+
+/* Guidance sits under the label and above the box, never in `placeholder` —
+   a placeholder disappears at the exact moment it is being acted on. */
+.field-help {
+  margin: 0.35rem 0 0;
+  color: var(--color-muted);
+  font-size: 0.85rem;
+  line-height: 1.6;
+}
+
+.field-optional {
+  color: var(--color-muted);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+}
+
+.idea-form input:not([type='checkbox']),
+.idea-form textarea {
+  display: block;
+  width: 100%;
+  margin-top: 0.5rem;
+  padding: 0.7rem 0.8rem;
+  border: var(--hairline);
+  border-radius: 0.35rem;
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-size: 1rem;
+}
+
+.idea-form textarea {
+  min-height: 6rem;
+  font-family: var(--font-body);
+  line-height: 1.7;
+  resize: vertical;
+}
+
+.idea-form input:focus-visible,
+.idea-form textarea:focus-visible {
+  border-color: var(--color-accent);
+  box-shadow: var(--focus-ring);
+  outline: none;
+}
+
+/* `:user-invalid`, not `:invalid` — the latter paints every required field
+   red before the reader has typed a character. */
+.idea-form input:user-invalid,
+.idea-form textarea:user-invalid {
+  border-color: var(--color-accent);
+}
+
+/* Tag chips. Same pill as `.tag-list li` elsewhere; the checkbox itself is
+   hidden and the label carries the state, so the hit target is the whole
+   chip and keyboard focus still lands somewhere visible. */
+.field-tags .tag-list {
+  margin-top: var(--baseline);
+}
+
+.tag-list.checkable li {
+  padding: 0;
+  border: 0;
+}
+
+.tag-list.checkable label {
+  display: inline-block;
+  position: relative;
+  padding: 0.35rem 0.7rem;
+  border: var(--hairline);
+  border-radius: 999px;
+  color: var(--color-muted);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  cursor: pointer;
+  transition:
+    background 160ms ease,
+    color 160ms ease;
+}
+
+/* The box still takes focus and still answers the space bar; it is only the
+   chip around it that gets to be seen. Pinned inside the (relative) label so
+   focusing it never scrolls the page somewhere else. */
+.tag-list.checkable input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.tag-list.checkable label:hover {
+  color: var(--color-text);
+}
+
+.tag-list.checkable label:has(input:checked) {
+  border-color: var(--color-text);
+  background: var(--color-secondary);
+  color: #17130f;
+}
+
+.tag-list.checkable label:has(input:focus-visible) {
+  box-shadow: var(--focus-ring);
+}
+
+/* The entry requirement. Checkbox and its line stay on one row. */
+.field-check label {
+  display: flex;
+  gap: 0.7rem;
+  align-items: flex-start;
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  line-height: 1.5;
+  cursor: pointer;
+}
+
+.field-check input {
+  width: 1.1rem;
+  height: 1.1rem;
+  flex: none;
+  margin-top: 0.2rem;
+  accent-color: var(--color-accent);
+}
+
+.field-deal .license-body {
+  margin-bottom: var(--baseline);
+}
+
+.field-deal .field-check {
+  padding: var(--baseline);
+  border: 1px solid var(--color-accent);
+}
+
+/* Announced, never seen — the honeypot and anything else that has to be in
+   the DOM for a machine rather than a reader. */
+.visually-hidden {
+  position: absolute;
+  overflow: hidden;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

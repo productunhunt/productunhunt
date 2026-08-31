@@ -18,7 +18,7 @@ interface Props {
     linkedin?: string | null;
     email?: string | null;
     bio?: string | null;
-    source: 'PR' | 'email';
+    source: 'PR' | 'email' | 'form';
   };
   compact?: boolean;
 }
@@ -40,8 +40,11 @@ const links = [
   author.email && { label: 'Email', href: `mailto:${author.email}` },
 ].filter((link): link is { label: string; href: string } => Boolean(link));
 
-const sourceLabel =
-  author.source === 'email' ? t('idea.authorSourceEmail') : t('idea.authorSourcePR');
+const sourceLabel = {
+  PR: t('idea.authorSourcePR'),
+  email: t('idea.authorSourceEmail'),
+  form: t('idea.authorSourceForm'),
+}[author.source];
 ---
 
 {

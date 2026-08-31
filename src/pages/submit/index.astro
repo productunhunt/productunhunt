@@ -1,0 +1,324 @@
+---
+// §11, door two. The email door asked a non-technical contributor to
+// reconstruct the house format from prose; this asks for the same fields in
+// the same order, with the guidance next to the box it applies to.
+//
+// Netlify Forms, not an Astro Action: the page is prerendered, so Netlify's
+// build-time HTML scan finds the form in `dist/` and handles the POST itself.
+// Nothing here reaches our own server, and nothing is stored in Neon.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { withBase } from '../../lib/url';
+import { OFFICIAL_TAGS } from '../../lib/tags';
+import { CONTACT_EMAIL, SITE } from '../../consts';
+import { t } from '../../i18n';
+
+const licenseParagraphs = t('license.body').split('\n\n');
+
+// Field names are the frontmatter keys from IDEA_TEMPLATE.md wherever one
+// exists, so a Netlify submission maps onto an idea file without a decoder
+// ring. `label`/`help` are the same words /contribute/ uses.
+interface TextField {
+  name: string;
+  label: string;
+  help: string;
+  type?: 'text' | 'url' | 'email';
+}
+
+const author: TextField[] = [
+  {
+    name: 'author-title',
+    label: 'Your title',
+    help: 'Yours, not ours — “Chief Unhunter” is taken.',
+  },
+  { name: 'author-x', label: 'X handle', help: 'Handle only. No @, no URL.' },
+  { name: 'author-github', label: 'GitHub handle', help: 'Handle only.' },
+  { name: 'author-url', label: 'Website', help: 'Full URL, including https://.', type: 'url' },
+  { name: 'author-linkedin', label: 'LinkedIn', help: 'Full profile URL.', type: 'url' },
+  {
+    name: 'author-email',
+    label: 'Public email',
+    help: 'Shown on the idea as a mailto link — scrapers will find it. Not the same as the address above.',
+    type: 'email',
+  },
+  { name: 'author-bio', label: 'One-line bio', help: 'No follower counts, ever.' },
+];
+
+interface StoryField {
+  name: string;
+  label: string;
+  help: string;
+  /** Only How It Started is; the five house sections are all required. */
+  optional?: boolean;
+}
+
+const story: StoryField[] = [
+  {
+    name: 'how-it-started',
+    label: 'How It Started',
+    optional: true,
+    help: 'The mundane moment the idea mutated from — the queue, the invoice, the conversation you overheard. Two or three sentences, a scene not a biography. Skip it if your Pitch already carries the origin; it usually does.',
+  },
+  {
+    name: 'pitch',
+    label: 'The Pitch',
+    help: 'The idea, played completely straight. Sell it like you believed it, because for about eleven minutes you did. Mechanics, not adjectives: what does the thing actually do, in order, to a real person?',
+  },
+  {
+    name: 'delusion',
+    label: 'The Delusion',
+    help: 'Why it sounded good. The market that looked underserved, the behaviour you thought you had spotted, the “near-zero marginal cost” that always shows up around now. A pitch nobody could ever have believed is not funny.',
+  },
+  {
+    name: 'reality-check',
+    label: 'The Reality Check',
+    help: 'Where it falls apart. This is the section that earns the piece, so be specific — a number, a mechanism, a regulation, the one operational detail that quietly kills it. “It wouldn’t work” is not a reality check.',
+  },
+  {
+    name: 'why-unbuilt',
+    label: 'Why It Stays Unbuilt',
+    help: 'The verdict. Short. Two or three sentences is usually two too many.',
+  },
+  {
+    name: 'unwanted-bonus',
+    label: 'Unwanted Bonus',
+    help: 'The worse idea that fell out of the first one while you were writing it. One paragraph. It should be genuinely worse.',
+  },
+];
+---
+
+<BaseLayout
+  title={t('submit.title')}
+  description={`The form for an idea you decided not to build. Every field ${SITE.title} needs, in one pass.`}
+>
+  <section class="page-head section">
+    <p class="eyebrow">{t('submit.eyebrow')}</p>
+    <h1>{t('cta.submit')}</h1>
+    <p class="lead">{t('submit.lead')}</p>
+    <p>
+      Prefer YAML? <a class="text-link" href={withBase('/contribute/')}>Open a pull request</a> instead
+      — same fields, same bar.
+    </p>
+  </section>
+
+  <section class="section" aria-label={t('submit.title')}>
+    {
+      /*
+      Four attributes here are load-bearing:
+      · `name` + the hidden `form-name` input — Netlify's deploy-time scan keys
+        off the first; the POST body needs the second to say which form it is.
+      · `data-netlify` — opts the form into that scan at all.
+      · `data-astro-reload` — BaseLayout mounts <ClientRouter />, which
+        otherwise intercepts the submit and turns it into a soft navigation.
+        The POST would never reach Netlify and the form would do nothing.
+      · `data-netlify-honeypot` — free spam filtering, no third-party script.
+    */
+    }
+    <form
+      class="idea-form"
+      name="idea-submission"
+      method="POST"
+      action={withBase('/submit/thanks/')}
+      data-netlify="true"
+      data-netlify-honeypot="bot-field"
+      data-astro-reload
+      data-tags-invalid={t('submit.tagsInvalid')}
+    >
+      <input type="hidden" name="form-name" value="idea-submission" />
+      <p class="visually-hidden" aria-hidden="true">
+        <label
+          >{t('submit.honeypot')} <input name="bot-field" tabindex="-1" autocomplete="off" /></label
+        >
+      </p>
+
+      <fieldset>
+        <legend>{t('submit.productLegend')}</legend>
+
+        <div class="field">
+          <label for="f-title">Product name</label>
+          <p class="field-help" id="h-title">The kind of name that would fit on a lanyard.</p>
+          <input id="f-title" name="title" aria-describedby="h-title" required maxlength="120" />
+        </div>
+
+        <div class="field">
+          <label for="f-tagline">Tagline</label>
+          <p class="field-help" id="h-tagline">One line, savage, no hedging.</p>
+          <input
+            id="f-tagline"
+            name="tagline"
+            aria-describedby="h-tagline"
+            required
+            maxlength="200"
+          />
+        </div>
+
+        <div class="field">
+          <label for="f-seo-title">
+            Plain-English description <span class="field-optional">{t('submit.optional')}</span>
+          </label>
+          <p class="field-help" id="h-seo-title">
+            What the browser tab says after the product name. Invented names are unsearchable, so
+            this is the searchable version. 70 characters, hard limit.
+          </p>
+          <input id="f-seo-title" name="seo-title" aria-describedby="h-seo-title" maxlength="70" />
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>{t('submit.authorLegend')}</legend>
+
+        <div class="field">
+          <label for="f-author-name">Your name</label>
+          <p class="field-help" id="h-author-name">Pseudonyms are fine.</p>
+          <input
+            id="f-author-name"
+            name="author-name"
+            aria-describedby="h-author-name"
+            required
+            maxlength="120"
+          />
+        </div>
+
+        <div class="field">
+          <label for="f-contact-email">Contact email</label>
+          <p class="field-help" id="h-contact-email">
+            Never published. It is how the editor replies, and the only reply you will get.
+          </p>
+          <input
+            id="f-contact-email"
+            name="contact-email"
+            type="email"
+            aria-describedby="h-contact-email"
+            required
+            autocomplete="email"
+          />
+        </div>
+
+        {
+          author.map((field) => (
+            <div class="field">
+              <label for={`f-${field.name}`}>
+                {field.label} <span class="field-optional">{t('submit.optional')}</span>
+              </label>
+              <p class="field-help" id={`h-${field.name}`}>
+                {field.help}
+              </p>
+              <input
+                id={`f-${field.name}`}
+                name={field.name}
+                type={field.type ?? 'text'}
+                aria-describedby={`h-${field.name}`}
+                maxlength="200"
+              />
+            </div>
+          ))
+        }
+      </fieldset>
+
+      {
+        /*
+        `required` and `maxlength` cover every rule on this page except "one to
+        three", which HTML cannot express. The script at the bottom adds it.
+      */
+      }
+      <fieldset class="field-tags">
+        <legend>{t('submit.tagsLegend')}</legend>
+        <p class="field-help" id="h-tags">{t('submit.tagsHelp')}</p>
+        <ul class="tag-list checkable" aria-describedby="h-tags">
+          {
+            OFFICIAL_TAGS.map((tag) => (
+              <li>
+                <label>
+                  <input type="checkbox" name="tags" value={tag} />
+                  <span>{tag}</span>
+                </label>
+              </li>
+            ))
+          }
+        </ul>
+      </fieldset>
+
+      <fieldset>
+        <legend>{t('submit.storyLegend')}</legend>
+        <p class="field-help">
+          Five sections, in this order — the house format and the default. No word-count rule: funny
+          and specific beats a target length. Write it straight. The joke is the seriousness.
+        </p>
+        {
+          story.map((field) => (
+            <div class="field">
+              <label for={`f-${field.name}`}>
+                {field.label}{' '}
+                {field.optional && <span class="field-optional">{t('submit.optional')}</span>}
+              </label>
+              <p class="field-help" id={`h-${field.name}`}>
+                {field.help}
+              </p>
+              <textarea
+                id={`f-${field.name}`}
+                name={field.name}
+                aria-describedby={`h-${field.name}`}
+                rows={field.optional ? 4 : 7}
+                required={!field.optional}
+              />
+            </div>
+          ))
+        }
+      </fieldset>
+
+      <fieldset class="field-deal">
+        <legend>{t('submit.dealLegend')}</legend>
+        <div class="license-body">
+          {licenseParagraphs.map((paragraph) => <p>{paragraph}</p>)}
+        </div>
+        <div class="field field-check">
+          <label>
+            <input type="checkbox" name="confirmation" value="yes" required />
+            <span>“{t('contribute.confirmation')}.”</span>
+          </label>
+          <p class="field-help">
+            That line is the entry requirement, not a formality. If you are still building it, this
+            is the wrong website.
+          </p>
+        </div>
+      </fieldset>
+
+      <div class="action-row">
+        <button class="button" type="submit">{t('submit.action')}</button>
+      </div>
+
+      <noscript>
+        <p class="field-help">{t('submit.noscript')}</p>
+      </noscript>
+    </form>
+
+    <p class="field-help">
+      If the form fails you, <a class="text-link" href={`mailto:${CONTACT_EMAIL}`}
+        >{CONTACT_EMAIL}</a
+      > still reaches a human. Slowly.
+    </p>
+  </section>
+</BaseLayout>
+
+<script>
+  // The one rule HTML cannot state: one to three tags. `setCustomValidity` on
+  // the first box routes it through native validation, so the message appears
+  // in the same bubble as every other error and submission is blocked the
+  // same way. Runs once — this form is never re-rendered by a soft navigation
+  // in place, so it needs no `data-astro-rerun` equivalent.
+  const form = document.querySelector<HTMLFormElement>('form.idea-form');
+  const boxes = form ? [...form.querySelectorAll<HTMLInputElement>('input[name="tags"]')] : [];
+
+  if (boxes.length > 0) {
+    const [first] = boxes;
+    const validate = () => {
+      const checked = boxes.filter((box) => box.checked).length;
+      first.setCustomValidity(
+        checked >= 1 && checked <= 3
+          ? ''
+          : (form?.dataset.tagsInvalid ?? 'Pick one to three tags.'),
+      );
+    };
+    for (const box of boxes) box.addEventListener('change', validate);
+    validate();
+  }
+</script>

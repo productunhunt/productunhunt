@@ -33,14 +33,15 @@ name tells a search result nothing, so this is where the idea gets described
 in words someone might actually type. `title: seoTitle — ProductUnhunt` has to
 fit in 70 characters, and the build says so if it doesn't.
 
-## Door two — email it
+## Door two — fill in the form
 
-Send the same fields as plain text to **ideas@productunhunt.com** and let
-someone else do the YAML.
+Go to [productunhunt.com/submit/](https://productunhunt.com/submit/) and let
+someone else do the YAML. Same fields, one box at a time, with the guidance
+next to the box it applies to.
 
-There is no form, no attachment requirement, and no autoresponder. Ingestion
-is manual, which is a polite way of saying it happens when the editor gets to
-it.
+There is no account and no autoresponder. Ingestion is manual, which is a
+polite way of saying it happens when the editor gets to it. If the form fails
+you, **ideas@productunhunt.com** still reaches a human, slowly.
 
 ## The fields
 

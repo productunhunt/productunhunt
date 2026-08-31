@@ -53,7 +53,7 @@ const ideas = defineCollection({
           bio: z.string().nullable().optional(),
           // How the idea arrived. Defaulted so the §8 example frontmatter, which
           // omits it, still validates.
-          source: z.enum(['PR', 'email']).default('PR'),
+          source: z.enum(['PR', 'email', 'form']).default('PR'),
         }),
         status: z.enum(STATUSES),
         featured: z.boolean().default(false),

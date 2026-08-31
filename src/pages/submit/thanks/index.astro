@@ -1,0 +1,25 @@
+---
+// Where Netlify lands a successful POST from /submit/ (the form's `action`).
+// It exists so the confirmation is in the site's own voice rather than
+// Netlify's generic success screen.
+//
+// `indexable={false}` and excluded from the sitemap in `scripts/content-seo.mjs`:
+// it is a dead end for a reader arriving from search.
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { withBase } from '../../../lib/url';
+import { t } from '../../../i18n';
+---
+
+<BaseLayout title={t('thanks.title')} description={t('thanks.lead')} indexable={false}>
+  <section class="hero section">
+    <p class="eyebrow">{t('thanks.eyebrow')}</p>
+    <h1>{t('thanks.heading')}</h1>
+    <p class="lead">{t('thanks.lead')}</p>
+    <p>{t('thanks.body')}</p>
+    <div class="action-row">
+      <a class="button" href={withBase('/ideas/')}>{t('cta.fullPile')}</a>
+      <a class="text-link" href={withBase('/how-it-works/')}>{t('cta.howThisWorks')}</a>
+      <a class="text-link" href={withBase('/submit/')}>Submit another</a>
+    </div>
+  </section>
+</BaseLayout>

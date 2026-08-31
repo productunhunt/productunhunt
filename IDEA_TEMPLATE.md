@@ -36,7 +36,7 @@ author:
   linkedin: null # Optional. Full profile URL, including https://.
   email: null # Optional. Shown publicly as a mailto link — scrapers will find it.
   bio: null # Optional. One line. No follower counts, ever.
-  source: PR
+  source: PR # PR, form, or email — how this one arrived. Yours is PR.
 
 # Leave as `unbuilt`. The others — someone-built-it, still-a-threat,
 # author-relapsed — are editor-assigned, and none is a compliment. The last

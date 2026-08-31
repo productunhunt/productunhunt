@@ -65,6 +65,9 @@ export async function sitemapData() {
     // Client-side search over content that is already in the sitemap: nothing
     // for an index to hold on to, and it renders `noindex` to match.
     '/search/',
+    // The form's success redirect. A dead end for anyone arriving from search,
+    // and it renders `noindex` to match.
+    '/submit/thanks/',
   ]);
   const lastmod = new Map();
 

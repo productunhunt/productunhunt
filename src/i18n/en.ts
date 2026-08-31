@@ -49,7 +49,7 @@ export const en = {
   'home.featuredHeading': 'Most gloriously impractical this week',
   'home.contributeHeading': 'You have ideas like these too',
   'home.contributeLead':
-    'Two doors, one format: open a pull request, or email it and let someone else do the YAML.',
+    'Two doors, one format: open a pull request, or fill in the form and let someone else do the YAML.',
   'home.empty': 'Nothing has been set free yet. Give it a moment.',
 
   // Idea archive (§3) — the pile, with no manifesto essay on top.
@@ -88,6 +88,7 @@ export const en = {
   'idea.breadcrumbIdeas': 'Ideas',
   'idea.authorSourcePR': 'Submitted by pull request',
   'idea.authorSourceEmail': 'Submitted by email',
+  'idea.authorSourceForm': 'Submitted through the form',
 
   // Status badges (§8). `src/lib/status.ts` maps a frontmatter key to one of
   // these, so the label is written down exactly once.
@@ -135,10 +136,38 @@ export const en = {
   'contribute.eyebrow': 'Contribute',
   'contribute.lead': 'Two doors, one format. The editor publishes; you supply the restraint.',
   'contribute.prEyebrow': 'For developers',
-  'contribute.emailEyebrow': 'For everyone else',
+  'contribute.formEyebrow': 'For everyone else',
   'contribute.fieldsEyebrow': 'What an entry needs',
   'contribute.confirmation': 'I thought about building this and chose not to',
   'contribute.reviewEyebrow': 'What gets published',
+
+  // Submit (§11) — the form door. The field spec and the review bar stay on
+  // /contribute/; this page is the form and nothing else.
+  'submit.title': 'Submit an idea',
+  'submit.eyebrow': 'Submit',
+  'submit.lead':
+    'Every field the editor needs, in one pass. Nothing here is published until it is read by a human.',
+  'submit.productLegend': 'The product',
+  'submit.authorLegend': 'You',
+  'submit.tagsLegend': 'Tags',
+  'submit.storyLegend': 'The story',
+  'submit.dealLegend': 'The deal',
+  'submit.tagsHelp': 'One to three, from the closed list. Anything outside it is not a tag here.',
+  'submit.tagsInvalid': 'Pick one to three tags.',
+  'submit.optional': 'Optional',
+  'submit.action': 'Send it',
+  'submit.honeypot': 'Leave this field empty',
+  'submit.noscript':
+    'This form works without JavaScript. The only thing the script does is stop you picking more than three tags.',
+
+  // Thank-you page — where Netlify lands a successful submission.
+  'thanks.title': 'Submission received',
+  'thanks.eyebrow': 'Received',
+  'thanks.heading': 'It is out of your hands now.',
+  'thanks.lead':
+    'The editor reads everything and publishes what is funny and specific. There is no queue position and no autoresponder, because there is no queue and no robot.',
+  'thanks.body':
+    'If it lands, it appears in the pile with your name on it and a poll you do not control. If it does not, nothing happens, quietly, forever.',
 
   // How it works (§3)
   'howItWorks.title': 'How it works',

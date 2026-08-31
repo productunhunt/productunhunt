@@ -10,7 +10,7 @@ import TagFilter from '../components/TagFilter.astro';
 import { withBase } from '../lib/url';
 import { getPublishedIdeas } from '../lib/ideas';
 import { usedTags } from '../lib/tags';
-import { CONTACT_EMAIL, REPO_URL, SITE } from '../consts';
+import { REPO_URL, SITE } from '../consts';
 import { t } from '../i18n';
 
 const ideas = await getPublishedIdeas();
@@ -154,7 +154,7 @@ const homeTitle = 'Funny startup ideas that should stay unbuilt';
       <a class="text-link" href={`${REPO_URL}/pulls`} rel="noopener noreferrer" target="_blank">
         Open a pull request ↗
       </a>
-      <a class="text-link" href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
+      <a class="text-link" href={withBase('/submit/')}>Fill in the form</a>
     </div>
   </Interstitial>
 

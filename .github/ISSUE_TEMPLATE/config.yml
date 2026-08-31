@@ -1,11 +1,11 @@
 blank_issues_enabled: false
 contact_links:
-  - name: Live demo
-    url: https://kpab.github.io/astro-keel/
-    about: See the theme running before filing an issue — the behavior may be intentional.
-  - name: Setup & configuration docs
-    url: https://github.com/kpab/astro-keel#configuration
-    about: Site config, base path, accent color, fonts, and deployment are covered in the README.
+  - name: The site
+    url: https://productunhunt.com/
+    about: See the behavior running in production before filing an issue — it may be intentional.
+  - name: Submit an idea
+    url: https://productunhunt.com/submit/
+    about: Ideas go through the form or a pull request, never an issue.
   - name: Contributing guide
-    url: https://github.com/kpab/astro-keel/blob/main/CONTRIBUTING.md
+    url: https://github.com/productunhunt/productunhunt/blob/main/CONTRIBUTING.md
     about: Dev setup, project structure, and pull request conventions.
